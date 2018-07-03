@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>web任务来了！！！ | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="知识管理🚩 搭建自己的博客,推荐使用Github+Hexo. https://github.com/limedroid/HexoLearning   熟练使用markdown编写文档. http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C   使用云笔记(推荐为知笔记,有道云笔记,印">
+<meta name="keywords" content="技术,学习历程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web任务来了！！！">
+<meta property="og:url" content="http://yoursite.com/child/2017/12/24/web任务来了!!!!!!/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="知识管理🚩 搭建自己的博客,推荐使用Github+Hexo. https://github.com/limedroid/HexoLearning   熟练使用markdown编写文档. http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C   使用云笔记(推荐为知笔记,有道云笔记,印">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-27T04:21:18.769Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web任务来了！！！">
+<meta name="twitter:description" content="知识管理🚩 搭建自己的博客,推荐使用Github+Hexo. https://github.com/limedroid/HexoLearning   熟练使用markdown编写文档. http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C   使用云笔记(推荐为知笔记,有道云笔记,印">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jas0nwhy</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/C语言/" style="font-size: 10px;">C语言</a> <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/代码审计/" style="font-size: 10px;">代码审计</a> <a href="/tags/关于我/" style="font-size: 10px;">关于我</a> <a href="/tags/变量覆盖/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/复习记录/" style="font-size: 10px;">复习记录</a> <a href="/tags/学习历程/" style="font-size: 10px;">学习历程</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/文件解析/" style="font-size: 10px;">文件解析</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">jas0nwhy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">jas0nwhy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-web任务来了!!!!!!" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/12/24/web任务来了!!!!!!/" class="article-date">
+      <time datetime="2017-12-24T09:31:49.000Z" itemprop="datePublished">2017-12-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      web任务来了！！！
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习历程/">学习历程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="知识管理🚩"><a href="#知识管理🚩" class="headerlink" title="知识管理🚩"></a>知识管理🚩</h2><ul>
+<li>搭建自己的博客,推荐使用Github+Hexo.<ul>
+<li><a href="https://github.com/limedroid/HexoLearning" target="_blank" rel="noopener">https://github.com/limedroid/HexoLearning</a></li>
+</ul>
+</li>
+<li>熟练使用markdown编写文档.<ul>
+<li><a href="http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C" target="_blank" rel="noopener">http://blog.leanote.com/post/freewalk/Markdown-%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C</a></li>
+</ul>
+</li>
+<li>使用云笔记(推荐为知笔记,有道云笔记,印象笔记)<a id="more"></a>
+</li>
+</ul>
+<h2 id="代码审计🚩"><a href="#代码审计🚩" class="headerlink" title="代码审计🚩"></a>代码审计🚩</h2><p>了解常见web漏洞的原理,利用及修复.</p>
+<ul>
+<li>SQL注入<ul>
+<li><a href="http://bobao.360.cn/learning/detail/3758.html" target="_blank" rel="noopener">http://bobao.360.cn/learning/detail/3758.html</a></li>
+<li><a href="http://websec.ca/kb/sql_injection" target="_blank" rel="noopener">http://websec.ca/kb/sql_injection</a> </li>
+</ul>
+</li>
+<li>文件包含<ul>
+<li><a href="http://www.cnblogs.com/iamstudy/articles/include_file.html" target="_blank" rel="noopener">http://www.cnblogs.com/iamstudy/articles/include_file.html</a></li>
+</ul>
+</li>
+<li>命令执行<ul>
+<li><a href="https://chybeta.github.io/2017/08/08/php%E4%BB%A3%E7%A0%81-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" target="_blank" rel="noopener">https://chybeta.github.io/2017/08/08/php%E4%BB%A3%E7%A0%81-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/</a></li>
+<li><a href="http://pupiles.com/shellcode.html" target="_blank" rel="noopener">http://pupiles.com/shellcode.html</a></li>
+</ul>
+</li>
+<li>代码注入<ul>
+<li><a href="https://chybeta.github.io/2017/07/14/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%B0%8F%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">https://chybeta.github.io/2017/07/14/php%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E5%B0%8F%E6%80%BB%E7%BB%93/</a></li>
+</ul>
+</li>
+</ul>
+<p>(上面给的链接仅作参考,不是看几篇博客就完了🐸)</p>
+<p>推荐书籍(必看👀):《白帽子讲web安全 》《代码审计:企业级web代码安全架构》</p>
+<p>熟悉Linux下的常用操作,包括但不限于:</p>
+<ul>
+<li>了解概念</li>
+</ul>
+<ul>
+<li>SSH配置</li>
+<li>软件的安装及卸载</li>
+<li>文件操作</li>
+<li>lamp配置</li>
+<li>shadowsocks配置</li>
+<li>……</li>
+</ul>
+<p>推荐书籍: 《鸟哥的Linux私房菜-基础篇》</p>
+<h2 id="渗透测试🚩"><a href="#渗透测试🚩" class="headerlink" title="渗透测试🚩"></a>渗透测试🚩</h2><p>熟悉Kali Linux下常用渗透测试工具的使用.</p>
+<ul>
+<li>SQLMAP</li>
+<li>BurpSuite</li>
+<li>NMAP</li>
+</ul>
+<p>了解常规渗透测试流程,掌握常用测试手段:</p>
+<ul>
+<li>信息收集</li>
+<li>端口扫描</li>
+<li>暴力破解</li>
+<li>……</li>
+</ul>
+<p>尝试在隐藏身份的情况下,获取一台<strong>境外</strong>服务器的webshell.</p>
+<h2 id="怎么学"><a href="#怎么学" class="headerlink" title="怎么学"></a>怎么学</h2><p>学习过程中最重要的是对<strong>原理</strong>的理解(Know it, then hack it),技术手段每天都更新,但原理是相通的.</p>
+<p>我以”SQL注入”为栗,讲下我个人学习的一般思路.</p>
+<ol>
+<li><p>目标: 掌握SQL注入漏洞</p>
+</li>
+<li><p>收集相关资料(书籍,博客,paper等几乎所有能找到的),找出掌握该漏洞需要得基础知识</p>
+<ul>
+<li>PHP环境搭建</li>
+<li>Mysql数据库</li>
+<li>SQL语言</li>
+<li>PHP编程</li>
+<li>PHP + MYSQL程序设计</li>
+</ul>
+</li>
+<li><p>掌握上面的基础之后(你可能又需要看几本书🙃),自己写出漏洞demo</p>
+</li>
+<li><p>利用漏洞demo分析漏洞产生的原理</p>
+</li>
+<li><p>熟悉该漏洞的各种利用</p>
+<ul>
+<li>联合查询</li>
+<li>报错注入<ul>
+<li>有哪些报错函数?原理分别是什么?</li>
+</ul>
+</li>
+<li>布尔盲注/延时盲注<ul>
+<li>区别是什么?分别在什么情况下使用?</li>
+</ul>
+</li>
+<li>写webshell<ul>
+<li>webshell是什么?</li>
+<li>什么情况下能写shell?</li>
+</ul>
+</li>
+<li>数据外带<ul>
+<li>为什么要数据外带?</li>
+<li>DNS又是什么鬼?</li>
+</ul>
+</li>
+<li><p>有哪些现成的利用工具?</p>
+<ul>
+<li>sqlmap =&gt; 熟练使用</li>
+</ul>
+</li>
+<li>如何用python编写注入脚本?<ul>
+<li>python编程基础</li>
+<li>所涉及的requests,re等模块的使用<ul>
+<li>正则表达式以及往下的无限延伸😆</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>“熟悉”的定义是我能随手写出各种注入的payload并且知道自己每一步在干嘛以及为什么要这样做.</p>
+</li>
+<li><p>常见防御情况下的绕过及各种trips,建议从各种<strong>CTF</strong>题里找案例来刷</p>
+<ul>
+<li>怎么找题? =&gt; google,github<ul>
+<li>没法翻墙上google? =&gt; 学习vps下ss代理搭建<ul>
+<li>linux不会用? =&gt; 学习linux下的各种操作</li>
+</ul>
+</li>
+<li>不会用github? =&gt; 学习github的使用</li>
+<li>什么还有docker这种搭环境的神器? =&gt; 学习docker的使用</li>
+<li>以及往下的无限延伸😆…</li>
+</ul>
+</li>
+<li>我能否总结出比网上更全的技巧?</li>
+</ul>
+</li>
+<li><p>学习如何防御SQL注入</p>
+<ul>
+<li>黑名单过滤</li>
+<li>PDO查询</li>
+<li>上述措施的代码实现</li>
+</ul>
+</li>
+<li><p>写出自己的学习总结/笔记(分享到博客会显得你很geek👍)</p>
+</li>
+<li><p>目标达成: 掌握SQL注入漏洞,在CTF比赛中不会畏惧这类题型,并且有信心解决它🤗.</p>
+</li>
+</ol>
+<p>我比较推荐这种”蔓延式”的学习,这样你就永远不会不知道自己该学什么了🤣任何一个点都可以往下延伸出一个面</p>
+<h2 id="给你们的任务❗❗❗"><a href="#给你们的任务❗❗❗" class="headerlink" title="给你们的任务❗❗❗"></a>给你们的任务❗❗❗</h2><p>完成上面3个小红旗下的所有要求,并写一份关于某<strong>一个</strong>你了解的最深入的漏洞的学习报告(请参考”怎么学”部分).</p>
+<p><strong>时间</strong>: 寒假结束之前完成📆</p>
+<h2 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h2><ol>
+<li><p>看书!看书!看书!书上的知识是成体系的,强烈推荐下面几本入门书:</p>
+<ul>
+<li>《白帽子讲web安全 》</li>
+<li>《代码审计:企业级web代码安全架构》</li>
+<li>《安全之路:Web渗透技术及实战案例解析(第2版) 》</li>
+</ul>
+</li>
+<li><p>各种安全新媒体/博客/微信公众号/论坛</p>
+<ul>
+<li><a href="https://www.secpulse.com/" target="_blank" rel="noopener">安全脉搏</a></li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><a href="https://www.anquanke.com/" target="_blank" rel="noopener">安全客</a></li>
+<li><p><a href="http://www.freebuf.com/" target="_blank" rel="noopener">freebuf</a></p>
+<p>以及各个安全文章聚合网站,</p>
+</li>
+<li><p><a href="https://www.sec-wiki.com" target="_blank" rel="noopener">https://www.sec-wiki.com</a></p>
+</li>
+<li><a href="https://www.secdic.com" target="_blank" rel="noopener">https://www.secdic.com</a></li>
+</ul>
+<ol>
+<li><p>社区论坛</p>
+<ul>
+<li><a href="https://xianzhi.aliyun.com/forum/" target="_blank" rel="noopener">先知安全技术社区</a></li>
+<li><a href="https://forum.90sec.org/" target="_blank" rel="noopener">90sec</a></li>
+<li><a href="https://www.t00ls.net/index.php" target="_blank" rel="noopener">t00ls</a></li>
+<li><a href="http://www.anquan.us/" target="_blank" rel="noopener">wooyun知识库</a></li>
+</ul>
+</li>
+<li><p>github</p>
+<ul>
+<li><a href="https://github.com/wonderkun/CTF_web" target="_blank" rel="noopener">https://github.com/wonderkun/CTF_web</a></li>
+<li><a href="https://github.com/CHYbeta/Code-Audit-Challenges" target="_blank" rel="noopener">https://github.com/CHYbeta/Code-Audit-Challenges</a></li>
+<li><a href="https://github.com/ctf-wiki/ctf-wiki" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-wiki</a></li>
+</ul>
+</li>
+</ol>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/12/24/web任务来了!!!!!!/">web任务来了！！！</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 jas0nwhy 的个人博客">jas0nwhy</a></p>
+        <p><span>发布时间:</span>2017年12月24日 - 17时31分</p>
+        <p><span>最后更新:</span>2018年02月27日 - 12时21分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/12/24/web任务来了!!!!!!/" title="web任务来了！！！">http://yoursite.com/child/2017/12/24/web任务来了!!!!!!/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2017/12/24/web任务来了!!!!!!/　　作者: jas0nwhy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/01/06/SQL注入基本步骤/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          SQL注入基本步骤
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/24/关于我/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于我</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#知识管理🚩"><span class="toc-number">1.</span> <span class="toc-text">知识管理🚩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码审计🚩"><span class="toc-number">2.</span> <span class="toc-text">代码审计🚩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渗透测试🚩"><span class="toc-number">3.</span> <span class="toc-text">渗透测试🚩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么学"><span class="toc-number">4.</span> <span class="toc-text">怎么学</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给你们的任务❗❗❗"><span class="toc-number">5.</span> <span class="toc-text">给你们的任务❗❗❗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习资源"><span class="toc-number">6.</span> <span class="toc-text">学习资源</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/01/06/SQL注入基本步骤/" title="上一篇: SQL注入基本步骤">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/12/24/关于我/" title="下一篇: 关于我">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC字节翻转攻击/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit 整理笔记(更新中)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/C语言忘记点/">C语言题库忘记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/实验吧小计/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc ctf题小记(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/变量覆盖漏洞/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/代码审计类ctf记录/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/python-爬虫学习/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/python基础学习/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/python：requests模块介绍/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/文件解析漏洞学习/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE  HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/正则表达式学习笔记/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL注入基本步骤/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web任务来了!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/关于我/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>

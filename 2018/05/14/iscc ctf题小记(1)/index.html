@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>iscc ctf题小记 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ISCC CTF小计（更新中）上周经班上同学说起，才知道最近有个信息安全竞赛，题目比较基础，就尝试着做了一下，做的不多   MISCWhat is that？下载附件，得到一张图片   看到手指指向的地方想到flag可能就在图片下面，根据经验，应该是修改图片宽度隐藏了flag     用winhex打开图片这里就要了解一些png图片结构的一些知识了推荐阅读分析PNG图像结构  找到表示图片长度宽度">
+<meta name="keywords" content="技术,ctf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iscc ctf题小记">
+<meta property="og:url" content="http://yoursite.com/child/2018/05/14/iscc ctf题小记(1)/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="ISCC CTF小计（更新中）上周经班上同学说起，才知道最近有个信息安全竞赛，题目比较基础，就尝试着做了一下，做的不多   MISCWhat is that？下载附件，得到一张图片   看到手指指向的地方想到flag可能就在图片下面，根据经验，应该是修改图片宽度隐藏了flag     用winhex打开图片这里就要了解一些png图片结构的一些知识了推荐阅读分析PNG图像结构  找到表示图片长度宽度">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgy3w9yq7j30ia0ekq3d.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1frfl1zjchkj30s90fewh3.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frfl8w7fnhj30he0het94.jpg">
+<meta property="og:image" content="https://images2017.cnblogs.com/blog/1100338/201710/1100338-20171017235425162-1445912366.png">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1frfn2kss5kj31h708yjue.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgf3wdyztj30yj0erjrx.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frgfq4hc3ij30g40g4gnc.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frggckws36j30dq035glh.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frggeqpogmj30b704b3yd.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frgh20mp3oj311m0gegng.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgsmnsabfj30x408odgd.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frgweq2o3uj30ta06qdgk.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frgxmdmw8uj31f90c8goc.jpg">
+<meta property="og:updated_time" content="2018-06-13T13:22:43.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iscc ctf题小记">
+<meta name="twitter:description" content="ISCC CTF小计（更新中）上周经班上同学说起，才知道最近有个信息安全竞赛，题目比较基础，就尝试着做了一下，做的不多   MISCWhat is that？下载附件，得到一张图片   看到手指指向的地方想到flag可能就在图片下面，根据经验，应该是修改图片宽度隐藏了flag     用winhex打开图片这里就要了解一些png图片结构的一些知识了推荐阅读分析PNG图像结构  找到表示图片长度宽度">
+<meta name="twitter:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgy3w9yq7j30ia0ekq3d.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">jas0nwhy</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/C语言/" style="font-size: 10px;">C语言</a> <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/代码审计/" style="font-size: 10px;">代码审计</a> <a href="/tags/关于我/" style="font-size: 10px;">关于我</a> <a href="/tags/变量覆盖/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/复习记录/" style="font-size: 10px;">复习记录</a> <a href="/tags/学习历程/" style="font-size: 10px;">学习历程</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/文件解析/" style="font-size: 10px;">文件解析</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">jas0nwhy</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">jas0nwhy</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-iscc ctf题小记(1)" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/14/iscc ctf题小记(1)/" class="article-date">
+      <time datetime="2018-05-14T03:35:12.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iscc ctf题小记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="ISCC-CTF小计（更新中）"><a href="#ISCC-CTF小计（更新中）" class="headerlink" title="ISCC CTF小计（更新中）"></a>ISCC CTF小计（更新中）</h3><p>上周经班上同学说起，才知道最近有个信息安全竞赛，题目比较基础，就尝试着做了一下，做的不多  </p>
+<h4 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h4><h5 id="What-is-that？"><a href="#What-is-that？" class="headerlink" title="What is that？"></a>What is that？</h5><p>下载附件，得到一张图片<br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgy3w9yq7j30ia0ekq3d.jpg" alt="image">  </p>
+<p>看到手指指向的地方想到flag可能就在图片下面，根据经验，应该是修改图片宽度隐藏了flag    </p>
+<p>用winhex打开图片<br>这里就要了解一些png图片结构的一些知识了<br><a href="https://blog.csdn.net/joqian/article/details/8290389" target="_blank" rel="noopener">推荐阅读分析PNG图像结构</a> </p>
+<p>找到表示图片长度宽度的十六进制码<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1frfl1zjchkj30s90fewh3.jpg" alt="image">  </p>
+<p>00 00 02 72 是图片的宽度<br>00 00 01 F4 是图片的长度<br>明显图片长宽并不标准，我们将长度修改为00 00 02 72，保存 得到flag<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frfl8w7fnhj30he0het94.jpg" alt="image">  </p>
+<h5 id="数字密文"><a href="#数字密文" class="headerlink" title="数字密文"></a>数字密文</h5><p>题目给了一串数字<strong>69742773206561737921</strong><br>观察发现每一位都是在0到9之间，想到了十进制编码，百度搜了一下，看见了这篇文章实验吧的一道题<br><a href="https://www.cnblogs.com/ECJTUACM-873284962/p/7774803.html" target="_blank" rel="noopener">CTF—密码学入门第六题 古典密码</a><br>于是把密文改成了<br>&amp;#69&amp;#74&amp;#27&amp;#73&amp;#20&amp;#65&amp;#61&amp;#73&amp;#79&amp;#21用十进制解码发现是乱的，在想会不会是十六进制，用十六进制解码成功得到flag  </p>
+<h5 id="秘密电报"><a href="#秘密电报" class="headerlink" title="秘密电报"></a>秘密电报</h5><p>压缩包解压得到<br>秘密电报：<br>知识就是力量 ABAAAABABBABAAAABABAAABAAABAAABAABAAAABAAAABA<br>知识就是力量不是培根说的吗？培根密码无误<br><img src="https://images2017.cnblogs.com/blog/1100338/201710/1100338-20171017235425162-1445912366.png" alt="image"><br><a href="https://netair.xyz/tools/%e5%9f%b9%e6%a0%b9%e5%af%86%e7%a0%81%e5%8a%a0%e5%af%86%e8%a7%a3%e5%af%86.html" target="_blank" rel="noopener">放到在线解密网站得到flag</a>  </p>
+<h5 id="重重谍影"><a href="#重重谍影" class="headerlink" title="重重谍影"></a>重重谍影</h5><p>打开网页<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1frfn2kss5kj31h708yjue.jpg" alt="image"><br>题目提示：刹那便是永恒。南无阿弥陀佛。想到了土豆文<br>再看看页面上的应该是base64码</p>
+<p>多次解密得到一串不是base64的值（注意解码中的坑每次解码都需要将末尾的%3D，也就是“=”的url编码去掉），得到一串密文  </p>
+<blockquote>
+<p>U2FsdGVkX183BPnBd50ynIRM3o8YLmwHaoi8b8QvfVdFHCEwG9iwp4hJHznrl7d4%0AB5r<br>KClEyYVtx6uZFIKtCXo71fR9Mcf6b0EzejhZ4pnhnJOl+zrZVlV0T9NUA+u1z%0AiN+jkp<br>b6ERH86j7t45v4Mpe+j1gCpvaQgoKC0Oaa5kc</p>
+</blockquote>
+<p>刚开始不知道是什么，问了一下做出来的同学，才知道是AES加密，把%0A换成换行符，找一个在线AES解码的平台得到密文:   </p>
+<p>答案就是后面这句但已加密  缽娑遠呐者若奢顛悉呐集梵提梵蒙夢怯倒耶哆般究有栗</p>
+<p>是土豆文没错<br><a href="http://www.keyfc.net/bbs/tools/tudoucode.aspx" target="_blank" rel="noopener">与佛论禅</a><br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgf3wdyztj30yj0erjrx.jpg" alt="image"> </p>
+<h5 id="有趣的ISCC"><a href="#有趣的ISCC" class="headerlink" title="有趣的ISCC"></a>有趣的ISCC</h5><p>又是一张图片<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frgfq4hc3ij30g40g4gnc.jpg" alt="image"><br>试了很多办法都没用，后面用winhex打开，发现文件尾部有一串Unicode编码  </p>
+<blockquote>
+<p>&#92;&#117;&#48;&#48;&#54;&#54;&#92;&#117;&#48;&#48;&#54;&#99;&#92;&#117;&#48;&#48;&#54;&#49;&#92;&#117;&#48;&#48;&#54;&#55;&#92;&#117;&#48;&#48;&#55;&#98;&#92;&#117;&#48;&#48;&#54;&#57;&#92;&#117;&#48;&#48;&#55;&#51;&#92;&#117;&#48;&#48;&#54;&#51;&#92;&#117;&#48;&#48;&#54;&#51;&#92;&#117;&#48;&#48;&#50;&#48;&#92;&#117;&#48;&#48;&#54;&#57;&#92;&#117;&#48;&#48;&#55;&#51;&#92;&#117;&#48;&#48;&#50;&#48;&#92;&#117;&#48;&#48;&#54;&#54;&#92;&#117;&#48;&#48;&#55;&#53;&#92;&#117;&#48;&#48;&#54;&#101;&#92;&#117;&#48;&#48;&#55;&#100;</p>
+</blockquote>
+<p>Unicode解码得到</p>
+<blockquote>
+<p>\u0066\u006c\u0061\u0067\u007b\u0069\u0073\u0063\u0063\u0020\u0069\u0073\u0020\u0066\u0075\u006e\u007d</p>
+</blockquote>
+<p>再转一次得到flag：flag{iscc is fun}  </p>
+<h5 id="凯撒十三世"><a href="#凯撒十三世" class="headerlink" title="凯撒十三世"></a>凯撒十三世</h5><p>提示：凯撒十三世在学会使用键盘后<br>密文：ebdgc697g95w3<br>猜测是凯撒密码加键盘密码<br>打开在线<a href="https://www.ctftools.com/down/down/passwd/" target="_blank" rel="noopener">凯撒密码网站</a>   移位数应该是13<br>刚开始以为是解密，解了半天什么都没有，结果是加密。。。加密得到 roqtp697t95j3<br>键盘密码：<br>我们注意到大键盘区所有的字母上面都有其对应的数字，这个位置几乎在所有的键盘都是相同的。所以我们可以利用这一点应用单表替换的方法进行加密：<br>1 2 3 4 5 6 7 8 9 0<br>Q W E R T Y U I O P<br>A S D F G H J K L<br>Z X C V B N M  </p>
+<p>我们根据上表可以得出，Q是1下面的第一个，A是1下面的第二个……以此类推，每一个字母都会有其对应的数字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">A 12</span><br><span class="line">B 53</span><br><span class="line">C 33</span><br><span class="line">D 32</span><br><span class="line">E 31</span><br><span class="line">F 42</span><br><span class="line">G 52</span><br><span class="line">H 62</span><br><span class="line">I 81</span><br><span class="line">J 72</span><br><span class="line">K 82</span><br><span class="line">L 92</span><br><span class="line">M 73</span><br><span class="line">N 63</span><br><span class="line">O 91</span><br><span class="line">P 01</span><br><span class="line">Q 11</span><br><span class="line">R 41</span><br><span class="line">S 22</span><br><span class="line">T 51</span><br><span class="line">U 71</span><br><span class="line">V 43</span><br><span class="line">W 21</span><br><span class="line">X 23</span><br><span class="line">Y 61</span><br><span class="line">Z 13</span><br></pre></td></tr></table></figure>
+<p>第一个数字代表横向（X坐标）的位置，第二个数字代表纵向（Y坐标）的位置。<br>得到flag：yougotme   </p>
+<h4 id="web"><a href="#web" class="headerlink" title="web"></a>web</h4><h5 id="比较数字大小"><a href="#比较数字大小" class="headerlink" title="比较数字大小"></a>比较数字大小</h5><p>进去发现有一个输入框，随便输入一点<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frggckws36j30dq035glh.jpg" alt="image"><br>那输入数字吧  ，发现只能输入3位，提交<br><img src="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frggeqpogmj30b704b3yd.jpg" alt="image"><br>查看html代码发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta http-equiv=Content-Type content=&quot;text/html;charset=utf-8&quot;&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">                &lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; maxlength=&quot;3&quot; name=&quot;v&quot;/&gt;</span><br><span class="line">            &lt;input type=&quot;submit&quot; value=&quot;提交&quot;/&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>数字太小了！   </p>
+<p>输入框限制了数字位数，修改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;text&quot; maxlength=&quot;10&quot; name=&quot;v&quot;/&gt;</span><br></pre></td></tr></table></figure>
+<p>再输入一个较大的数，得到flag：key is 768HKyu678567&amp;*&amp;K  </p>
+<h5 id="web01"><a href="#web01" class="headerlink" title="web01"></a>web01</h5><p>此道为代码审计题  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">highlight_file(&apos;2.php&apos;);</span><br><span class="line">$flag=&apos;&#123;***************&#125;&apos;;</span><br><span class="line">if (isset($_GET[&apos;password&apos;])) &#123;  </span><br><span class="line">    if (strcmp($_GET[&apos;password&apos;], $flag) == 0)  </span><br><span class="line">        die(&apos;Flag: &apos;.$flag);  </span><br><span class="line">    else  </span><br><span class="line">        print &apos;Invalid password&apos;;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>题目要求是get传参password，这里涉及到strcmp函数的漏洞  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int strcmp ( string $str1 , string $str2 )</span><br></pre></td></tr></table></figure>
+<p>参数 str1第一个字符串。str2第二个字符串。如果 str1 小于 str2 返回 &lt; 0； 如果 str1 大于 str2 返回 &gt; 0；如果两者相等，返回 0<br>该漏洞是用于php5.3之前的版本<br>该函数要求是上传字符串进行比较，当我们传入非法参数时，如数组，在php5.3之前函数会报错，return 0！刚好和两个字符串相等返回0的结果一样<br>于是我们在url中输入？password[]=1,利用数组是非法参数报错，得到flag： ISCC{iscc_ef3w5r5tw_5rg5y6s3t3}   </p>
+<h5 id="本地的诱惑"><a href="#本地的诱惑" class="headerlink" title="本地的诱惑"></a>本地的诱惑</h5><p>提示：小明扫描了他心爱的小红的电脑，发现开放了一个8013端口，但是当小明去访问的时候却发现只允许从本地访问，可他心爱的小红不敢让这个诡异的小明触碰她的电脑，可小明真的想知道小红电脑的8013端口到底隐藏着什么秘密(key)？<br>只允许本地访问，那我们就用bp抓包伪造ip<br><a href="https://blog.csdn.net/jrn1012/article/details/39763819" target="_blank" rel="noopener">推荐文章网络安全之IP伪造</a><br>添加X-Forwarded-For请求头，修改IP地址为127.0.0.1<br><img src="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frgh20mp3oj311m0gegng.jpg" alt="image"><br>得到flag<br>后面才发现。。。直接F12，flag就在html代码中。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=&quot;utf-8&quot; /&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php </span><br><span class="line">//print_r($_SERVER);</span><br><span class="line">$arr=explode(&apos;,&apos;,$_SERVER[&apos;HTTP_X_FORWARDED_FOR&apos;]);</span><br><span class="line">if($arr[0]==&apos;127.0.0.1&apos;)&#123;</span><br><span class="line">    //key</span><br><span class="line">    echo &quot;key is ISCC&#123;^&amp;*(UIHKJjkadshf&#125;&quot;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">	echo &quot;必须从本地访问！&quot;;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="你能跨过去吗？"><a href="#你能跨过去吗？" class="headerlink" title="你能跨过去吗？"></a>你能跨过去吗？</h5><p>提示：xss<br>题目：<a href="http://www.test.com/NodeMore.jsp?id=672613&amp;page=2&amp;pageCounter=32&amp;undefined&amp;callback=%2b/v%2b%20%2bADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAiAGsAZQB5ADoALwAlAG4AcwBmAG8AYwB1AHMAWABTAFMAdABlAHMAdAAlAC8AIgApADwALwBzAGMAcgBpAHAAdAA%2bAC0-&amp;_=1302746925413" target="_blank" rel="noopener">http://www.test.com/NodeMore.jsp?id=672613&amp;page=2&amp;pageCounter=32&amp;undefined&amp;callback=%2b/v%2b%20%2bADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAiAGsAZQB5ADoALwAlAG4AcwBmAG8AYwB1AHMAWABTAFMAdABlAHMAdAAlAC8AIgApADwALwBzAGMAcgBpAHAAdAA%2bAC0-&amp;_=1302746925413</a><br>发现和实验吧的xss题有点类似<br>对网址进行转义，发现其中有段base64编码   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/NodeMore.jsp?id=672613&amp;page=2&amp;pageCounter=32&amp;undefined&amp;callback=+/v+ +ADwAcwBjAHIAaQBwAHQAPgBhAGwAZQByAHQAKAAiAGsAZQB5ADoALwAlAG4AcwBmAG8AYwB1AHMAWABTAFMAdABlAHMAdAAlAC8AIgApADwALwBzAGMAcgBpAHAAdAA+AC0-&amp;_=1302746925413</span><br></pre></td></tr></table></figure>
+<p>看到类似“+/v+ +ADwAcwBjAHIAaQBwA”想到了UTF-7编码<br><a href="http://web2hack.org/xssee/" target="_blank" rel="noopener">xssee</a>  在线解码得到 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://www.test.com/NodeMore.jsp?id=672613&amp;page=2&amp;pageCounter=32&amp;undefined&amp;callback=+/v+ &lt;script&gt;alert(&quot;key:/%nsfocusXSStest%/&quot;)&lt;/script&gt;-&amp;_=1302746925413</span><br></pre></td></tr></table></figure>
+<p>将/%nsfocusXSStest%/输入提交框，弹出弹框：恭喜你！flag{Hell0World}  </p>
+<h5 id="一切都是套路"><a href="#一切都是套路" class="headerlink" title="一切都是套路"></a>一切都是套路</h5><p>提示：好像有个文件忘记删了&amp;flag is here<br>应该是备份文件泄露<br>找到文件泄露地址<br><a href="http://118.190.152.202:8009/index.php.txt" target="_blank" rel="noopener">http://118.190.152.202:8009/index.php.txt</a><br>得到PHP代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">include &quot;flag.php&quot;;</span><br><span class="line"></span><br><span class="line">if ($_SERVER[&quot;REQUEST_METHOD&quot;] != &quot;POST&quot;)</span><br><span class="line">	die(&quot;flag is here&quot;);</span><br><span class="line"></span><br><span class="line">if (!isset($_POST[&quot;flag&quot;]) )</span><br><span class="line">	die($_403);</span><br><span class="line"></span><br><span class="line">foreach ($_GET as $k =&gt; $v)&#123;</span><br><span class="line">	$$k = $$v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foreach ($_POST as $k =&gt; $v)&#123;</span><br><span class="line">	$$k = $v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ( $_POST[&quot;flag&quot;] !== $flag )</span><br><span class="line">	die($_403);</span><br><span class="line"></span><br><span class="line">echo &quot;flag: &quot;. $flag . &quot;\n&quot;;</span><br><span class="line">die($_200);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>又是代码审计<br>看到$$想到了变量覆盖漏洞，这类漏洞也常常和foreach联系在一起<br>post:flag=flag<br>get:?_200=flag<br>post传入变量使得flag变量的值为flag，绕过比较<br>get传参将flag变量的值赋值给_200，最后打印出来<br>得到flag：flag ISCC{taolu2333333….}  </p>
+<h5 id="你能绕过吗"><a href="#你能绕过吗" class="headerlink" title="你能绕过吗?"></a>你能绕过吗?</h5><p>刚开始以为是SQL注入，一直再瞎搞，后面经过朋友提示知道里是文件包含，PHP伪协议</p>
+<p><a href="https://blog.csdn.net/Ni9htMar3/article/details/69812306?locationNum=2&amp;fps=1" target="_blank" rel="noopener">推荐文章PHP伪协议</a><br>php://filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 readfile()、 file() 和 file_get_contents()， 在数据流内容读取之前没有机会应用其他过滤器。</p>
+<p>php://filter 参数  </p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>resource=&lt;要过滤的数据流&gt;</td>
+<td>这个参数是必须的。它指定了你要筛选过滤的数据流。</td>
+</tr>
+<tr>
+<td>read=&lt;读链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（_  </td>
+</tr>
+<tr>
+<td>write=&lt;写链的筛选列表&gt;</td>
+<td>该参数可选。可以设定一个或多个过滤器名称，以管道符（_  </td>
+</tr>
+<tr>
+<td>&lt;；两个链的筛选列表&gt;</td>
+<td>任何没有以 read= 或 write= 作前缀 的筛选器列表会视情况应用于读或写链。  </td>
+</tr>
+</tbody>
+</table>
+<p>利用PHP://filter过滤器读取index.php的代码，刚开始测试点是id，发现应该不是这里，再测试了f：<br><a href="http://118.190.152.202:8008/index.php?f=php://filter/read=convert.base64-encode/resource=index.php&amp;id=4" target="_blank" rel="noopener">http://118.190.152.202:8008/index.php?f=php://filter/read=convert.base64-encode/resource=index.php&amp;id=4</a><br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1frgsmnsabfj30x408odgd.jpg" alt="image"><br>报错。。。<br>后面发现过滤了php字符<br>修改：<a href="http://118.190.152.202:8008/index.php?f=Php://filter/read=convert.base64-encode/resource=index&amp;id=4" target="_blank" rel="noopener">http://118.190.152.202:8008/index.php?f=Php://filter/read=convert.base64-encode/resource=index&amp;id=4</a> （至于为什么要将index后面的.php删掉不太清楚）<br>后面看了代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;å¯¼èªé¡µ&lt;/title&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;a href=&apos;index.php?f=articles&amp;id=1&apos;&gt;ID: 1&lt;/href&gt;</span><br><span class="line">    &lt;/br&gt;</span><br><span class="line">    &lt;a href=&apos;index.php?f=articles&amp;id=2&apos;&gt;ID: 2&lt;/href&gt;</span><br><span class="line">    &lt;/br&gt;</span><br><span class="line">    &lt;a href=&apos;index.php?f=articles&amp;id=3&apos;&gt;ID: 3&lt;/href&gt;</span><br><span class="line">    &lt;/br&gt;</span><br><span class="line">    &lt;a href=&apos;index.php?f=articles&amp;id=4&apos;&gt;ID: 4&lt;/href&gt;</span><br><span class="line">    &lt;/br&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"> </span><br><span class="line">&lt;?php</span><br><span class="line">    #ISCC&#123;LFIOOOOOOOOOOOOOO&#125;</span><br><span class="line">    if(isset($_GET[&apos;f&apos;]))&#123;</span><br><span class="line">        if(strpos($_GET[&apos;f&apos;],&quot;php&quot;) !== False)&#123;</span><br><span class="line">            die(&quot;error...&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            include($_GET[&apos;f&apos;] . &apos;.php&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>代码中过滤了php字符，并且会在f参数后加上.php，明白了</p>
+<h5 id="web2"><a href="#web2" class="headerlink" title="web2"></a>web2</h5><p>提示：错误！你的IP不是本机ip！<br>应该还是IP伪造<br>试了最常见的几个伪造ip响应头文件都不行      X-Forwarded-For<br>X-Client-IP<br>X-Real-IP<br>CDN-Src-IP  …<br>后面试了一下Client-IP ，成了<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1frgweq2o3uj30ta06qdgk.jpg" alt="image">    </p>
+<h5 id="Please-give-me-username-and-password"><a href="#Please-give-me-username-and-password" class="headerlink" title="Please give me username and password!"></a>Please give me username and password!</h5><p>页面显示：Please give me username or password!<br>那我们就get传参username和password先试一下<br><a href="http://118.190.152.202:8017/?username=1&amp;password=1000" target="_blank" rel="noopener">http://118.190.152.202:8017/?username=1&amp;password=1000</a><br>查看代码发现  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Username is not right&lt;!--index.php.txt--&gt;&lt;p&gt;Password too long&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>打开index.php.txt发现PHP代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">$flag = &quot;***********&quot;;	</span><br><span class="line">if(isset($_GET[&apos;username&apos;]))&#123;</span><br><span class="line">	if (0 == strcasecmp($flag,$_GET[&apos;username&apos;]))&#123;</span><br><span class="line">	$a = fla;</span><br><span class="line">	echo &quot;very good!Username is right&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">	else&#123;</span><br><span class="line">	print &apos;Username is not right&lt;!--index.php.txt--&gt;&apos;;&#125;</span><br><span class="line">&#125;else</span><br><span class="line">print &apos;Please give me username or password!&apos;;</span><br><span class="line">if (isset($_GET[&apos;password&apos;]))&#123;</span><br><span class="line">	if (is_numeric($_GET[&apos;password&apos;]))&#123;</span><br><span class="line">		if (strlen($_GET[&apos;password&apos;]) &lt; 4)&#123;</span><br><span class="line">			if ($_GET[&apos;password&apos;] &gt; 999)&#123;</span><br><span class="line">			$b = g;</span><br><span class="line">			print &apos;&lt;p&gt;very good!Password is right&lt;/p&gt;&apos;;</span><br><span class="line">		&#125;else </span><br><span class="line">			print &apos;&lt;p&gt;Password too little&lt;/p&gt;&apos;;</span><br><span class="line">		&#125;else</span><br><span class="line">		print &apos;&lt;p&gt;Password too long&lt;/p&gt;&apos;;</span><br><span class="line">	&#125;else</span><br><span class="line">	print &apos;&lt;p&gt;Password is not numeric&lt;/p&gt;&apos;;</span><br><span class="line">&#125;</span><br><span class="line">if ($a.$b == &quot;flag&quot;)</span><br><span class="line">	print $flag;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (0 == strcasecmp($flag,$_GET[&apos;username&apos;]))&#123;</span><br><span class="line">	$a = fla;</span><br><span class="line">	echo &quot;very good!Username is right&quot;;</span><br></pre></td></tr></table></figure>
+<p>这一段要求flag变量值要与username参数值相同，我们可以利用strcasecmp函数传入非法参数报错返回0绕过 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (is_numeric($_GET[&apos;password&apos;]))&#123;</span><br><span class="line">		if (strlen($_GET[&apos;password&apos;]) &lt; 4)&#123;</span><br><span class="line">			if ($_GET[&apos;password&apos;] &gt; 999)&#123;</span><br><span class="line">			$b = g;</span><br><span class="line">			print &apos;&lt;p&gt;very good!Password is right&lt;/p&gt;&apos;;</span><br></pre></td></tr></table></figure>
+<p>这一段是要求password的长度要小于4，但是值却要大于999，这里我们可以用科学计数法绕过<br>构造<a href="http://118.190.152.202:8017/index.php/?username[]=1&amp;password=9E9" target="_blank" rel="noopener">http://118.190.152.202:8017/index.php/?username[]=1&amp;password=9E9</a><br>得到flag：flag{ISCC2018_Very_GOOD!}  </p>
+<h5 id="php是世界上最好的语言"><a href="#php是世界上最好的语言" class="headerlink" title="php是世界上最好的语言"></a>php是世界上最好的语言</h5><p>又是一道代码审计的题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;md5.php&quot;  method=&quot;post&quot; &gt;</span><br><span class="line">    用户名:&lt;input type=&quot;text&quot; name=&quot;username&quot;/&gt;</span><br><span class="line">    密码:&lt;input type=&quot;password&quot; name =&quot;password&quot;/&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; &gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">header(&quot;content-type:text/html;charset=utf-8&quot;);</span><br><span class="line">if(isset($_POST[&apos;username&apos;])&amp;isset($_POST[&apos;password&apos;]))&#123;</span><br><span class="line">    $username = $_POST[&apos;username&apos;];</span><br><span class="line">    $password = $_POST[&apos;password&apos;];</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">    $username=&quot;hello&quot;;</span><br><span class="line">    $password=&quot;hello&quot;;</span><br><span class="line">&#125;</span><br><span class="line">if(md5($password) == 0)&#123;</span><br><span class="line">    echo &quot;xxxxx&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">show_source(__FILE__);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>要求的是post传入username和password两个参数，password参数的md5值要等于0<br><a href="https://www.cnblogs.com/Primzahl/p/6018158.html" target="_blank" rel="noopener">推荐文章PHP处理0e开头md5哈希字符串缺陷/bug</a><br>输入框输入username=1，password=QNKCDZO得到  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">NULL &lt;?php</span><br><span class="line">include &apos;flag.php&apos;;</span><br><span class="line">$a = @$_REQUEST[&apos;a&apos;];</span><br><span class="line">str_replace(&quot;&#123;&quot;,&quot;&quot;,$a);</span><br><span class="line">str_replace(&quot;&#125;&quot;,&quot;&quot;,$a);</span><br><span class="line">@eval(&quot;var_dump($$a);&quot;);</span><br><span class="line">show_source(__FILE__);</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>这里又是$$变量覆盖漏洞使用全局数组变量GLOBALS打印出所有变量值<br><a href="http://118.190.152.202:8005/no_md5.php?a=GLOBALS" target="_blank" rel="noopener">http://118.190.152.202:8005/no_md5.php?a=GLOBALS</a><br><img src="http://wx3.sinaimg.cn/mw690/0060lm7Tly1frgxmdmw8uj31f90c8goc.jpg" alt="image">  </p>
+<h5 id="SQL注入的艺术"><a href="#SQL注入的艺术" class="headerlink" title="SQL注入的艺术"></a>SQL注入的艺术</h5><p>找到个人信息处应该是宽字节注入，<a href="http://118.190.152.202:8015/index.php?id=1%27%df" target="_blank" rel="noopener">http://118.190.152.202:8015/index.php?id=1%27%df</a><br>利用SQLmap得到flag</p>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/05/14/iscc ctf题小记(1)/">iscc ctf题小记</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 jas0nwhy 的个人博客">jas0nwhy</a></p>
+        <p><span>发布时间:</span>2018年05月14日 - 11时35分</p>
+        <p><span>最后更新:</span>2018年06月13日 - 21时22分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/05/14/iscc ctf题小记(1)/" title="iscc ctf题小记">http://yoursite.com/child/2018/05/14/iscc ctf题小记(1)/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2018/05/14/iscc ctf题小记(1)/　　作者: jas0nwhy" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/06/01/实验吧小计/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          实验吧ctf题小计
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/14/变量覆盖漏洞/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">变量覆盖漏洞</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ISCC-CTF小计（更新中）"><span class="toc-number">1.</span> <span class="toc-text">ISCC CTF小计（更新中）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MISC"><span class="toc-number">1.1.</span> <span class="toc-text">MISC</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#What-is-that？"><span class="toc-number">1.1.1.</span> <span class="toc-text">What is that？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#数字密文"><span class="toc-number">1.1.2.</span> <span class="toc-text">数字密文</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#秘密电报"><span class="toc-number">1.1.3.</span> <span class="toc-text">秘密电报</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#重重谍影"><span class="toc-number">1.1.4.</span> <span class="toc-text">重重谍影</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#有趣的ISCC"><span class="toc-number">1.1.5.</span> <span class="toc-text">有趣的ISCC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#凯撒十三世"><span class="toc-number">1.1.6.</span> <span class="toc-text">凯撒十三世</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web"><span class="toc-number">1.2.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#比较数字大小"><span class="toc-number">1.2.1.</span> <span class="toc-text">比较数字大小</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#web01"><span class="toc-number">1.2.2.</span> <span class="toc-text">web01</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本地的诱惑"><span class="toc-number">1.2.3.</span> <span class="toc-text">本地的诱惑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#你能跨过去吗？"><span class="toc-number">1.2.4.</span> <span class="toc-text">你能跨过去吗？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#一切都是套路"><span class="toc-number">1.2.5.</span> <span class="toc-text">一切都是套路</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#你能绕过吗"><span class="toc-number">1.2.6.</span> <span class="toc-text">你能绕过吗?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#web2"><span class="toc-number">1.2.7.</span> <span class="toc-text">web2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Please-give-me-username-and-password"><span class="toc-number">1.2.8.</span> <span class="toc-text">Please give me username and password!</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#php是世界上最好的语言"><span class="toc-number">1.2.9.</span> <span class="toc-text">php是世界上最好的语言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SQL注入的艺术"><span class="toc-number">1.2.10.</span> <span class="toc-text">SQL注入的艺术</span></a></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/06/01/实验吧小计/" title="上一篇: 实验吧ctf题小计">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/05/14/变量覆盖漏洞/" title="下一篇: 变量覆盖漏洞">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC字节翻转攻击/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit 整理笔记(更新中)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/C语言忘记点/">C语言题库忘记点</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/实验吧小计/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc ctf题小记(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/变量覆盖漏洞/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/代码审计类ctf记录/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/25/python-爬虫学习/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/python基础学习/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/23/python：requests模块介绍/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/文件解析漏洞学习/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE  HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/正则表达式学习笔记/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL注入基本步骤/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web任务来了!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/关于我/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>
