@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/child/"/>
-  <updated>2018-07-27T15:26:30.893Z</updated>
+  <updated>2018-08-19T05:39:33.822Z</updated>
   <id>http://yoursite.com/child/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>脱壳总结</title>
+    <link href="http://yoursite.com/child/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/child/2018/08/15/脱壳总结/</id>
+    <published>2018-08-15T03:35:12.000Z</published>
+    <updated>2018-08-19T05:39:33.822Z</updated>
+    
+    <content type="html"><![CDATA[<h5 id="常见脱壳知识："><a href="#常见脱壳知识：" class="headerlink" title="常见脱壳知识："></a>常见脱壳知识：</h5><ul><li>1.PUSHAD （压栈）  代表程序的入口点</li><li>2.POPAD （出栈） 代表程序的出口点，与PUSHAD相对应，一般找到这个,说明OEP可能就在附近</li><li>3.OEP：程序的入口点，软件加壳就是隐藏了OEP（或者用了假的OEP）<br>只要我们找到程序真正的OEP，就可以立刻脱壳。 <h5 id="脱壳的几种方法："><a href="#脱壳的几种方法：" class="headerlink" title="脱壳的几种方法："></a>脱壳的几种方法：</h5><h6 id="方法一：单步跟踪"><a href="#方法一：单步跟踪" class="headerlink" title="方法一：单步跟踪"></a>方法一：单步跟踪</h6></li></ul><ol><li>用OD载入，不分析代码！</li><li>单步向下跟踪F8，是向下跳的让它实现</li><li>遇到程序往回跳的（包括循环），我们在下一句代码处按F4（或者右健单击代码，选择断点——运行到所选）</li><li>绿色线条表示跳转没实现，不用理会，红色线条表示跳转已经实现！</li><li>如果刚载入程序，在附近就有一个CALL的，我们就F7跟进去，这样很快就能到程序的OEP</li><li>在跟踪的时候，如果运行到某个CALL程序就运行的，就在这个CALL中F7进入</li><li>一般有很大的跳转，比如 jmp XXXXXX 或者 je XXXXXX 或者有RETE的一般很快就会到程序的OEP。  </li></ol><h6 id="方法二：ESP定律脱壳（最常用）"><a href="#方法二：ESP定律脱壳（最常用）" class="headerlink" title="方法二：ESP定律脱壳（最常用）"></a>方法二：ESP定律脱壳（最常用）</h6><ol><li>用Od载入后就按F8，注意观察OD右上角的寄存器中ESP有没出现</li><li>在命令行下：dd 0012FFA4(0012FFA4指在当前代码中的ESP地址)，按回车！</li><li>选种下断的地址，下硬件访问WORD断点。</li><li>按一下F9运行程序，直接来到了跳转处，按下F8，到达程序OEP，脱壳  </li></ol><h6 id="方法三：内存跟踪"><a href="#方法三：内存跟踪" class="headerlink" title="方法三：内存跟踪"></a>方法三：内存跟踪</h6><ol><li>用OD打开软件！</li><li>点击选项——调试选项——异常，把里面的忽略全部勾上，CTRL+F2重新加载程序</li><li>按ALT+M,打开内存镜象，找到第一个.rsrc.按F2下断点，然后按SHIFT+F9运行到断点，接着再按ALT+M, 打开内存镜象，找到.RSRC上面的CODE，按F2下断点，然后按SHIFT+F9，直接到达程序OEP，脱壳  </li></ol><h6 id="方法四：跟踪出口法"><a href="#方法四：跟踪出口法" class="headerlink" title="方法四：跟踪出口法"></a>方法四：跟踪出口法</h6><ol><li>开始按Ctrl+F,输入：popad（只适合少数壳，包括ASPACK壳），然后按下F2，F9运行到此处</li><li>来到大跳转处，点下F8，脱壳</li></ol><h6 id="方法五：最后一次异常法"><a href="#方法五：最后一次异常法" class="headerlink" title="方法五：最后一次异常法"></a>方法五：最后一次异常法</h6><ol><li>用OD打开软件</li><li>点击选项——调试选项——异常，把里面的勾全部去掉，CTRL+F2重新加载程序</li><li>在这里我们按SHIFT+F9，直到程序运行，记下从开始按SHIFT+F9到程序运行的次数</li><li>CTRL+F2重新加载程序，按SHIFT+F9（次数为程序运行的次数-1次）</li><li>在OD的右下角我们看见有一个SE 句柄，这时我们按CTRL+G，输入SE 句柄前的地址！</li><li>按F2下断点，然后按SHIFT+F9来到断点处！</li><li>去掉断点，按F8慢慢向下走</li><li>到达程序的OEP，脱壳</li></ol><h5 id="一些小技巧"><a href="#一些小技巧" class="headerlink" title="一些小技巧"></a>一些小技巧</h5><h6 id="手脱-UPX-壳的捷径"><a href="#手脱-UPX-壳的捷径" class="headerlink" title="手脱 UPX 壳的捷径"></a>手脱 UPX 壳的捷径</h6><p>OD载入程序后，直接Ctrl+F，输入 POPAD  ;点确定后 来到这个命令所在的位置。按F2，在这个地方下断；再按F9（运行）；停止后，按F2取消刚才下的断点。再F8单步！ </p><h6 id="手脱-ASPCK-的壳"><a href="#手脱-ASPCK-的壳" class="headerlink" title="手脱 ASPCK 的壳"></a>手脱 ASPCK 的壳</h6><p>脱这个壳用ESP定律，还是相对快捷的。可以用载入程序后，第二行（是一个CALL）那里面的ESP。(多数程序这个壳的第二行都是一个CALL)，<br>在左OD左下角的命令行中，输入命令：hr ESP地址（如 hr 0012FFA4）；F9 运行。然后从OD”调试菜单“中的”硬件断点“这一项将刚才下的断点删除，这点很重要！最后F8单步！  </p><h6 id="手脱FSG-1-33-和-PCshrink-的壳"><a href="#手脱FSG-1-33-和-PCshrink-的壳" class="headerlink" title="手脱FSG 1.33 和 PCshrink 的壳"></a>手脱FSG 1.33 和 PCshrink 的壳</h6><p>1、忽略所有异常<br>2、Alt+M  打开内存镜像，找到第一个 ”.rsrc“<br>  3、F2（下断），F9（运行）<br>  4、Alt+M  打开内存镜像，找到”Code“段；<br>  5、F2（下断），Shift+F9【这点一定要记住，切记是 Shift+F9】运行；<br>  6、先按F8，再按下F4，直接到达OEP  </p><h6 id="手脱-JDpack-壳-和-PEpack-1-0-的壳-最简单的方法"><a href="#手脱-JDpack-壳-和-PEpack-1-0-的壳-最简单的方法" class="headerlink" title="手脱 JDpack 壳 和 PEpack 1.0 的壳 最简单的方法"></a>手脱 JDpack 壳 和 PEpack 1.0 的壳 最简单的方法</h6><p>内存镜像法  </p><h6 id="手脱nspack（北斗）1-3-的壳"><a href="#手脱nspack（北斗）1-3-的壳" class="headerlink" title="手脱nspack（北斗）1.3 的壳"></a>手脱nspack（北斗）1.3 的壳</h6><p>1、ESP定律，命令：hr ESP地址 【脱壳后程序不能正常运行】<br>2、用 ImportREC 这个工具进行修复，修复后程序正常运行。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h5 id=&quot;常见脱壳知识：&quot;&gt;&lt;a href=&quot;#常见脱壳知识：&quot; class=&quot;headerlink&quot; title=&quot;常见脱壳知识：&quot;&gt;&lt;/a&gt;常见脱壳知识：&lt;/h5&gt;&lt;ul&gt;
+&lt;li&gt;1.PUSHAD （压栈）  代表程序的入口点&lt;/li&gt;
+&lt;li&gt;2.POPAD （出栈
+      
+    
+    </summary>
+    
+    
+      <category term="逆向" scheme="http://yoursite.com/child/tags/%E9%80%86%E5%90%91/"/>
+    
+      <category term="脱壳" scheme="http://yoursite.com/child/tags/%E8%84%B1%E5%A3%B3/"/>
+    
+  </entry>
   
   <entry>
     <title>Seacms6.61xss漏洞</title>
@@ -193,9 +220,9 @@
     
       <category term="ctf" scheme="http://yoursite.com/child/tags/ctf/"/>
     
-      <category term="web" scheme="http://yoursite.com/child/tags/web/"/>
-    
       <category term="变量覆盖" scheme="http://yoursite.com/child/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/"/>
+    
+      <category term="web" scheme="http://yoursite.com/child/tags/web/"/>
     
   </entry>
   
@@ -222,9 +249,9 @@
     
       <category term="ctf" scheme="http://yoursite.com/child/tags/ctf/"/>
     
-      <category term="代码审计" scheme="http://yoursite.com/child/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
-    
       <category term="web" scheme="http://yoursite.com/child/tags/web/"/>
+    
+      <category term="代码审计" scheme="http://yoursite.com/child/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"/>
     
   </entry>
   
@@ -409,26 +436,6 @@
   </entry>
   
   <entry>
-    <title>关于我</title>
-    <link href="http://yoursite.com/child/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
-    <id>http://yoursite.com/child/2017/12/24/关于我/</id>
-    <published>2017-12-24T09:31:49.000Z</published>
-    <updated>2017-12-24T10:05:24.807Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>欢迎来到<a href="https://jas0nwhy.github.io" title="一起来玩啊" target="_blank" rel="noopener">我的博客</a><br><a id="more"></a><br>标签：刚刚入坑信息安全专业大学生<br>地点：四川成都<br>技术：什么都不会<br>搭建目的:分享学习历程(求大佬带带我)<br>QQ：1456450951  </p><h3 id="一些小想法"><a href="#一些小想法" class="headerlink" title="一些小想法"></a>一些小想法</h3><p>在高考之前从来没有听说过信息安全专业，也没有任何的有关学习经历。被信安专业录取以后，才开始对信安有了最初的概念，自己什么都不会，ctf、SQL注入、文件包含、抓包。。。<img src="https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=a4204cb57bf082022dc799397bcbd7d5/810a19d8bc3eb1353a911f2dae1ea8d3fc1f44d5.jpg" alt="一脸懵逼"><br>后来想了一想，来都来了，还是要学一点的，正好有一个xx大挑战，去玩玩吧。。。<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2177487654,1605171879&amp;fm=58&amp;bpow=258&amp;bpoh=256" alt="一脸懵逼2"><br>结果一个月过去了只会签到题，蓝瘦香菇。一场比赛发现了周围周围全是大佬，我想我一定要向他们学习，好的，学学PHP吧，结果安装PHPstudy又搞三天才搞好（其实是自己傻，本来已经搞好了，因为www文件有一个helloworld.PHP，咦！显示效果和教程不一样诶，一直停在了那里没有反映过来）<br>再后来，在同寝室某大佬的指导下，开始做了一些ctf平台的题，好像开了一扇新的大门，感觉有点意思了，开始想去主动了解一些东西了，可是还是很菜，很多题都要看了write up才明白。<br>差不多一个学期要结束了，大学真的很忙，在搞好学习的同时，还要忙学生会、社团。剩下的一点点时间拿来学习技术，感觉学的非常杂乱，不知道自己该怎么去学了，这个时候看见xx小组招新了（可惜招新的时候去了重庆）<img src="http://u.candou.com/2017/0802/1501660799721.jpg" alt="日"><br>好吧，出了web任务了，还有一个寒假，好好学学，至少有一个大概的方向了，就这样吧。。。</p><p>如果有什么问题可以联系我的邮箱<a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#49;&#x34;&#x35;&#54;&#52;&#53;&#x30;&#x39;&#x35;&#49;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;">&#49;&#x34;&#x35;&#54;&#52;&#53;&#x30;&#x39;&#x35;&#49;&#x40;&#113;&#113;&#46;&#99;&#111;&#109;</a><img src="https://b-ssl.duitang.com/uploads/item/201704/09/20170409213006_43GBH.thumb.700_0.jpeg" alt="独自哭泣"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;关于我&quot;&gt;&lt;a href=&quot;#关于我&quot; class=&quot;headerlink&quot; title=&quot;关于我&quot;&gt;&lt;/a&gt;关于我&lt;/h2&gt;&lt;p&gt;欢迎来到&lt;a href=&quot;https://jas0nwhy.github.io&quot; title=&quot;一起来玩啊&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的博客&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="关于我" scheme="http://yoursite.com/child/tags/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
-    
-  </entry>
-  
-  <entry>
     <title>web任务来了！！！</title>
     <link href="http://yoursite.com/child/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/"/>
     <id>http://yoursite.com/child/2017/12/24/web任务来了!!!!!!/</id>
@@ -456,6 +463,26 @@
       <category term="技术" scheme="http://yoursite.com/child/tags/%E6%8A%80%E6%9C%AF/"/>
     
       <category term="学习历程" scheme="http://yoursite.com/child/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于我</title>
+    <link href="http://yoursite.com/child/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
+    <id>http://yoursite.com/child/2017/12/24/关于我/</id>
+    <published>2017-12-24T09:31:49.000Z</published>
+    <updated>2017-12-24T10:05:24.807Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h2><p>欢迎来到<a href="https://jas0nwhy.github.io" title="一起来玩啊" target="_blank" rel="noopener">我的博客</a><br><a id="more"></a><br>标签：刚刚入坑信息安全专业大学生<br>地点：四川成都<br>技术：什么都不会<br>搭建目的:分享学习历程(求大佬带带我)<br>QQ：1456450951  </p><h3 id="一些小想法"><a href="#一些小想法" class="headerlink" title="一些小想法"></a>一些小想法</h3><p>在高考之前从来没有听说过信息安全专业，也没有任何的有关学习经历。被信安专业录取以后，才开始对信安有了最初的概念，自己什么都不会，ctf、SQL注入、文件包含、抓包。。。<img src="https://gss0.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=a4204cb57bf082022dc799397bcbd7d5/810a19d8bc3eb1353a911f2dae1ea8d3fc1f44d5.jpg" alt="一脸懵逼"><br>后来想了一想，来都来了，还是要学一点的，正好有一个xx大挑战，去玩玩吧。。。<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2177487654,1605171879&amp;fm=58&amp;bpow=258&amp;bpoh=256" alt="一脸懵逼2"><br>结果一个月过去了只会签到题，蓝瘦香菇。一场比赛发现了周围周围全是大佬，我想我一定要向他们学习，好的，学学PHP吧，结果安装PHPstudy又搞三天才搞好（其实是自己傻，本来已经搞好了，因为www文件有一个helloworld.PHP，咦！显示效果和教程不一样诶，一直停在了那里没有反映过来）<br>再后来，在同寝室某大佬的指导下，开始做了一些ctf平台的题，好像开了一扇新的大门，感觉有点意思了，开始想去主动了解一些东西了，可是还是很菜，很多题都要看了write up才明白。<br>差不多一个学期要结束了，大学真的很忙，在搞好学习的同时，还要忙学生会、社团。剩下的一点点时间拿来学习技术，感觉学的非常杂乱，不知道自己该怎么去学了，这个时候看见xx小组招新了（可惜招新的时候去了重庆）<img src="http://u.candou.com/2017/0802/1501660799721.jpg" alt="日"><br>好吧，出了web任务了，还有一个寒假，好好学学，至少有一个大概的方向了，就这样吧。。。</p><p>如果有什么问题可以联系我的邮箱<a href="&#109;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x31;&#x34;&#x35;&#x36;&#52;&#x35;&#48;&#x39;&#53;&#49;&#64;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#x31;&#x34;&#x35;&#x36;&#52;&#x35;&#48;&#x39;&#53;&#49;&#64;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;</a><img src="https://b-ssl.duitang.com/uploads/item/201704/09/20170409213006_43GBH.thumb.700_0.jpeg" alt="独自哭泣"></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;关于我&quot;&gt;&lt;a href=&quot;#关于我&quot; class=&quot;headerlink&quot; title=&quot;关于我&quot;&gt;&lt;/a&gt;关于我&lt;/h2&gt;&lt;p&gt;欢迎来到&lt;a href=&quot;https://jas0nwhy.github.io&quot; title=&quot;一起来玩啊&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;我的博客&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="关于我" scheme="http://yoursite.com/child/tags/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
     
   </entry>
   
