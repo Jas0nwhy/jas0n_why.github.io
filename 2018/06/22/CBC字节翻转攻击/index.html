@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CBC字节翻转攻击 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="CBC字节翻转攻击简介CBC加密是AES加密的一种模式，中文名叫密码分组链接模式（Cipher Block Chaining (CBC)），这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。看下图：IV：随机生成的初始向量Plaintxt：明文数据Ciphertext：密文数据Key：分组加密使用的密钥    加密过程    首先将我们需要将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CBC字节翻转攻击">
+<meta property="og:url" content="http://yoursite.com/child/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="CBC字节翻转攻击简介CBC加密是AES加密的一种模式，中文名叫密码分组链接模式（Cipher Block Chaining (CBC)），这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。看下图：IV：随机生成的初始向量Plaintxt：明文数据Ciphertext：密文数据Key：分组加密使用的密钥    加密过程    首先将我们需要将">
+<meta property="og:locale">
+<meta property="og:image" content="https://mk0resourcesinfm536w.kinstacdn.com/wp-content/uploads/082113_1459_CBCByteFlip1.png">
+<meta property="og:image" content="https://mk0resourcesinfm536w.kinstacdn.com/wp-content/uploads/082113_1459_CBCByteFlip2.png">
+<meta property="og:image" content="https://screenshotscdn.firefoxusercontent.com/images/e68ed912-038b-43ad-8c51-7dde8359fe7d.png">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/0060lm7Tly1fspt6lq2ufj30w90awdh5.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1fspuq0rb5qj30ky0a83z2.jpg">
+<meta property="article:published_time" content="2018-06-22T03:35:12.000Z">
+<meta property="article:modified_time" content="2018-06-27T09:27:04.438Z">
+<meta property="article:author" content="jas0nwhy">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mk0resourcesinfm536w.kinstacdn.com/wp-content/uploads/082113_1459_CBCByteFlip1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a> <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" style="font-size: 10px;">学习历程</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" style="font-size: 10px;">文件解析</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-CBC字节翻转攻击" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/" class="article-date">
+      <time datetime="2018-06-22T03:35:12.000Z" itemprop="datePublished">2018-06-22</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CBC字节翻转攻击
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h4 id="CBC字节翻转攻击"><a href="#CBC字节翻转攻击" class="headerlink" title="CBC字节翻转攻击"></a>CBC字节翻转攻击</h4><h5 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h5><p>CBC加密是AES加密的一种模式，中文名叫密码分组链接模式（Cipher Block Chaining (CBC)），这种模式是先将明文切分成若干小段，然后每一小段与初始块或者上一段的密文段进行异或运算后，再与密钥进行加密。<br>看下图：<br>IV：随机生成的初始向量<br>Plaintxt：明文数据<br>Ciphertext：密文数据<br>Key：分组加密使用的密钥   </p>
+<h5 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h5><p><img src="https://mk0resourcesinfm536w.kinstacdn.com/wp-content/uploads/082113_1459_CBCByteFlip1.png" alt="image">   </p>
+<p>首先将我们需要将需要加密的明文按照十六个字节为一组分组，最后一组不满十六字节用特殊字符填补<br>接着系统产生一个十六字节的随机字符串作为初始向量，该向量与第一组明文进行异或操作，再与key进行CBC加密得到第一组密文<br>第一组密文再与下一组明文进行异或操作CBC加密得到第二组密文<br>以此类推……<br>将得到的密文组按顺序拼接到一起就是所得到的密文  </p>
+<h5 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h5><p><img src="https://mk0resourcesinfm536w.kinstacdn.com/wp-content/uploads/082113_1459_CBCByteFlip2.png" alt="image"><br>首先将密文按十六进制分组<br>第一组密文与key进行CBC解密，再将解密的数据与初始向量异或得到第一组明文<br>接着第一组密文再与下一组CBC解密得到的数据进行异或操作得到第二组明文<br>以此类推……<br>最后拼接得到明文   </p>
+<h5 id="异或操作"><a href="#异或操作" class="headerlink" title="异或操作"></a>异或操作</h5><p>CBC字节翻转的关键点就在异或上，所以首先我们要明白异或是什么。<br><img src="https://screenshotscdn.firefoxusercontent.com/images/e68ed912-038b-43ad-8c51-7dde8359fe7d.png" alt="image"><br>当我们的一个值C是由A和B异或得到<br>C = A XOR B<br>那么<br>A XOR B XOR C很明显是=0的<br>当我们知道B和C之后，想要得到A的值也很容易<br>A = B XOR C<br>因此，A XOR B XOR C等于0。有了这个公式，我们可以在XOR运算的末尾处设置我们自己的值，即可改变。  </p>
+<h5 id="攻击过程"><a href="#攻击过程" class="headerlink" title="攻击过程"></a>攻击过程</h5><p><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1fspt6lq2ufj30w90awdh5.jpg" alt="image"><br>攻击针对的是解密过程<br>第一步：修改  </p>
+<p>由图可知，你在密文中改变的字节，只会影响到在下一明文当中，具有相同偏移量的字节。   </p>
+<p>所以我们要找到要修改的明文中的那一个字节C，我，上一组密文对应字节为A，本组密文对应字节为B，我们知道了A xor B = C，我们现在现在要将C改变为c，那么知道A XOR B XOR C = 0，则A XOR B XOR C xor c= c。  </p>
+<p>这里我们知道B是解密后的数据未知我们不好修改，所以我们可以将A修改a=A xor C xor c ，这样我们就将C替换成了c。  </p>
+<p>第二步：修复  </p>
+<p>上一步我们将第二组明文修改为了我们想要得到的数据，但是，与此同时，我们也将第一组密文给修改了，这就会导致第一组明文数据被修改，那么我们不能去修改第一组密文，又要使第一组明文数据正确，我们只有利用异或对初始向量下手。  </p>
+<p>若原iv为O，新iv为N，错误的第一组明文M = O xor 第一组密文，我们要想得到正确的第一组明文m，那么就去改变N = O xor M xor m，这样就利用异或得到了正确的明文。  </p>
+<h5 id="看个例子"><a href="#看个例子" class="headerlink" title="看个例子"></a>看个例子</h5><p>这是iscc的一道题Only admin can see flag<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1fspuq0rb5qj30ky0a83z2.jpg" alt="image"><br>查看源码发现一个TXT文件，打开得到PHP代码   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">define(&quot;SECRET_KEY&quot;, file_get_contents(&#39;&#x2F;root&#x2F;key&#39;));</span><br><span class="line">define(&quot;METHOD&quot;, &quot;aes-128-cbc&quot;);</span><br><span class="line">session_start();</span><br><span class="line"> &#x2F;&#x2F;设置随机初始向量</span><br><span class="line">function get_random_iv()&#123;</span><br><span class="line">    $random_iv&#x3D;&#39;&#39;;</span><br><span class="line">    for($i&#x3D;0;$i&lt;16;$i++)&#123;</span><br><span class="line">        $random_iv.&#x3D;chr(rand(1,255));</span><br><span class="line">    &#125;</span><br><span class="line">    return $random_iv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;设置cookie的流程调用的函数，返回一个随机的iv和使用该iv加密的post提交的username和password的结果——cipher</span><br><span class="line">function login($info)&#123;</span><br><span class="line">    $iv &#x3D; get_random_iv();</span><br><span class="line">    &#x2F;&#x2F;序列化传入数组</span><br><span class="line">    #a:2:&#123;s:8:&quot;username&quot;;s:5:&quot;Admin&quot;;s:8:&quot;password&quot;;s:4:&quot;test&quot;;&#125;</span><br><span class="line">    #第一组明文：a:2:&#123;s:8:&quot;userna</span><br><span class="line">    #第二组明文：me&quot;;s:5:&quot;Admin&quot;;</span><br><span class="line">    #第三组明文：s:8:&quot;password&quot;;s</span><br><span class="line">    #第四组明文：:4:&quot;test&quot;;&#125;</span><br><span class="line">    $plain &#x3D; serialize($info);</span><br><span class="line">    &#x2F;&#x2F;cbc加密</span><br><span class="line">    $cipher &#x3D; openssl_encrypt($plain, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv);</span><br><span class="line">    $_SESSION[&#39;username&#39;] &#x3D; $info[&#39;username&#39;];</span><br><span class="line">    setcookie(&quot;iv&quot;, base64_encode($iv));</span><br><span class="line">    setcookie(&quot;cipher&quot;, base64_encode($cipher));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;检查函数，这里是对cookie中cipher和iv进行CBC翻转的利用点</span><br><span class="line">function check_login()&#123;</span><br><span class="line">    if(isset($_COOKIE[&#39;cipher&#39;]) &amp;&amp; isset($_COOKIE[&#39;iv&#39;]))&#123;</span><br><span class="line">        $cipher &#x3D; base64_decode($_COOKIE[&#39;cipher&#39;]);</span><br><span class="line">        $iv &#x3D; base64_decode($_COOKIE[&quot;iv&quot;]);</span><br><span class="line">        &#x2F;&#x2F;进行CBC模式的AES解密</span><br><span class="line">        if($plain &#x3D; openssl_decrypt($cipher, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv))&#123;</span><br><span class="line">            &#x2F;&#x2F;对解密结果进行反序列化，设置session中的username为反序列化后数组中的username的值</span><br><span class="line">            $info &#x3D; unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&#39;&quot;.base64_encode($plain).&quot;&#39;) can&#39;t unserialize&lt;&#x2F;p&gt;&quot;);</span><br><span class="line">            $_SESSION[&#39;username&#39;] &#x3D; $info[&#39;username&#39;];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            die(&quot;ERROR!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> &#x2F;&#x2F;根据session中username参数，控制显示结果</span><br><span class="line">&#x2F;&#x2F;如果没有设置参数，进入判断cookie路径</span><br><span class="line">function show_homepage()&#123;</span><br><span class="line">    &#x2F;&#x2F;session要为admin</span><br><span class="line">    if ($_SESSION[&quot;username&quot;]&#x3D;&#x3D;&#x3D;&#39;admin&#39;)&#123;</span><br><span class="line">        echo $flag;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        echo &#39;&lt;p&gt;hello &#39;.$_SESSION[&#39;username&#39;].&#39;&lt;&#x2F;p&gt;&#39;;</span><br><span class="line">        echo &#39;&lt;p&gt;Only admin can see flag&lt;&#x2F;p&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">    echo &#39;&lt;p&gt;&lt;a href&#x3D;&quot;loginout.php&quot;&gt;Log out&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;&#39;;</span><br><span class="line">&#125;</span><br><span class="line"> &#x2F;&#x2F;入口</span><br><span class="line">if(isset($_POST[&#39;username&#39;]) &amp;&amp; isset($_POST[&#39;password&#39;]))&#123;</span><br><span class="line">    $username &#x3D; (string)$_POST[&#39;username&#39;];</span><br><span class="line">    $password &#x3D; (string)$_POST[&#39;password&#39;];</span><br><span class="line">    &#x2F;&#x2F;post传参不能为admin</span><br><span class="line">    if($username &#x3D;&#x3D;&#x3D; &#39;admin&#39;)&#123;</span><br><span class="line">        exit(&#39;&lt;p&gt;admin are not allowed to login&lt;&#x2F;p&gt;&#39;);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $info &#x3D; array(&#39;username&#39;&#x3D;&gt;$username,&#39;password&#39;&#x3D;&gt;$password);</span><br><span class="line">        login($info);</span><br><span class="line">        show_homepage();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    if(isset($_SESSION[&quot;username&quot;]))&#123;</span><br><span class="line">        check_login();</span><br><span class="line">        show_homepage();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        echo &#39;&lt;body class&#x3D;&quot;login-body&quot;&gt;</span><br><span class="line">                &lt;div id&#x3D;&quot;wrapper&quot;&gt;</span><br><span class="line">                    &lt;div class&#x3D;&quot;user-icon&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">                    &lt;div class&#x3D;&quot;pass-icon&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">                    &lt;form name&#x3D;&quot;login-form&quot; class&#x3D;&quot;login-form&quot; action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;</span><br><span class="line">                        &lt;div class&#x3D;&quot;header&quot;&gt;</span><br><span class="line">                        &lt;h1&gt;Login Form&lt;&#x2F;h1&gt;</span><br><span class="line">                        &lt;span&gt;Fill out the form below to login to my super awesome imaginary control panel.&lt;&#x2F;span&gt;</span><br><span class="line">                        &lt;&#x2F;div&gt;</span><br><span class="line">                        &lt;div class&#x3D;&quot;content&quot;&gt;</span><br><span class="line">                        &lt;input name&#x3D;&quot;username&quot; type&#x3D;&quot;text&quot; class&#x3D;&quot;input username&quot; value&#x3D;&quot;Username&quot; onfocus&#x3D;&quot;this.value&#x3D;\&#39;\&#39;&quot; &#x2F;&gt;</span><br><span class="line">                        &lt;input name&#x3D;&quot;password&quot; type&#x3D;&quot;password&quot; class&#x3D;&quot;input password&quot; value&#x3D;&quot;Password&quot; onfocus&#x3D;&quot;this.value&#x3D;\&#39;\&#39;&quot; &#x2F;&gt;</span><br><span class="line">                        &lt;&#x2F;div&gt;</span><br><span class="line">                        &lt;div class&#x3D;&quot;footer&quot;&gt;</span><br><span class="line">                        &lt;input type&#x3D;&quot;submit&quot; name&#x3D;&quot;submit&quot; value&#x3D;&quot;Login&quot; class&#x3D;&quot;button&quot; &#x2F;&gt;</span><br><span class="line">                        &lt;&#x2F;div&gt;</span><br><span class="line">                    &lt;&#x2F;form&gt;</span><br><span class="line">                &lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;body&gt;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>我已经在其中做出详细的注释<br>首先从入口开始验证post是否传参username和password，这里要求传入的用户名不能为admin。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">if(isset($_POST[&#39;username&#39;]) &amp;&amp; isset($_POST[&#39;password&#39;]))&#123;</span><br><span class="line">    $username &#x3D; (string)$_POST[&#39;username&#39;];</span><br><span class="line">    $password &#x3D; (string)$_POST[&#39;password&#39;];</span><br><span class="line">    &#x2F;&#x2F;post传参不能为admin</span><br><span class="line">    if($username &#x3D;&#x3D;&#x3D; &#39;admin&#39;)&#123;</span><br><span class="line">        exit(&#39;&lt;p&gt;admin are not allowed to login&lt;&#x2F;p&gt;&#39;);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        $info &#x3D; array(&#39;username&#39;&#x3D;&gt;$username,&#39;password&#39;&#x3D;&gt;$password);</span><br><span class="line">        login($info);</span><br><span class="line">        show_homepage();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>接着对传入参数序列化，接着对起进行一次CBC加密，得到了COOKIE值iv和cipher，以及session值username，对解密结果进行反序列化，设置session中的username为反序列化后数组中的username的值，但是这里又要传入的username参数为admin。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function check_login()&#123;</span><br><span class="line">    if(isset($_COOKIE[&#39;cipher&#39;]) &amp;&amp; isset($_COOKIE[&#39;iv&#39;]))&#123;</span><br><span class="line">        $cipher &#x3D; base64_decode($_COOKIE[&#39;cipher&#39;]);</span><br><span class="line">        $iv &#x3D; base64_decode($_COOKIE[&quot;iv&quot;]);</span><br><span class="line">        &#x2F;&#x2F;进行CBC模式的AES解密</span><br><span class="line">        if($plain &#x3D; openssl_decrypt($cipher, METHOD, SECRET_KEY, OPENSSL_RAW_DATA, $iv))&#123;</span><br><span class="line">            &#x2F;&#x2F;对解密结果进行反序列化，设置session中的username为反序列化后数组中的username的值</span><br><span class="line">            $info &#x3D; unserialize($plain) or die(&quot;&lt;p&gt;base64_decode(&#39;&quot;.base64_encode($plain).&quot;&#39;) can&#39;t unserialize&lt;&#x2F;p&gt;&quot;);</span><br><span class="line">            $_SESSION[&#39;username&#39;] &#x3D; $info[&#39;username&#39;];</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            die(&quot;ERROR!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以我们利用CBC翻转字节，传入Admin绕过过滤，再在加密过程中将A翻转为a，通过验证。<br>修改代码如下：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import urllib,base64,requests,re</span><br><span class="line"></span><br><span class="line">url &#x3D; &quot;http:&#x2F;&#x2F;*.*.*.*&#x2F;index.php&quot;</span><br><span class="line">datas &#x3D; &#123;</span><br><span class="line">    &quot;username&quot; : &quot;Admin&quot;,</span><br><span class="line">    &quot;password&quot; : &quot;test&quot;</span><br><span class="line">&#125;</span><br><span class="line">#第一组明文：a:2:&#123;s:8:&quot;userna</span><br><span class="line">#第二组明文：me&quot;;s:5:&quot;admin&quot;;</span><br><span class="line">#第三组明文：s:8:&quot;password&quot;;s</span><br><span class="line">#第四组明文：:4:&quot;test&quot;;&#125;</span><br><span class="line">#修改过程</span><br><span class="line">r &#x3D; requests.post(url,data&#x3D;datas)</span><br><span class="line">cipher &#x3D; r.cookies.get(&quot;cipher&quot;)#获取初始密文</span><br><span class="line">cipher &#x3D; base64.b64decode(urllib.unquote(cipher))</span><br><span class="line">offset &#x3D; 9</span><br><span class="line">new_cipher &#x3D; cipher[:offset] + chr(ord(cipher[offset])^ord(&quot;A&quot;)^ord(&quot;a&quot;)) + cipher[offset+1:]#字节翻转</span><br><span class="line">new_cookies &#x3D; requests.utils.dict_from_cookiejar(r.cookies)</span><br><span class="line">new_cookies[&quot;cipher&quot;] &#x3D; urllib.quote_plus(base64.b64encode(new_cipher))</span><br><span class="line">#修复过程</span><br><span class="line">r2 &#x3D; requests.get(url,cookies&#x3D;new_cookies)</span><br><span class="line">#获得损坏的第一段明文</span><br><span class="line">plain &#x3D; base64.b64decode(re.findall(&quot;decode(&#39;(.*)&#39;)&quot;,r2.text)[0])</span><br><span class="line">iv &#x3D; base64.b64decode(urllib.unquote(new_cookies[&quot;iv&quot;]))</span><br><span class="line">old &#x3D; plain[:len(iv)]</span><br><span class="line">new &#x3D; &#39;a:2:&#123;s:8:&quot;userna&#39;</span><br><span class="line">new_iv &#x3D; &quot;&quot;.join([chr(ord(iv[i])^ord(old[i])^ord(new[i])) for i in xrange(16)])</span><br><span class="line">new_cookies[&quot;iv&quot;] &#x3D; urllib.quote_plus(base64.b64encode(new_iv))</span><br><span class="line"></span><br><span class="line">r3 &#x3D; requests.get(url,cookies&#x3D;new_cookies)</span><br><span class="line">print(r3.text)</span><br></pre></td></tr></table></figure>
+<p>最后将修改的iv和cipher设为cookies得到flag   </p>
+<p>CBC翻转字节攻击属于密码学的题目，关键是理解加密解密过程和异或操作，后面还遇到了翻转攻击与SQL注入的结合题型，值得继续了解。。。  </p>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2018年06月22日 - 11时35分</p>
+        <p><span>最后更新:</span>2018年06月27日 - 17时27分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/" title="CBC字节翻转攻击">http://yoursite.com/child/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          hash长度扩展攻击
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Metasploit 整理笔记</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB"><span class="toc-number">1.</span> <span class="toc-text">CBC字节翻转攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">加密过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E5%AF%86%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">解密过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%82%E6%88%96%E6%93%8D%E4%BD%9C"><span class="toc-number">1.4.</span> <span class="toc-text">异或操作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">攻击过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9C%8B%E4%B8%AA%E4%BE%8B%E5%AD%90"><span class="toc-number">1.6.</span> <span class="toc-text">看个例子</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/" title="上一篇: hash长度扩展攻击">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/" title="下一篇: Metasploit 整理笔记">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/">脱壳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/%E5%AE%9E%E9%AA%8C%E5%90%A7%E5%B0%8F%E8%AE%A1/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc%20ctf%E9%A2%98%E5%B0%8F%E8%AE%B0(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B1%BBctf%E8%AE%B0%E5%BD%95/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE%20%20HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>

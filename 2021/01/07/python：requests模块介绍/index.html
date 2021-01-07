@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python：requests模块介绍 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="发送请求使用 Requests 发送网络请求非常简单。一开始要导入 Requests 模块： 1&gt;&gt;&gt; import requests 然后，尝试获取某个网页。本例子中，我们来获取 Github 的公共时间线： 1&gt;&gt;&gt;r&#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.jso">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python：requests模块介绍">
+<meta property="og:url" content="http://yoursite.com/child/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="发送请求使用 Requests 发送网络请求非常简单。一开始要导入 Requests 模块： 1&gt;&gt;&gt; import requests 然后，尝试获取某个网页。本例子中，我们来获取 Github 的公共时间线： 1&gt;&gt;&gt;r&#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.jso">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-01-07T08:10:09.412Z">
+<meta property="article:modified_time" content="2018-03-23T09:01:57.226Z">
+<meta property="article:author" content="jas0nwhy">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a> <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" style="font-size: 10px;">学习历程</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" style="font-size: 10px;">文件解析</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-python：requests模块介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" class="article-date">
+      <time datetime="2021-01-07T08:10:09.412Z" itemprop="datePublished">2021-01-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python：requests模块介绍
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h2><p>使用 Requests 发送网络请求非常简单。<br>一开始要导入 Requests 模块：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests</span><br></pre></td></tr></table></figure>
+<p>然后，尝试获取某个网页。本例子中，我们来获取 Github 的公共时间线：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;r&#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.json&#39;)</span><br></pre></td></tr></table></figure>
+<p>现在，我们有一个名为 r 的 Response 对象。我们可以从这个对象中获取所有我们想要的信息。<br>Requests 简便的 API 意味着所有 HTTP 请求类型都是显而易见的。例如，你可以这样发送一个 HTTP POST 请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;post&quot;)</span><br></pre></td></tr></table></figure>
+<p>漂亮，对吧？那么其他 HTTP 请求类型：PUT，DELETE，HEAD 以及 OPTIONS 又是如何的呢？都是一样的简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.put(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;put&quot;)  </span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.delete(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;delete&quot;)  </span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.head(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;get&quot;)  </span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.options(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;get&quot;)  </span><br></pre></td></tr></table></figure>
+<p>都很不错吧，但这也仅是 Requests 的冰山一角呢。</p>
+<h2 id="传递-URL-参数"><a href="#传递-URL-参数" class="headerlink" title="传递 URL 参数"></a>传递 URL 参数</h2><p>你也许经常想为 URL 的查询字符串(query string)传递某种数据。如果你是手工构建 URL，那么数据会以键/值对的形式置于 URL 中，跟在一个问号的后面。例如， httpbin.org/get?key=val。 Requests 允许你使用 params 关键字参数，以一个字符串字典来提供这些参数。举例来说，如果你想传递 key1=value1 和 key2=value2 到 httpbin.org/get ，那么你可以使用如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload &#x3D; &#123;&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: &#39;value2&#39;&#125;  </span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;get&quot;, params&#x3D;payload)</span><br></pre></td></tr></table></figure>
+<p>通过打印输出该 URL，你能看到 URL 已被正确编码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print(r.url)  </span><br><span class="line">http:&#x2F;&#x2F;httpbin.org&#x2F;get?key2&#x3D;value2&amp;key1&#x3D;value1</span><br></pre></td></tr></table></figure>
+<p>注意字典里值为 None 的键都不会被添加到 URL 的查询字符串里。<br>你还可以将一个列表作为值传入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload &#x3D; &#123;&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: [&#39;value2&#39;, &#39;value3&#39;]&#125;  </span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;http:&#x2F;&#x2F;httpbin.org&#x2F;get&#39;,params&#x3D;payload)</span><br><span class="line">&gt; print(r.url)  </span><br><span class="line">http:&#x2F;&#x2F;httpbin.org&#x2F;get?key1&#x3D;value1&amp;key2&#x3D;value2&amp;key2&#x3D;value3</span><br></pre></td></tr></table></figure>
+<h2 id="响应内容"><a href="#响应内容" class="headerlink" title="响应内容"></a>响应内容</h2><p>我们能读取服务器响应的内容。再次以 GitHub 时间线为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests  </span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.json&#39;)  </span><br><span class="line">&gt;&gt;&gt; r.text  </span><br><span class="line">u&#39;[&#123;&quot;repository&quot;:&#123;&quot;open_issues&quot;:0,&quot;url&quot;:&quot;https:&#x2F;&#x2F;github.com&#x2F;...</span><br></pre></td></tr></table></figure>
+<p>Requests 会自动解码来自服务器的内容。大多数 unicode 字符集都能被无缝地解码。<br>请求发出后，Requests 会基于 HTTP 头部对响应的编码作出有根据的推测。当你访问 r.text 之时，Requests 会使用其推测的文本编码。你可以找出 Requests 使用了什么编码，并且能够使用 r.encoding 属性来改变它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.encoding  </span><br><span class="line">  &#39;utf-8&#39;  </span><br><span class="line">&gt;&gt;&gt; r.encoding &#x3D; &#39;ISO-8859-1&#39;  </span><br></pre></td></tr></table></figure>
+<p>如果你改变了编码，每当你访问 r.text ，Request 都将会使用 r.encoding 的新值。你可能希望在使用特殊逻辑计算出文本的编码的情况下来修改编码。比如 HTTP 和 XML 自身可以指定编码。这样的话，你应该使用 r.content 来找到编码，然后设置 r.encoding为相应的编码。这样就能使用正确的编码解析 r.text 了。<br>在你需要的情况下，Requests 也可以使用定制的编码。如果你创建了自己的编码，并使用 codecs 模块进行注册，你就可以轻松地使用这个解码器名称作为 r.encoding 的值， 然后由 Requests 来为你处理编码。<br>二进制响应内容<br>你也能以字节的方式访问请求响应体，对于非文本请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.content  </span><br><span class="line">b&#39;[&#123;&quot;repository&quot;:&#123;&quot;open_issues&quot;:0,&quot;url&quot;:&quot;https:&#x2F;&#x2F;github.com&#x2F;...</span><br></pre></td></tr></table></figure>
+<p>Requests 会自动为你解码 gzip 和 deflate 传输编码的响应数据。<br>例如，以请求返回的二进制数据创建一张图片，你可以使用如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from PIL import Image  </span><br><span class="line">&gt;&gt;&gt; from io import BytesIO</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; i &#x3D; Image.open(BytesIO(r.content))</span><br></pre></td></tr></table></figure>
+<h2 id="JSON-响应内容"><a href="#JSON-响应内容" class="headerlink" title="JSON 响应内容"></a>JSON 响应内容</h2><p>Requests 中也有一个内置的 JSON 解码器，助你处理 JSON 数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import requests</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.json&#39;)  </span><br><span class="line">&gt;&gt;&gt; r.json()  </span><br><span class="line">[&#123;u&#39;repository&#39;: &#123;u&#39;open_issues&#39;: 0, u&#39;url&#39;: &#39;https:&#x2F;&#x2F;github.com&#x2F;...</span><br></pre></td></tr></table></figure>
+<p>如果 JSON 解码失败， r.json() 就会抛出一个异常。<br>例如，响应内容是 401 (Unauthorized)，尝试访问 r.json() 将会抛出 ValueError: No JSON object could be decoded 异常。<br>需要注意的是，成功调用 r.json() 并不意味着响应的成功。有的服务器会在失败的响应中包含一个 JSON 对象（比如 HTTP 500 的错误细节）。这种 JSON 会被解码返回。要检查请求是否成功，请使用 r.raise_for_status() 或者检查 r.status_code 是否和你的期望相同。<br>原始响应内容<br>在罕见的情况下，你可能想获取来自服务器的原始套接字响应，那么你可以访问 r.raw。 如果你确实想这么干，那请你确保在初始请求中设置了 stream=True。具体你可以这么做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;https:&#x2F;&#x2F;github.com&#x2F;timeline.json&#39;, stream&#x3D;True)  </span><br><span class="line">&gt;&gt;&gt; r.raw  </span><br><span class="line">&lt;requests.packages.urllib3.response.HTTPResponse object at 0x101194810&gt;  </span><br><span class="line">&gt;&gt;&gt; r.raw.read(10)  </span><br><span class="line">&#39;\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\x03&#39;  </span><br></pre></td></tr></table></figure>
+<p>但一般情况下，你应该以下面的模式将文本流保存到文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">with open(filename, &#39;wb&#39;) as fd:  </span><br><span class="line">    for chunk in r.iter_content(chunk_size):  </span><br><span class="line">        fd.write(chunk)  </span><br></pre></td></tr></table></figure>
+<p>使用 Response.iter_content 将会处理大量你直接使用 Response.raw 不得不处理的。 当流下载时，上面是优先推荐的获取内容方式。 Note that chunk_size can be freely adjusted to a number that may better fit your use cases.</p>
+<h2 id="定制请求头"><a href="#定制请求头" class="headerlink" title="定制请求头"></a>定制请求头</h2><p>如果你想为请求添加 HTTP 头部，只要简单地传递一个 dict 给 headers 参数就可以了。<br>例如，在前一个示例中我们没有指定 content-type:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url &#x3D; &#39;https:&#x2F;&#x2F;api.github.com&#x2F;some&#x2F;endpoint&#39;</span><br><span class="line">&gt;&gt;&gt; headers &#x3D; &#123;&#39;user-agent&#39;: &#39;my-app&#x2F;0.0.1&#39;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(url, headers&#x3D;headers)</span><br></pre></td></tr></table></figure>
+<p>注意: 定制 header 的优先级低于某些特定的信息源，例如：<br>如果在 .netrc 中设置了用户认证信息，使用 headers= 设置的授权就不会生效。而如果设置了 auth= 参数，<code>.netrc</code> 的设置就无效了。<br>如果被重定向到别的主机，授权 header 就会被删除。<br>代理授权 header 会被 URL 中提供的代理身份覆盖掉。<br>在我们能判断内容长度的情况下，header 的 Content-Length 会被改写。<br>更进一步讲，Requests 不会基于定制 header 的具体情况改变自己的行为。只不过在最后的请求中，所有的 header 信息都会被传递进去。<br>注意: 所有的 header 值必须是 string、bytestring 或者 unicode。尽管传递 unicode header 也是允许的，但不建议这样做。<br>更加复杂的 POST 请求<br>通常，你想要发送一些编码为表单形式的数据——非常像一个 HTML 表单。要实现这个，只需简单地传递一个字典给 data 参数。你的数据字典在发出请求时会自动编码为表单形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload &#x3D; &#123;&#39;key1&#39;: &#39;value1&#39;, &#39;key2&#39;: &#39;value2&#39;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(&quot;http:&#x2F;&#x2F;httpbin.org&#x2F;post&quot;, data&#x3D;payload)</span><br><span class="line">&gt;&gt;&gt; print(r.text)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;form&quot;: &#123;</span><br><span class="line">    &quot;key2&quot;: &quot;value2&quot;,</span><br><span class="line">    &quot;key1&quot;: &quot;value1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你还可以为 data 参数传入一个元组列表。在表单中多个元素使用同一 key 的时候，这种方式尤其有效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; payload &#x3D; ((&#39;key1&#39;, &#39;value1&#39;), (&#39;key1&#39;, &#39;value2&#39;))</span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(&#39;http:&#x2F;&#x2F;httpbin.org&#x2F;post&#39;, data&#x3D;payload)</span><br><span class="line">&gt;&gt;&gt; print(r.text)</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;form&quot;: &#123;</span><br><span class="line">    &quot;key1&quot;: [</span><br><span class="line">      &quot;value1&quot;,</span><br><span class="line">      &quot;value2&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>很多时候你想要发送的数据并非编码为表单形式的。如果你传递一个 string 而不是一个 dict，那么数据会被直接发布出去。<br>例如，Github API v3 接受编码为 JSON 的 POST/PATCH 数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import json</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; url &#x3D; &#39;https:&#x2F;&#x2F;api.github.com&#x2F;some&#x2F;endpoint&#39;</span><br><span class="line">&gt;&gt;&gt; payload &#x3D; &#123;&#39;some&#39;: &#39;data&#39;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(url, data&#x3D;json.dumps(payload))</span><br><span class="line"></span><br><span class="line">此处除了可以自行对 dict 进行编码，你还可以使用 json 参数直接传递，然后它就会被自动编码。这是 2.4.2 版的新加功能：</span><br><span class="line">&gt;&gt;&gt; url &#x3D; &#39;https:&#x2F;&#x2F;api.github.com&#x2F;some&#x2F;endpoint&#39;</span><br><span class="line">&gt;&gt;&gt; payload &#x3D; &#123;&#39;some&#39;: &#39;data&#39;&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(url, json&#x3D;payload)</span><br><span class="line"></span><br><span class="line">POST一个多部分编码(Multipart-Encoded)的文件</span><br><span class="line">Requests 使得上传多部分编码文件变得很简单：</span><br><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;httpbin.org&#x2F;post&#39;</span><br><span class="line">&gt;&gt;&gt; files &#x3D; &#123;&#39;file&#39;: open(&#39;report.xls&#39;, &#39;rb&#39;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(url, files&#x3D;files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;&lt;censored...binary...data&gt;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以显式地设置文件名，文件类型和请求头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;httpbin.org&#x2F;post&#39;</span><br><span class="line">&gt;&gt;&gt; files &#x3D; &#123;&#39;file&#39;: (&#39;report.xls&#39;, open(&#39;report.xls&#39;, &#39;rb&#39;), &#39;application&#x2F;vnd.ms-excel&#39;, &#123;&#39;Expires&#39;: &#39;0&#39;&#125;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(url, files&#x3D;files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;&lt;censored...binary...data&gt;&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想，你也可以发送作为文件来接收的字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;httpbin.org&#x2F;post&#39;</span><br><span class="line">&gt;&gt;&gt; files &#x3D; &#123;&#39;file&#39;: (&#39;report.csv&#39;, &#39;some,data,to,send\nanother,row,to,send\n&#39;)&#125;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.post(url, files&#x3D;files)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  &quot;files&quot;: &#123;</span><br><span class="line">    &quot;file&quot;: &quot;some,data,to,send\\nanother,row,to,send\\n&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你发送一个非常大的文件作为 multipart/form-data 请求，你可能希望将请求做成数据流。默认下 requests 不支持, 但有个第三方包 requests-toolbelt 是支持的。你可以阅读 toolbelt 文档 来了解使用方法。<br>在一个请求中发送多文件参考 高级用法 一节。<br>警告<br>我们强烈建议你用二进制模式(binary mode)打开文件。这是因为 Requests 可能会试图为你提供 Content-Length header，在它这样做的时候，这个值会被设为文件的字节数（bytes）。如果用文本模式(text mode)打开文件，就可能会发生错误。</p>
+<h2 id="响应状态码"><a href="#响应状态码" class="headerlink" title="响应状态码"></a>响应状态码</h2><p>我们可以检测响应状态码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;http:&#x2F;&#x2F;httpbin.org&#x2F;get&#39;)</span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">200</span><br></pre></td></tr></table></figure>
+<p>为方便引用，Requests还附带了一个内置的状态码查询对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.status_code &#x3D;&#x3D; requests.codes.ok</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>如果发送了一个错误请求(一个 4XX 客户端错误，或者 5XX 服务器错误响应)，我们可以通过 Response.raise_for_status() 来抛出异常：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; bad_r &#x3D; requests.get(&#39;http:&#x2F;&#x2F;httpbin.org&#x2F;status&#x2F;404&#39;)</span><br><span class="line">&gt;&gt;&gt; bad_r.status_code</span><br><span class="line">404</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; bad_r.raise_for_status()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;requests&#x2F;models.py&quot;, line 832, in raise_for_status</span><br><span class="line">    raise http_error</span><br><span class="line">requests.exceptions.HTTPError: 404 Client Error</span><br></pre></td></tr></table></figure>
+<p>但是，由于我们的例子中 r 的 status_code 是 200 ，当我们调用 raise_for_status() 时，得到的是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.raise_for_status()</span><br><span class="line">None</span><br></pre></td></tr></table></figure>
+<p>一切都挺和谐哈。</p>
+<h2 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h2><p>我们可以查看以一个 Python 字典形式展示的服务器响应头：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.headers</span><br><span class="line">&#123;</span><br><span class="line">    &#39;content-encoding&#39;: &#39;gzip&#39;,</span><br><span class="line">    &#39;transfer-encoding&#39;: &#39;chunked&#39;,</span><br><span class="line">    &#39;connection&#39;: &#39;close&#39;,</span><br><span class="line">    &#39;server&#39;: &#39;nginx&#x2F;1.0.4&#39;,</span><br><span class="line">    &#39;x-runtime&#39;: &#39;148ms&#39;,</span><br><span class="line">    &#39;etag&#39;: &#39;&quot;e1ca502697e5c9317743dc078f67693f&quot;&#39;,</span><br><span class="line">    &#39;content-type&#39;: &#39;application&#x2F;json&#39;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是这个字典比较特殊：它是仅为 HTTP 头部而生的。根据 RFC 2616， HTTP 头部是大小写不敏感的。<br>因此，我们可以使用任意大写形式来访问这些响应头字段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r.headers[&#39;Content-Type&#39;]</span><br><span class="line">&#39;application&#x2F;json&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.headers.get(&#39;content-type&#39;)</span><br><span class="line">&#39;application&#x2F;json&#39;</span><br></pre></td></tr></table></figure>
+<p>它还有一个特殊点，那就是服务器可以多次接受同一 header，每次都使用不同的值。但 Requests 会将它们合并，这样它们就可以用一个映射来表示出来，参见 RFC 7230:<br>A recipient MAY combine multiple header fields with the same field name into one “field-name: field-value” pair, without changing the semantics of the message, by appending each subsequent field value to the combined field value in order, separated by a comma.<br>接收者可以合并多个相同名称的 header 栏位，把它们合为一个 “field-name: field-value” 配对，将每个后续的栏位值依次追加到合并的栏位值中，用逗号隔开即可，这样做不会改变信息的语义。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>如果某个响应中包含一些 cookie，你可以快速访问它们：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;example.com&#x2F;some&#x2F;cookie&#x2F;setting&#x2F;url&#39;</span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(url)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.cookies[&#39;example_cookie_name&#39;]</span><br><span class="line">&#39;example_cookie_value&#39;</span><br></pre></td></tr></table></figure>
+<p>要想发送你的cookies到服务器，可以使用 cookies 参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;httpbin.org&#x2F;cookies&#39;</span><br><span class="line">&gt;&gt;&gt; cookies &#x3D; dict(cookies_are&#x3D;&#39;working&#39;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(url, cookies&#x3D;cookies)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#39;&#123;&quot;cookies&quot;: &#123;&quot;cookies_are&quot;: &quot;working&quot;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+<p>Cookie 的返回对象为 RequestsCookieJar，它的行为和字典类似，但界面更为完整，适合跨域名跨路径使用。你还可以把 Cookie Jar 传到 Requests 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; jar &#x3D; requests.cookies.RequestsCookieJar()</span><br><span class="line">&gt;&gt;&gt; jar.set(&#39;tasty_cookie&#39;, &#39;yum&#39;, domain&#x3D;&#39;httpbin.org&#39;, path&#x3D;&#39;&#x2F;cookies&#39;)</span><br><span class="line">&gt;&gt;&gt; jar.set(&#39;gross_cookie&#39;, &#39;blech&#39;, domain&#x3D;&#39;httpbin.org&#39;, path&#x3D;&#39;&#x2F;elsewhere&#39;)</span><br><span class="line">&gt;&gt;&gt; url &#x3D; &#39;http:&#x2F;&#x2F;httpbin.org&#x2F;cookies&#39;</span><br><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(url, cookies&#x3D;jar)</span><br><span class="line">&gt;&gt;&gt; r.text</span><br><span class="line">&#39;&#123;&quot;cookies&quot;: &#123;&quot;tasty_cookie&quot;: &quot;yum&quot;&#125;&#125;&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="重定向与请求历史"><a href="#重定向与请求历史" class="headerlink" title="重定向与请求历史"></a>重定向与请求历史</h2><p>默认情况下，除了 HEAD, Requests 会自动处理所有重定向。<br>可以使用响应对象的 history 方法来追踪重定向。<br>Response.history 是一个 Response 对象的列表，为了完成请求而创建了这些对象。这个对象列表按照从最老到最近的请求进行排序。<br>例如，Github 将所有的 HTTP 请求重定向到 HTTPS：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;http:&#x2F;&#x2F;github.com&#39;)</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.url</span><br><span class="line">&#39;https:&#x2F;&#x2F;github.com&#x2F;&#39;</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">200</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[&lt;Response [301]&gt;]</span><br></pre></td></tr></table></figure>
+<p>如果你使用的是GET、OPTIONS、POST、PUT、PATCH 或者 DELETE，那么你可以通过 allow_redirects 参数禁用重定向处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.get(&#39;http:&#x2F;&#x2F;github.com&#39;, allow_redirects&#x3D;False)</span><br><span class="line">&gt;&gt;&gt; r.status_code</span><br><span class="line">301</span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+<p>如果你使用了 HEAD，你也可以启用重定向：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; r &#x3D; requests.head(&#39;http:&#x2F;&#x2F;github.com&#39;, allow_redirects&#x3D;True)</span><br><span class="line">&gt;&gt;&gt; r.url</span><br><span class="line">&#39;https:&#x2F;&#x2F;github.com&#x2F;&#39;</span><br><span class="line">&gt;&gt;&gt; r.history</span><br><span class="line">[&lt;Response [301]&gt;]</span><br></pre></td></tr></table></figure>
+<h2 id="超时"><a href="#超时" class="headerlink" title="超时"></a>超时</h2><p>你可以告诉 requests 在经过以 timeout 参数设定的秒数时间之后停止等待响应。基本上所有的生产代码都应该使用这一参数。如果不使用，你的程序可能会永远失去响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; requests.get(&#39;http:&#x2F;&#x2F;github.com&#39;, timeout&#x3D;0.001)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">requests.exceptions.Timeout: HTTPConnectionPool(host&#x3D;&#39;github.com&#39;, port&#x3D;80): Request timed out. (timeout&#x3D;0.001)</span><br></pre></td></tr></table></figure>
+<p>注意<br>timeout 仅对连接过程有效，与响应体的下载无关。 timeout 并不是整个下载响应的时间限制，而是如果服务器在 timeout 秒内没有应答，将会引发一个异常（更精确地说，是在 timeout 秒内没有从基础套接字上接收到任何字节的数据时）If no timeout is specified explicitly, requests do not time out.</p>
+<h2 id="错误与异常"><a href="#错误与异常" class="headerlink" title="错误与异常"></a>错误与异常</h2><p>遇到网络问题（如：DNS 查询失败、拒绝连接等）时，Requests 会抛出一个 ConnectionError 异常。<br>如果 HTTP 请求返回了不成功的状态码， Response.raise_for_status() 会抛出一个 HTTPError 异常。<br>若请求超时，则抛出一个 Timeout 异常。<br>若请求超过了设定的最大重定向次数，则会抛出一个 TooManyRedirects 异常。<br>所有Requests显式抛出的异常都继承自 requests.exceptions.RequestException 。</p>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2021年01月07日 - 16时10分</p>
+        <p><span>最后更新:</span>2018年03月23日 - 17时01分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" title="python：requests模块介绍">http://yoursite.com/child/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python爬虫学习1</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">发送请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E9%80%92-URL-%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">传递 URL 参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9"><span class="toc-number">3.</span> <span class="toc-text">响应内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON-%E5%93%8D%E5%BA%94%E5%86%85%E5%AE%B9"><span class="toc-number">4.</span> <span class="toc-text">JSON 响应内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E5%88%B6%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-number">5.</span> <span class="toc-text">定制请求头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">6.</span> <span class="toc-text">响应状态码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%A4%B4"><span class="toc-number">7.</span> <span class="toc-text">响应头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">8.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E4%B8%8E%E8%AF%B7%E6%B1%82%E5%8E%86%E5%8F%B2"><span class="toc-number">9.</span> <span class="toc-text">重定向与请求历史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E6%97%B6"><span class="toc-number">10.</span> <span class="toc-text">超时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E4%B8%8E%E5%BC%82%E5%B8%B8"><span class="toc-number">11.</span> <span class="toc-text">错误与异常</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" title="下一篇: python爬虫学习1">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/">脱壳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/%E5%AE%9E%E9%AA%8C%E5%90%A7%E5%B0%8F%E8%AE%A1/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc%20ctf%E9%A2%98%E5%B0%8F%E8%AE%B0(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B1%BBctf%E8%AE%B0%E5%BD%95/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE%20%20HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python基础学习 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="函数1.print(L[0][0], L[1][1], L[-1][-1], sep&#x3D;’\n’) 像这样在print里面最后加sep&#x3D;’\n’可以起到换行的作用，而且换行后面有空格 2.list列表使用[]括起来。其中元素可以删改，tuple元组使用()，其中不可以删改，都可以在其中进行嵌套 3.条件函数if内部代码只需要缩进两行就可以了，不用{} 4.1234567age &#x3D; 20if">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python基础学习">
+<meta property="og:url" content="http://yoursite.com/child/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="函数1.print(L[0][0], L[1][1], L[-1][-1], sep&#x3D;’\n’) 像这样在print里面最后加sep&#x3D;’\n’可以起到换行的作用，而且换行后面有空格 2.list列表使用[]括起来。其中元素可以删改，tuple元组使用()，其中不可以删改，都可以在其中进行嵌套 3.条件函数if内部代码只需要缩进两行就可以了，不用{} 4.1234567age &#x3D; 20if">
+<meta property="og:locale">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvimueawj30h90cogq3.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/0060lm7Tly1fpmvjxjg5nj30qq0gjn2b.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvkggipfj30k90but8p.jpg">
+<meta property="article:published_time" content="2021-01-07T08:10:09.404Z">
+<meta property="article:modified_time" content="2018-03-23T09:25:01.970Z">
+<meta property="article:author" content="jas0nwhy">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvimueawj30h90cogq3.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a> <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" style="font-size: 10px;">学习历程</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" style="font-size: 10px;">文件解析</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-python基础学习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2021-01-07T08:10:09.404Z" itemprop="datePublished">2021-01-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python基础学习
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h6 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h6><p>print(L[0][0], L[1][1], L[-1][-1], sep=’\n’) 像这样在print里面最后加sep=’\n’可以起到换行的作用，而且换行后面有空格</p>
+<h6 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h6><p>list列表使用[]括起来。其中元素可以删改，tuple元组使用()，其中不可以删改，都可以在其中进行嵌套</p>
+<h6 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h6><p>条件函数if内部代码只需要缩进两行就可以了，不用{}</p>
+<h6 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">age &#x3D; 20</span><br><span class="line">if age &gt;&#x3D; 6:</span><br><span class="line">   print(&#39;teenager&#39;)</span><br><span class="line">elif age &gt;&#x3D; 18:</span><br><span class="line">   print(&#39;adult&#39;)</span><br><span class="line">else:</span><br><span class="line">   print(&#39;kid&#39;)</span><br></pre></td></tr></table></figure>
+<p>其中最后结果只会显示teenager，if语句执行有个特点，它是从上往下判断，如果在某个判断上是True，把该判断对应的语句执行后，就忽略掉剩下的elif和else</p>
+<h6 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h6><p>input()函数输入的值作为字符串，不能参加比较，可以用int（）、float（）函数进行转变</p>
+<h6 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h6><p>Python的循环有两种，一种是for…in循环，依次把list或tuple中的每个元素迭代出来  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">names &#x3D; [&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;]</span><br><span class="line">for name in names:</span><br><span class="line">    print(name)</span><br></pre></td></tr></table></figure>
+<p>   第二种循环是while循环，只要条件满足，就不断循环，条件不满足时退出循环。比如我们要计算100以内所有奇数之和，可以用while循环实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sum &#x3D; 0</span><br><span class="line">n &#x3D; 99</span><br><span class="line">while n &gt; 0:</span><br><span class="line">    sum &#x3D; sum + n</span><br><span class="line">    n &#x3D; n - 2</span><br><span class="line">print(sum)</span><br></pre></td></tr></table></figure>
+<h6 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h6><p>python中的字典dict与js中的json表达方式极为相似，采用键值对形式表达用{}括起每一个key对应一个value，要删除一个key，用pop(key)方法</p>
+<h6 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h6><p>set相对于dict只有key，相当于一个无序无重复数字的集合，&amp;表示并集，|表示合集，</p>
+<h6 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h6><p>replace()函数只能改变值，不能改变变量，要改变只有重新定义变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a &#x3D; &#39;abc&#39;</span><br><span class="line">&gt;&gt;&gt; b &#x3D; a.replace(&#39;a&#39;, &#39;A&#39;)</span><br><span class="line">&gt;&gt;&gt; b</span><br><span class="line">       &#39;Abc&#39;</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">        &#39;abc&#39;</span><br></pre></td></tr></table></figure>
+<h6 id="10"><a href="#10" class="headerlink" title="10."></a>10.</h6><p>在print函数中逗号起分割作用，涉及几个变量时，必须加，分割，不会显示<br>abs（）转化绝对值<br>str（）转化字符串<br>int（）转化整数<br>hex（）转化十六进制<br>len（）返回字符串的字符数</p>
+<h6 id="11"><a href="#11" class="headerlink" title="11."></a>11.</h6><p>pass语句可以在定义函数中作为占位符，def定义函数也要用：引起内部函数，结束定义函数用return返回值，import math语句表示导入math包</p>
+<h6 id="12"><a href="#12" class="headerlink" title="12."></a>12.</h6><p>自定义函数必选参数在前，默认参数在后，要修改默认参数的值，要把对应变量写出来复制，单写值无法改变变量，定义默认参数要牢记一点：默认参数必须指向不变对象！</p>
+<h6 id="13"><a href="#13" class="headerlink" title="13."></a>13.</h6><p>在函数中我们还可以设置可变参数，可变参数就是传入的参数个数是可变的，只是在参数前面加了一个*号，省去了在执行函数时再写一遍list、tuple，也就是说可变参数就是可以把列表中的元素提取出来作为可变元素。还有就是关键字参数，允许你传入多个值，还可以用关键字参数调用已有的list;；而命名关键字参数则可以限制自定义参数的名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def person(name,age,**kw):</span><br><span class="line">    print(&#39;name:&#39;,name,&#39;age:&#39;,age,&quot;other:&quot;,kw)</span><br><span class="line">person(&#39;jason&#39;,19,city&#x3D;&#39;chengdu&#39;)</span><br><span class="line">&gt;&gt;&gt;name: jason age: 19 other: &#123;&#39;city&#39;: &#39;chengdu&#39;&#125;</span><br><span class="line"></span><br><span class="line">def person(name, age, *, city, job):</span><br><span class="line">    print(name, age, city, job)</span><br><span class="line">person(&#39;Jack&#39;, 24, city&#x3D;&#39;Beijing&#39;, job&#x3D;&#39;Engineer&#39;)</span><br><span class="line">Jack 24 Beijing Engineer</span><br></pre></td></tr></table></figure>
+<p>便于理解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">def f1(a, b, c&#x3D;0, *args, **kw):</span><br><span class="line">     print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;args &#x3D;&#39;, args, &#39;kw &#x3D;&#39;, kw) </span><br><span class="line">def f2(a, b, c&#x3D;0, *, d, **kw):</span><br><span class="line">     print(&#39;a &#x3D;&#39;, a, &#39;b &#x3D;&#39;, b, &#39;c &#x3D;&#39;, c, &#39;d &#x3D;&#39;, d, &#39;kw &#x3D;&#39;, kw)</span><br><span class="line">&gt;&gt;&gt; f1(1, 2) </span><br><span class="line">     a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line"> &gt;&gt;&gt; f1(1, 2, c&#x3D;3)</span><br><span class="line">     a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; () kw &#x3D; &#123;&#125;</span><br><span class="line"> &gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;) </span><br><span class="line">     a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#125;</span><br><span class="line"> &gt;&gt;&gt; f1(1, 2, 3, &#39;a&#39;, &#39;b&#39;, x&#x3D;99)</span><br><span class="line">     a &#x3D; 1 b &#x3D; 2 c &#x3D; 3 args &#x3D; (&#39;a&#39;, &#39;b&#39;) kw &#x3D; &#123;&#39;x&#39;: 99&#125;</span><br><span class="line"> &gt;&gt;&gt; f2(1, 2, d&#x3D;99, ext&#x3D;None) </span><br><span class="line">     a &#x3D; 1 b &#x3D; 2 c &#x3D; 0 d &#x3D; 99 kw &#x3D; &#123;&#39;ext&#39;: None&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="14"><a href="#14" class="headerlink" title="14."></a>14.</h6><p>加强记忆，python与C语言不一样!   语句结束不加分号，输入用input（）且输入值为字符串，输出用print（），不用提前定义数据类型，Python是弱类型语言进行递归函数时就要防止栈溢出，在计算机中，函数调用是通过栈（stack）这种数据结构实现的，每当进入一个函数调用，栈就会加一层栈帧，每当函数返回，栈就会减一层栈帧。由于栈的大小不是无限的，所以，递归调用的次数过多，会导致栈溢出。</p>
+<h6 id="15"><a href="#15" class="headerlink" title="15."></a>15.</h6><p>关于切片，表达形式L[m，n]，意思是从列表或元组L中提取出第m+1个元素到n-1个元素的切片，如果第一个索引是0，还可以省略为L[：n]，切片也可以取负数，从后面取元素，倒数第一个元素的索引是-1,正着数则是以两个数的间隔做区分，比如0就在第一个元素以前，1在第一第二个元素中间，所以n要减1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">L &#x3D; [&#39;Michael&#39;, &#39;Sarah&#39;, &#39;Tracy&#39;, &#39;Bob&#39;, &#39;Jack&#39;]</span><br><span class="line">print(L[-3:])</span><br><span class="line">&gt;&gt;&gt;[&#39;Tracy&#39;, &#39;Bob&#39;, &#39;Jack&#39;]</span><br></pre></td></tr></table></figure>
+<h6 id="16"><a href="#16" class="headerlink" title="16."></a>16.</h6><p>迭代：给定一个list或tuple，我们可以通过for循环来遍历这个list或tuple，对于字典的迭代，很可能并没有按照列出的顺序，因为dict的存储不是按照list的方式顺序排列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for ch in &#39;ABC&#39;:</span><br><span class="line">...     print(ch)</span><br><span class="line">&gt;&gt;&gt;A</span><br><span class="line">      B</span><br><span class="line">      C</span><br></pre></td></tr></table></figure>
+<h6 id="17"><a href="#17" class="headerlink" title="17."></a>17.</h6><p>赋值语句：a, b = b, a + b<br>相当于：t = (b, a + b) # t是一个tuple<br>a = t[0]<br>b = t[1]</p>
+<h6 id="18"><a href="#18" class="headerlink" title="18."></a>18.</h6><p>map()函数接收两个参数，一个是函数，一个是Iterable，map将传入的函数依次作用到序列的每个元素，并把结果作为新的Iterator返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; def f(x):</span><br><span class="line">...     return x * x</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt; r &#x3D; map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line">&gt;&gt;&gt; list(r)</span><br><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br></pre></td></tr></table></figure>
+<h6 id="19"><a href="#19" class="headerlink" title="19."></a>19.</h6><p>两个import语义有差异</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import datetime</span><br><span class="line">print(datetime.datetime.now())</span><br></pre></td></tr></table></figure>
+<p>是引入整个datetime包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from datetime import datetime</span><br><span class="line">print(datetime.now())</span><br></pre></td></tr></table></figure>
+<p>是只引入datetime包里的datetime类<br>所以import之后前者是datetime这个包可见 后者是datetime.datetime这个类可见</p>
+<h6 id="20"><a href="#20" class="headerlink" title="20."></a>20.</h6><p>filter()接收一个函数和一个序列，用于过滤序列<br>例如，在一个list中，删掉偶数，只保留奇数，可以这么写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def is_odd(n):</span><br><span class="line">    return n % 2 &#x3D;&#x3D; 1</span><br><span class="line">list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15]))</span><br><span class="line"># 结果: [1, 5, 9, 15]</span><br></pre></td></tr></table></figure>
+<p>21.sorted()函数对list进行排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; sorted([36, 5, -12, 9, -21], key&#x3D;abs)</span><br><span class="line">[5, 9, -12, -21, 36] </span><br></pre></td></tr></table></figure>
+<p>str.lower表示忽略大小写，reverse=True表示反向排序</p>
+<p>从这几个函数理解高阶函数的意义就是能够利用其他函数对元素进行处理</p>
+<h6 id="22"><a href="#22" class="headerlink" title="22."></a>22.</h6><p>匿名函数lamba，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))</span><br><span class="line">[1, 4, 9, 16, 25, 36, 49, 64, 81]</span><br></pre></td></tr></table></figure>
+<h6 id="23"><a href="#23" class="headerlink" title="23."></a>23.</h6><p>python2.x中print是一个语句，不用加括号，而在3.x中，print变成了一个函数，要加括号，其中的分隔符用sep定义，结束符用end定义，格式符用%定义，后加元组（）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print &quot;%f, % s&quot; % (3.4, &quot;Hello World!&quot;)  </span><br><span class="line">3.400000, Hello World! </span><br></pre></td></tr></table></figure>
+<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><h6 id="1-1"><a href="#1-1" class="headerlink" title="1."></a>1.</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line">  # -*- coding: utf-8 -*-</span><br><span class="line">&#39; a test module &#39;</span><br></pre></td></tr></table></figure>
+<p>第1行和第2行是标准注释，第1行注释可以让这个hello.py文件直接在Unix/Linux/Mac上运行，第2行注释表示.py文件本身使用标准UTF-8编码，第3行是一个字符串，表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释<br>import sys<br>导入模块，导入sys模块后，我们就有了变量sys指向该模块，利用sys这个变量，就可以访问sys模块的所有功能，要引用该模块内的函数用sys.函数名（）</p>
+<h6 id="2-1"><a href="#2-1" class="headerlink" title="2."></a>2.</h6><p>作用域：在一个模块中，我们可能会定义很多函数和变量，但有的函数和变量我们希望给别人使用，有的函数和变量我们希望仅仅在模块内部使用。在Python中，是通过_前缀来实现的。类似_xxx和__xxx这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；</p>
+<h6 id="3-1"><a href="#3-1" class="headerlink" title="3."></a>3.</h6><p>包：在文件系统中，包就是一个文件夹，模块就是一个.py文件，区分包与普通文件夹在于每一个包下面都有一个—init—.py文件，并且每一层都有，不同的包里面的同名函数用包名.函数名区分<br><img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvimueawj30h90cogq3.jpg" alt="image"></p>
+<h6 id="4-1"><a href="#4-1" class="headerlink" title="4."></a>4.</h6><p>如果我们只是应用包里的某些函数，可以使用from math import pow, sin, log来导入</p>
+<h6 id="5-1"><a href="#5-1" class="headerlink" title="5."></a>5.</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">try:</span><br><span class="line">   	 from cStringIO import StringIO</span><br><span class="line">    except ImportError:</span><br><span class="line">    	from StringIO import StringIO</span><br></pre></td></tr></table></figure>
+<p>上述代码先尝试从cStringIO导入，如果失败了（比如cStringIO没有被安装），再尝试从StringIO导入。这样，如果cStringIO模块存在，则我们将获得更快的运行速度，如果cStringIO不存在，则顶多代码运行速度会变慢，但不会影响代码的正常执行。try 的作用是捕获错误，并在捕获到指定错误时执行 except 语句。</p>
+<h6 id="6-1"><a href="#6-1" class="headerlink" title="6."></a>6.</h6><p>第三方模块载入在py2.7以后已经自带了pip，可以利用piip下载第三方模块，并且IDEpcharm中自带pip。import载入模块时，遇到未下载第三方模块会提醒你下载</p>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h6 id="1-2"><a href="#1-2" class="headerlink" title="1."></a>1.</h6><p>面向对象编程可以看成是不同对象的相互调用，基本思想为类和实例，必须牢记类是抽象的模板，比如Student类，而实例是根据类创建出来的一个个具体的“对象”，每个对象都拥有相同的方法，但各自的数据可能不同。<br><img src="http://ww3.sinaimg.cn/large/0060lm7Tly1fpmvjxjg5nj30qq0gjn2b.jpg" alt="image"></p>
+<h6 id="2-2"><a href="#2-2" class="headerlink" title="2."></a>2.</h6><p>类通过关键字class定义，类名以大写字母开头，紧接着是(object)，表示该类是从哪个类继承下来的。有了类就可以创建具体的实例，实例用类名＋（）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Person(object):</span><br><span class="line">    pass  #pass能够创建一个最简单的类</span><br><span class="line">xiaoming &#x3D; Person()</span><br><span class="line">xiaohong &#x3D; Person()</span><br><span class="line">print xiaoming</span><br><span class="line">print xiaohong</span><br><span class="line">print xiaoming&#x3D;&#x3D;xiaohong</span><br><span class="line">&gt;&gt;&gt;&lt;__main__.Person object at 0x7fb705015450&gt;  #结果中出现的__main__意思是，调用模块本身</span><br><span class="line">	&lt;__main__.Person object at 0x7fb704f54ad0&gt;</span><br><span class="line">	False # 说明两个实例并不相同</span><br></pre></td></tr></table></figure>
+<p>关于为什么要继承object类[<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19754936]">https://www.zhihu.com/question/19754936]</a>   </p>
+<h6 id="3-2"><a href="#3-2" class="headerlink" title="3."></a>3.</h6><p>实例的属性使用实例,属性表示，在定义 Person 类时，可以为Person类添加一个特殊的<strong>init</strong>()方法，当创建实例时，<strong>init</strong>()方法被自动调用，我们就能在此为每个实例都统一属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Person(object):</span><br><span class="line">    def __init__(self, name, gender, birth):</span><br><span class="line">        self.name &#x3D; name</span><br><span class="line">        self.gender &#x3D; gender</span><br><span class="line">        self.birth &#x3D; birth</span><br></pre></td></tr></table></figure>
+<p><strong>init</strong>() 方法的第一个参数必须是 self（也可以用别的名字，但建议使用习惯用法），后续参数则可以自由指定，和定义函数没有任何区别</p>
+<h6 id="4-2"><a href="#4-2" class="headerlink" title="4."></a>4.</h6><p>关于访问限制，在属性前面加上__，如__job该属性就无法被外部访问到，而__job__作为特殊属性可以被外部访问，_job也可以被外部访问</p>
+<h6 id="5-2"><a href="#5-2" class="headerlink" title="5."></a>5.</h6><p>实例属性每个实例各自拥有，互相独立，而类属性有且只有一份，该类下的实例都可以使用类属性，在内部函数中调用类属性，需要使用类名.类属性名，当实例属性和类属性重名时，实例属性优先级高，它将屏蔽掉对类属性的访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Person(object):</span><br><span class="line">    address &#x3D; &#39;Earth&#39;  #定义类属性</span><br><span class="line">    def __init__(self, name):   #定义实例属性</span><br><span class="line">        self.name &#x3D; name</span><br></pre></td></tr></table></figure>
+<h6 id="6-2"><a href="#6-2" class="headerlink" title="6."></a>6.</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Student(object):</span><br><span class="line">    ...</span><br><span class="line">    def set_score(self, score):</span><br><span class="line">        if 0 &lt;&#x3D; score &lt;&#x3D; 100:</span><br><span class="line">            self.__score &#x3D; score</span><br><span class="line">        else:</span><br><span class="line">            raise ValueError(&#39;bad score&#39;)  #可以对参数做检查，避免传入无效的参数</span><br></pre></td></tr></table></figure>
+<h6 id="7-1"><a href="#7-1" class="headerlink" title="7."></a>7.</h6><p>方法就是与实例绑定的函数，和普通函数不同，方法可以直接访问实例的数据</p>
+<h6 id="8-1"><a href="#8-1" class="headerlink" title="8."></a>8.</h6><p>在面向对象的程序设计中，当我们定义一个class的时候，可以从某个现有的class继承，新的class称为子类（Subclass），而被继承的class称为基类、父类或超类（Base class、Super class），对于前面的类，括号里面的object就是他们的父类，子类继承父类全部功能<br><img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fpmvkggipfj30k90but8p.jpg" alt="image"></p>
+<h6 id="9-1"><a href="#9-1" class="headerlink" title="9."></a>9.</h6><p>加强记忆，一种类的实例可以应用这个类里面的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Timer(object):</span><br><span class="line">    def run(self):</span><br><span class="line">        print(&#39; Timer is  Start...&#39;)</span><br><span class="line">dog&#x3D;Timer()</span><br><span class="line">dog.run()   #实例dog应用了Timer类中的Run函数</span><br></pre></td></tr></table></figure>
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2021年01月07日 - 16时10分</p>
+        <p><span>最后更新:</span>2018年03月23日 - 17时25分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" title="python基础学习">http://yoursite.com/child/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python爬虫学习1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/07/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">函数</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2"><span class="toc-number">1.0.0.0.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3"><span class="toc-number">1.0.0.0.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4"><span class="toc-number">1.0.0.0.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5"><span class="toc-number">1.0.0.0.5.</span> <span class="toc-text">5.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6"><span class="toc-number">1.0.0.0.6.</span> <span class="toc-text">6.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7"><span class="toc-number">1.0.0.0.7.</span> <span class="toc-text">7.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#8"><span class="toc-number">1.0.0.0.8.</span> <span class="toc-text">8.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9"><span class="toc-number">1.0.0.0.9.</span> <span class="toc-text">9.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#10"><span class="toc-number">1.0.0.0.10.</span> <span class="toc-text">10.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#11"><span class="toc-number">1.0.0.0.11.</span> <span class="toc-text">11.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#12"><span class="toc-number">1.0.0.0.12.</span> <span class="toc-text">12.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#13"><span class="toc-number">1.0.0.0.13.</span> <span class="toc-text">13.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#14"><span class="toc-number">1.0.0.0.14.</span> <span class="toc-text">14.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#15"><span class="toc-number">1.0.0.0.15.</span> <span class="toc-text">15.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#16"><span class="toc-number">1.0.0.0.16.</span> <span class="toc-text">16.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#17"><span class="toc-number">1.0.0.0.17.</span> <span class="toc-text">17.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#18"><span class="toc-number">1.0.0.0.18.</span> <span class="toc-text">18.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#19"><span class="toc-number">1.0.0.0.19.</span> <span class="toc-text">19.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#20"><span class="toc-number">1.0.0.0.20.</span> <span class="toc-text">20.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#22"><span class="toc-number">1.0.0.0.21.</span> <span class="toc-text">22.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#23"><span class="toc-number">1.0.0.0.22.</span> <span class="toc-text">23.</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text">模块</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-1"><span class="toc-number">2.0.0.0.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-1"><span class="toc-number">2.0.0.0.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-1"><span class="toc-number">2.0.0.0.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-1"><span class="toc-number">2.0.0.0.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-1"><span class="toc-number">2.0.0.0.5.</span> <span class="toc-text">5.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-1"><span class="toc-number">2.0.0.0.6.</span> <span class="toc-text">6.</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="toc-number">3.</span> <span class="toc-text">面向对象</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-2"><span class="toc-number">3.0.0.0.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-2"><span class="toc-number">3.0.0.0.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-2"><span class="toc-number">3.0.0.0.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-2"><span class="toc-number">3.0.0.0.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-2"><span class="toc-number">3.0.0.0.5.</span> <span class="toc-text">5.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-2"><span class="toc-number">3.0.0.0.6.</span> <span class="toc-text">6.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-1"><span class="toc-number">3.0.0.0.7.</span> <span class="toc-text">7.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#8-1"><span class="toc-number">3.0.0.0.8.</span> <span class="toc-text">8.</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#9-1"><span class="toc-number">3.0.0.0.9.</span> <span class="toc-text">9.</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" title="上一篇: python爬虫学习1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/01/07/hello-world/" title="下一篇: Hello World">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/">脱壳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/%E5%AE%9E%E9%AA%8C%E5%90%A7%E5%B0%8F%E8%AE%A1/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc%20ctf%E9%A2%98%E5%B0%8F%E8%AE%B0(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B1%BBctf%E8%AE%B0%E5%BD%95/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE%20%20HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>

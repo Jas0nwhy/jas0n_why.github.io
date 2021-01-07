@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>正则表达式学习笔记 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="正则表达式学习笔记定义正则表达式regular expression(也称“regex”或“regexp”)是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。   举个例子：在平时的计算机操作中，当我们搜索一个文件时，希望找到所有的Word文档，可以在搜索栏的文件名中输入“*.doc”来匹配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式学习笔记">
+<meta property="og:url" content="http://yoursite.com/child/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="正则表达式学习笔记定义正则表达式regular expression(也称“regex”或“regexp”)是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。   举个例子：在平时的计算机操作中，当我们搜索一个文件时，希望找到所有的Word文档，可以在搜索栏的文件名中输入“*.doc”来匹配">
+<meta property="og:locale">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/0060lm7Tly1fnfasb6191j30si0dm750.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/0060lm7Tly1fnfaurs77ej30si0j8dh5.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/0060lm7Tly1fngg0n9a9bj30b60963z4.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfavvxvudj30sd0d5dgw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfaxh7gagj30sc08u3yt.jpg">
+<meta property="article:published_time" content="2018-01-14T13:32:17.000Z">
+<meta property="article:modified_time" content="2018-02-27T04:20:48.085Z">
+<meta property="article:author" content="jas0nwhy">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="正则表达式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/0060lm7Tly1fnfasb6191j30si0dm750.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a> <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" style="font-size: 10px;">学习历程</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" style="font-size: 10px;">文件解析</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-正则表达式学习笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="article-date">
+      <time datetime="2018-01-14T13:32:17.000Z" itemprop="datePublished">2018-01-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      正则表达式学习笔记
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="tag">正则表达式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="正则表达式学习笔记"><a href="#正则表达式学习笔记" class="headerlink" title="正则表达式学习笔记"></a>正则表达式学习笔记</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>正则表达式regular expression(也称“regex”或“regexp”)是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。  </p>
+<p>举个例子：在平时的计算机操作中，当我们搜索一个文件时，希望找到所有的Word文档，可以在搜索栏的文件名中输入“*.doc”来匹配所有以“.doc”结尾的文件名，“*”被称为通配符，可以任意匹配字符串。正则表达式的作用就类似于这种应用。  </p>
+<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>在JavaScript和php中，正则表达式是由两条斜杠“/”所包围的（Java则不用，由于正则表达式是数学概念，在不同的语言中核心语法是相似的，只是存在细微差别，这里我主要针对的是js）。  </p>
+<p>正则表达式语言由两种基本字符类型组成：原义（正常）文本字符和元字符。元字符使正则表达式具有处理能力。所谓元字符就是指那些在正则表达式中具有特殊意义的专用字符，可以用来规定其前导字符（即位于元字符前面的字符）在目标对象中的出现模式，描述文本模式的表达对象。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var reg01&#x3D;&#x2F;abc&#x2F;;</span><br><span class="line">var reg02&#x3D;&#x2F;a&#123;1,2&#125;b&#x2F;g;</span><br><span class="line">var reg03&#x3D;&#x2F;a&#123;1,2&#125;b&#x2F;ig;</span><br><span class="line">var reg04&#x3D;&#x2F;^[\u0391-\uFFE5]+$&#x2F;i;</span><br></pre></td></tr></table></figure>
+<p>上面实例中，第二个/后面的“ig”等是匹配模式，可选。其含义分为：  </p>
+<ul>
+<li><input disabled="" type="checkbox"> “i”为“ignore case”，即忽略大小写。</li>
+<li><input disabled="" type="checkbox"> “g”为“global search”，即全局搜索。</li>
+<li><input disabled="" type="checkbox"> “m”为“multiline search”，即多行搜索。  </li>
+</ul>
+<h2 id="含义"><a href="#含义" class="headerlink" title="含义"></a>含义</h2><p>正则表达式的两个斜杠之间的模式字符串如果为一般的字母或数字，表示直接匹配相应的字符。例如“/abcd/”匹配字符串“abcd123”中“abcd”的部分。花括号“{”等特殊字符在正则表达式中，又有其特殊的含义。下面是正则表达式中各字符的匹配含义。  </p>
+<h4 id="一、普通字符"><a href="#一、普通字符" class="headerlink" title="一、普通字符"></a>一、普通字符</h4><p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。  </p>
+<h4 id="二、非打印字符"><a href="#二、非打印字符" class="headerlink" title="二、非打印字符"></a>二、非打印字符</h4><p>非打印字符也可以是正则表达式的组成部分。下表列出了表示非打印字符的转义序列：<br><img src="http://ww3.sinaimg.cn/large/0060lm7Tly1fnfasb6191j30si0dm750.jpg" alt="非打印字符"></p>
+<h4 id="三、特殊字符"><a href="#三、特殊字符" class="headerlink" title="三、特殊字符"></a>三、特殊字符</h4><p>所谓特殊字符，就是一些有特殊含义的字符，如”*.txt”中的*，简单的说就是表示任何字符串的意思。如果要查找文件名中有*的文件，则需要对*进行转义，即在其前加一个\。ls\ *.txt。</p>
+<p>许多元字符要求在试图匹配它们时特别对待。若要匹配这些特殊字符，必须首先使字符”转义”，即，将反斜杠字符 () 放在它们前面。下表列出了正则表达式中的特殊字符：<br><img src="http://ww4.sinaimg.cn/large/0060lm7Tly1fnfaurs77ej30si0j8dh5.jpg" alt="特殊字符"><br>补充<br><img src="http://ww3.sinaimg.cn/large/0060lm7Tly1fngg0n9a9bj30b60963z4.jpg" alt="元字符补充"></p>
+<h4 id="四、限定符"><a href="#四、限定符" class="headerlink" title="四、限定符"></a>四、限定符</h4><p>限定符用来指定正则表达式的一个给定组件必须要出现多少次才能满足匹配。有*或+或?或{n}或{n,}或{n,m}共6种。</p>
+<p>正则表达式的限定符有：<br><img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfavvxvudj30sd0d5dgw.jpg" alt="限定字符"></p>
+<h4 id="五、定位符"><a href="#五、定位符" class="headerlink" title="五、定位符"></a>五、定位符</h4><p>定位符使您能够将正则表达式固定到行首或行尾。它们还使您能够创建这样的正则表达式，这些正则表达式出现在一个单词内、在一个单词的开头或者一个单词的结尾。</p>
+<p>定位符用来描述字符串或单词的边界，^和$分别指字符串的开始与结束，\b描述单词的前或后边界，\B表示非单词边界。<br><img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fnfaxh7gagj30sc08u3yt.jpg" alt="定位符"><br>注意：不能将限定符与定位点一起使用。由于在紧靠换行或者字边界的前面或后面不能有一个以上位置，因此不允许诸如 ^* 之类的表达式。 </p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>下面我们找几个实际的例子来分析一下，就更加明白了。  </p>
+<ol>
+<li>校验中文<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">^[\u4e00-\u9fa5]&#123;0,&#125;$</span><br><span class="line">&#96;&#96;&#96;  </span><br><span class="line">^开始[]中是要匹配的主要内容，其中的\u4e00是一个汉字的Unicode编码，而\u4e00-\u9fa5就表示所有汉字的Unicode编码，后面的&#123;0,&#125;表示至少匹配0次，最多不限制长度，$结束。</span><br><span class="line">2. 验证身份证号（18位）  </span><br></pre></td></tr></table></figure>
+^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">^开始[1-9]匹配1-9数字中的一个，\d&#123;5&#125;表示匹配5个0-9的数字，后面的一样体会，((0\d)|(1[0-2]))这一段是单独括出来表示年份的，|表示的或条件（左右二选一），0\d是0+一个数字，1[0-2]是1+0,1,2,中的一个，后面表示年月的类似，最后面的([0-9]|X)则是给定了身份证最后一位要么是0-9数字，要么是X，$结束正则表达式  </span><br><span class="line">3. 验证email地址  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+^\w+([-+.]\w+)*@\w+([-.]\w+)<em>.\w+([-.]\w+)</em>$<pre><code>^开始\w匹配数字字母下划线或汉字，表示匹配前面的表达式一次或多次，考虑到用户脑回路比较清奇[+-.]表示匹配其中的+-.其中一个，*匹配前面的子表达式一次或多次，后面大致相同理解，其中\\.是转义字符就表示.，$结束
+</code></pre>
+</li>
+</ol>
+<p>这里举的例子不多，可以看看下面参考文献中的二十个常用的正则表达式  </p>
+<h2 id="贪婪与非贪婪模式"><a href="#贪婪与非贪婪模式" class="headerlink" title="贪婪与非贪婪模式"></a>贪婪与非贪婪模式</h2><p>贪婪匹配:正则表达式一般趋向于最大长度匹配，也就是所谓的贪婪匹配。如上面使用模式p匹配字符串str，结果就是匹配到：abcaxc(ab*c)。  </p>
+<p>非贪婪匹配：就是匹配到结果就好，就少的匹配字符。如上面使用模式p匹配字符串str，结果就是匹配到：abc(ab*c)。  </p>
+<p>仅从应用角度分析，可以这样认为，非贪婪模式，就是在整个表达式匹配成功的前提下，尽可能少的匹配，也就是所谓的“非贪婪”，通俗点讲，就是找到一个想要的捡起来就行了，至于还有没有没捡的就不管了。<br>这里要更深入了解具体可看参考文献。</p>
+<h6 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h6><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/francisblogs/p/6100665.html">正则表达式之基础语法</a><br><a target="_blank" rel="noopener" href="http://deerchao.net/tutorials/regex/regex.htm">正则表达式30分钟入门教程</a>（推荐必看）<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25400344">Python正则表达式指南</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29163295">知道这20个正则表达式，能让你少写1,000行代码</a><br><a target="_blank" rel="noopener" href="http://www.9958.pw/post/preg_match">正则基础(贪婪与非贪婪模式)</a></p>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2018年01月14日 - 21时32分</p>
+        <p><span>最后更新:</span>2018年02月27日 - 12时20分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="正则表达式学习笔记">http://yoursite.com/child/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/02/27/GOOGLE%20%20HAKING/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Google hacking利用简介
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SQL注入基本步骤</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">正则表达式学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AB%E4%B9%89"><span class="toc-number">1.3.</span> <span class="toc-text">含义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%99%AE%E9%80%9A%E5%AD%97%E7%AC%A6"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">一、普通字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%9D%9E%E6%89%93%E5%8D%B0%E5%AD%97%E7%AC%A6"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">二、非打印字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">三、特殊字符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="toc-number">1.3.0.4.</span> <span class="toc-text">四、限定符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9A%E4%BD%8D%E7%AC%A6"><span class="toc-number">1.3.0.5.</span> <span class="toc-text">五、定位符</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.4.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AA%E5%A9%AA%E4%B8%8E%E9%9D%9E%E8%B4%AA%E5%A9%AA%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">贪婪与非贪婪模式</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-number">1.5.0.0.0.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/02/27/GOOGLE%20%20HAKING/" title="上一篇: Google hacking利用简介">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/" title="下一篇: SQL注入基本步骤">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/">脱壳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/%E5%AE%9E%E9%AA%8C%E5%90%A7%E5%B0%8F%E8%AE%A1/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc%20ctf%E9%A2%98%E5%B0%8F%E8%AE%B0(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B1%BBctf%E8%AE%B0%E5%BD%95/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE%20%20HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python爬虫学习1 | Welcome to Jas0nwhy&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前提 最先肯定要复习一下正则不定式，当然还可以用XPath语言去替代正则    教程  爬虫调度端：启动爬虫，停止爬虫，监视爬虫运行情况URL管理器：对将要爬取的和已经爬取过的URL进行管理；可取出带爬取的URL，将其传送给“网页下载器”网页下载器：将URL指定的网页下载，存储成一个字符串，在传送给“网页解析器”网页解析器：解析网页可解析出①有价值的数据②另一方面，每个网页都包含有指向其他网页的U">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python爬虫学习1">
+<meta property="og:url" content="http://yoursite.com/child/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Welcome to Jas0nwhy&#39;s Blog">
+<meta property="og:description" content="前提 最先肯定要复习一下正则不定式，当然还可以用XPath语言去替代正则    教程  爬虫调度端：启动爬虫，停止爬虫，监视爬虫运行情况URL管理器：对将要爬取的和已经爬取过的URL进行管理；可取出带爬取的URL，将其传送给“网页下载器”网页下载器：将URL指定的网页下载，存储成一个字符串，在传送给“网页解析器”网页解析器：解析网页可解析出①有价值的数据②另一方面，每个网页都包含有指向其他网页的U">
+<meta property="og:locale">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/0060lm7Tly1fpp72zcmssj30m71br7wh.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/0060lm7Tly1fpp7cbw9z7j30vx0gkdkr.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7cs0ajqj30vv0i2gtv.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7dtrugdj30mv06jmxb.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7aspnr9j315x0f6k3u.jpg">
+<meta property="article:published_time" content="2021-01-07T08:10:09.404Z">
+<meta property="article:modified_time" content="2018-03-25T09:45:37.162Z">
+<meta property="article:author" content="jas0nwhy">
+<meta property="article:tag" content="技术">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/0060lm7Tly1fpp72zcmssj30m71br7wh.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Welcome to Jas0nwhy&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/"></a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+			<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=280 height=86 src="//music.163.com/outchain/player?type=2&id=532166475&auto=1&height=66"></iframe>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                        
+                            <li><a  href="/archives">文章归档</a></li>
+                        
+                            <li><a  href="/CTFStudy">学习导航</a></li>
+                        
+                            <li><a  href="/PWNABLE">PWNABLE</a></li>
+                        
+                            <li><a  href="/resume">个人简历</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail"  target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                            
+                                <a class="fl github"  target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                            
+                                <a class="fl zhihu"  target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Google-hacking/" style="font-size: 10px;">Google hacking</a> <a href="/tags/MSF/" style="font-size: 10px;">MSF</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 10px;">SQL注入</a> <a href="/tags/Seacms/" style="font-size: 10px;">Seacms</a> <a href="/tags/ctf/" style="font-size: 16.67px;">ctf</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/xss/" style="font-size: 10px;">xss</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 10px;">代码审计</a> <a href="/tags/%E5%85%B3%E4%BA%8E%E6%88%91/" style="font-size: 10px;">关于我</a> <a href="/tags/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96/" style="font-size: 10px;">变量覆盖</a> <a href="/tags/%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" style="font-size: 10px;">学习历程</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 20px;">技术</a> <a href="/tags/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90/" style="font-size: 10px;">文件解析</a> <a href="/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" style="font-size: 10px;">正则表达式</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E8%84%B1%E5%A3%B3/" style="font-size: 10px;">脱壳</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 10px;">逆向</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://ring3.xyz/">Yllen</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://mxny.org/">麦香浓郁</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://whereisk0shl.top/">K0sh1</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.ycjcl.cc/">信鑫</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://bystudent.com/">ByStundet表哥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.jarviswang.me/">汪神_Jarvis</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sh3ll.me/">Chu</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.hackfun.org/">4ido10n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/iamstudy">L3m0n</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://o0xmuhe.me/">muhe</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.nuptzj.cn/">_画船听雨</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.virzz.com/index.html">Virink</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.sqlsec.com/">国光</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bodkin.ren/">老锥</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cizel.cn/">C1zel</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://1phan.cc">1phan</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://www.liuil.top/">liuil</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.cnblogs.com/Ox9A82/">Ox9A82</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://burnegg.com/">burnegg</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://jwrsec.cn/">jwr-sec</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://sudalover.cn/">苏打</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.binklac.com">VeroFess</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.bendawang.site/">bendawang</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://weeklyalgo.codes/">hook</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.flier.net.cn/">Flier&#39;blog</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.mutepig.club">mutepig</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://blog.iret.xyz/list.aspx">Silver</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://simp1e.leanote.com/">Simple</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://processor.pub/">Processor</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">一只什么都不会的咸鱼</div>
+                </section>
+                
+		     </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/http://ww4.sinaimg.cn/large/a15b4afegy1fmpyh1revgj20hs0hsdgg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a target="_blank" rel="noopener" href="https://jas0nwhy.github.io/">博客首页</a></li>
+                
+                    <li><a href="/archives">文章归档</a></li>
+                
+                    <li><a href="/CTFStudy">学习导航</a></li>
+                
+                    <li><a href="/PWNABLE">PWNABLE</a></li>
+                
+                    <li><a href="/resume">个人简历</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=rZyZmJuZmJ2UmJzt3NyDzsLA" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/Jas0nwhy/jas0nwhy.github.io" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/jasontu-sen-po/activities" title="zhihu">zhihu</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/6446326734/profile?topnav=1&wvr=6&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-python-爬虫学习" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" class="article-date">
+      <time datetime="2021-01-07T08:10:09.404Z" itemprop="datePublished">2021-01-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python爬虫学习1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF/" rel="tag">技术</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><ol>
+<li><p>最先肯定要复习一下正则不定式，当然还可以用XPath语言去替代正则    <a target="_blank" rel="noopener" href="http://www.w3school.com.cn/xpath/">教程</a><br><img src="http://ww2.sinaimg.cn/large/0060lm7Tly1fpp72zcmssj30m71br7wh.jpg" alt="image"></p>
+</li>
+<li><p>爬虫调度端：启动爬虫，停止爬虫，监视爬虫运行情况<br>URL管理器：对将要爬取的和已经爬取过的URL进行管理；可取出带爬取的URL，将其传送给“网页下载器”<br>网页下载器：将URL指定的网页下载，存储成一个字符串，在传送给“网页解析器”<br>网页解析器：解析网页可解析出①有价值的数据②另一方面，每个网页都包含有指向其他网页的URL，解析出来后可补充进“URL管理器”<br><img src="http://ww2.sinaimg.cn/large/0060lm7Tly1fpp7cbw9z7j30vx0gkdkr.jpg" alt="image"><br><img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7cs0ajqj30vv0i2gtv.jpg" alt="image"></p>
+</li>
+</ol>
+<ol start="3">
+<li>URL管理器的实现方式有三种，一种是python内存中，利用set（）函数储存url<br>第二种是关联   第三种就是存放在缓存数据库中，如redis（这个不太明白 ）  </li>
+<li>常见的网页下载器，官方的是urllib2，在py3.x后被改为urllib.request，支持登录网页的cookies处理以及代理处理），使用from urllib import <h2 id="request添加模块"><a href="#request添加模块" class="headerlink" title="request添加模块"></a>request添加模块</h2></li>
+<li>基本<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># coding:utf8  #当文件中有中文时，需要声明字符集  </span><br><span class="line">import urllib2  </span><br><span class="line">import cookielib  </span><br><span class="line">#引用urllib2、cookielib模块</span><br><span class="line">url&#x3D;&#39;https:&#x2F;&#x2F;www.zhihu.com&#39;</span><br><span class="line">cj&#x3D;cookielib.CookieJar()</span><br><span class="line">#将查询数据赋值给变量</span><br><span class="line">opener&#x3D;urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))</span><br><span class="line">urllib2.install_opener(opener)</span><br><span class="line">#向urllib2模块添加opener</span><br><span class="line">request&#x3D;urllib2.Request(url)</span><br><span class="line">request.add_header(&#39;user-agent&#39;,&#39;Mozilla&#x2F;5.0&#39;)</span><br><span class="line">response1&#x3D;urllib2.urlopen(url)</span><br><span class="line">print response1.getcode()</span><br><span class="line">print cj</span><br><span class="line">print response1.read()</span><br></pre></td></tr></table></figure></li>
+<li>基本的urlopen()函数不支持验证、cookie或其他HTTP高级功能。要支持这些功能，必须使用build_opener()函数来创建自己的自定义Opener对象  </li>
+<li>网页解析器常用beatuifulsoup模块进行解析<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># coding:utf8</span><br><span class="line">import urllib2</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">url&#x3D;&#39;https:&#x2F;&#x2F;www.zhihu.com&#39;</span><br><span class="line">request&#x3D;urllib2.Request(url)</span><br><span class="line">response1&#x3D;urllib2.urlopen(url)</span><br><span class="line">soup&#x3D;BeautifulSoup(response1.read(),&#39;html.parser&#39;,from_encoding&#x3D;&quot;utf-8&quot;)</span><br><span class="line">#第一个参数是解析出网页的代码，第二个是解析方式，第三个是用的字符集</span><br><span class="line">links&#x3D;soup.find_all(&#39;a&#39;)</span><br><span class="line">for link in links:</span><br><span class="line">    print link.name,link[&#39;href&#39;],link.get_text()</span><br><span class="line">#遍历网页html代码中的a节点，并输出节点的名字、链接、对应文本</span><br><span class="line">print(soup)</span><br></pre></td></tr></table></figure></li>
+<li>通过一个简单爬虫实例来学习  <h5 id="控制器"><a href="#控制器" class="headerlink" title="控制器"></a>控制器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">import url_manager,html_downloader,html_parser,html_outputer</span><br><span class="line">class SpiderMain(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.urls&#x3D;url_manager.UrlManeger()</span><br><span class="line">        self.downloader&#x3D;html_downloader.HtmlDownloader()</span><br><span class="line">        self.parser&#x3D;html_parser.HtmlParser()</span><br><span class="line">        self.outputer&#x3D;html_outputer.HtmlOutputer()</span><br><span class="line">        #初始化管理器、下载器、解析器、输出器</span><br><span class="line">    def craw(self,root_url):</span><br><span class="line">        count&#x3D;1#记录爬取的次数</span><br><span class="line">        self.urls.add_new_url(root_url)</span><br><span class="line">        while self.urls.has_new_url():#如果有新的url</span><br><span class="line">            try:</span><br><span class="line">                new_url&#x3D;self.urls.get_new_url() #放进一个新的url</span><br><span class="line">                print &#39;craw %d:%s&#39;%(count,new_url)</span><br><span class="line">                html_cont&#x3D;self.downloader.download(new_url)#下载新url对应的页面</span><br><span class="line">                new_urls,new_data&#x3D;self.parser.parser(new_url,html_cont)#对新的url进行代码解析，又得到新的url和有效数据</span><br><span class="line">                self.urls.add_new_urls(new_urls)#将得到的新的url加入到url管理器进行爬取</span><br><span class="line">                self.outputer.collect_data(new_data)#收集有效的数据</span><br><span class="line">                if count&#x3D;&#x3D;1000:#设置查找到1000个url结束爬取</span><br><span class="line">                    break</span><br><span class="line">                count&#x3D;count+1</span><br><span class="line">            except:</span><br><span class="line">                print &#39;craw failed&#39;#标记url爬取失败</span><br><span class="line">        self.outputer.output_html()#输出为html形式</span><br><span class="line"></span><br><span class="line">if __name__&#x3D;&#x3D;&quot;__main__&quot;:</span><br><span class="line">    root_url&#x3D;&quot;https:&#x2F;&#x2F;baike.baidu.com&#x2F;item&#x2F;Python&quot;#设置爬虫的入口url</span><br><span class="line">    obj_spider&#x3D;SpiderMain()</span><br><span class="line">    obj_spider.craw(root_url)#启动爬虫</span><br></pre></td></tr></table></figure>
+<h5 id="管理器"><a href="#管理器" class="headerlink" title="管理器"></a>管理器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">class UrlManeger(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.new_urls&#x3D;set()#将新的url输出为一个集合并且删除重复元素</span><br><span class="line">        self.old_urls&#x3D;set()#将新的url输出为一个集合并且删除重复元素</span><br><span class="line"></span><br><span class="line">    def add_new_url(self, url):#向管理器中添加一个新的url</span><br><span class="line">        if url is None: #判断url是否存在</span><br><span class="line">            return</span><br><span class="line">        if url not in self.new_urls and url not in self.old_urls: #判断url是否在待爬取或已爬取页面</span><br><span class="line">            self.new_urls.add(url)#将url添加到未爬取列表</span><br><span class="line"></span><br><span class="line">    def add_new_urls(self, new_urls):#向管理器中添加批量url</span><br><span class="line">        if new_urls is None or len(new_urls) &#x3D;&#x3D; 0:</span><br><span class="line">            return</span><br><span class="line">        for url in new_urls:#从urls中遍历url添加到URL集合中</span><br><span class="line">            self.add_new_urls(url)</span><br><span class="line"></span><br><span class="line">    def has_new_url(self):#验证是否添加新的url</span><br><span class="line">        return len(self.new_urls) !&#x3D; 0</span><br><span class="line"></span><br><span class="line">    def get_new_url(self):#从管理器中拿出一个新的url进行爬取</span><br><span class="line">        new_url&#x3D;self.new_urls.pop()#新的url集合中随机取出一个url并且从集合中删去这个url</span><br><span class="line">        self.old_urls.add(new_url)</span><br><span class="line">        return new_url</span><br></pre></td></tr></table></figure>
+<h5 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">class HtmlParser(object):</span><br><span class="line">    def _get_new_urls(self, page_url, soup):</span><br><span class="line">        new_urls&#x3D;set()</span><br><span class="line">        links&#x3D;soup.find_all(&#39;a&#39;, href&#x3D;re.compile(r&#39;&#x2F;item&#x2F;&#39;))#正则匹配，查询a标签中href属性</span><br><span class="line">        for link in links:#遍历links列表（匹配的url片段）</span><br><span class="line">            new_url&#x3D;link[&#39;herf&#39;]#抓取herf属性值（link被储存为字典，用[]取出数据）</span><br><span class="line">            new_full_url&#x3D;urlparse.urljoin(page_url,new_url)#将url拼接起来</span><br><span class="line">            new_urls.add(new_full_url)#将补全的url加入未爬取url名单</span><br><span class="line">        return new_urls</span><br><span class="line"></span><br><span class="line">    def _get_new_data(self, page_url, soup):</span><br><span class="line">        res_data&#x3D;&#123;&#125;#建立一个res_data字典</span><br><span class="line">        res_data[&#39;url&#39;]&#x3D;page_url#加入url</span><br><span class="line">        title_node&#x3D;soup.find(&#39;dd&#39;, class_&#x3D;&quot;lemmaWgt-lemmaTitle-title&quot;).find(&quot;h1&quot;)#抓取dd标签class属性的hi属性</span><br><span class="line">        res_data[&#39;title&#39;]&#x3D;title_node.get_text()#取得h1标签文本</span><br><span class="line">        sammary_node&#x3D;soup.find(&#39;div&#39;, class_&#x3D;&quot;lemma-summary&quot;)</span><br><span class="line">        res_data[&#39;sammary&#39;]&#x3D;sammary_node.get_text()</span><br><span class="line">        return res_data#输出字典</span><br><span class="line"></span><br><span class="line">    def parser(self, new_url, html_cont):</span><br><span class="line">        if new_url is None or html_cont is None:#判断页面是否存在</span><br><span class="line">            return</span><br><span class="line">        soup&#x3D;BeautifulSoup(html_cont, &#39;html_parser&#39;,from_encoding&#x3D;&#39;utf-8&#39;)#以utf-8字符集解析页面html代码</span><br><span class="line">        new_urls&#x3D;self._get_new_urls(new_url, soup)</span><br><span class="line">        new_data&#x3D;self._get_new_data(new_url, soup)</span><br><span class="line">        return new_urls, new_data</span><br></pre></td></tr></table></figure>
+<h5 id="下载器"><a href="#下载器" class="headerlink" title="下载器"></a>下载器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">#这里只使用了最简单的方法</span><br><span class="line">import urllib2#载入urllib2模块</span><br><span class="line"></span><br><span class="line">class HtmlDownloader(object):</span><br><span class="line">    def download(self, url):</span><br><span class="line">        if url is None:#验证url是否存在</span><br><span class="line">            return None</span><br><span class="line">        response&#x3D;urllib2.urlopen(url)#下载url</span><br><span class="line">        if response.getcode() !&#x3D; 200:#判断状态码</span><br><span class="line">            return None</span><br><span class="line">        res&#x3D;response.read()</span><br><span class="line">        return res#读取网页内容</span><br></pre></td></tr></table></figure>
+<h5 id="输出器"><a href="#输出器" class="headerlink" title="输出器"></a>输出器</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">class HtmlOutputer(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.datas&#x3D;[]#设置data为一个列表</span><br><span class="line">    def collect_data(self,data):</span><br><span class="line">        if data is None:</span><br><span class="line">            return</span><br><span class="line">        self.datas.append(data)</span><br><span class="line"></span><br><span class="line">    def output_html(self):</span><br><span class="line">        fout&#x3D;open(&#39;output.html&#39;,&#39;w&#39;)#写出一个html文件</span><br><span class="line">        fout.write(&#39;&lt;html&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;meta charset&#x3D;\&#39;utf-8\&#39;&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;body&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;table&gt;&#39;)</span><br><span class="line">        for data in self.datas:</span><br><span class="line">            fout.write(&#39;&lt;tr&gt;&#39;)</span><br><span class="line">            fout.write(&#39;&lt;td&gt;%s&lt;&#x2F;td&gt;&#39;%data[&#39;url&#39;])</span><br><span class="line">            fout.write(&#39;&lt;td&gt;%s&lt;&#x2F;td&gt;&#39;%data[&#39;title&#39;].encode(&#39;utf-8&#39;))</span><br><span class="line">            fout.write(&#39;&lt;td&gt;%s&lt;&#x2F;td&gt;&#39;%data[&#39;sammary&#39;].encode(&#39;utf-8&#39;))</span><br><span class="line">            fout.write(&#39;&lt;&#x2F;tr&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;&#x2F;table&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;&#x2F;body&gt;&#39;)</span><br><span class="line">        fout.write(&#39;&lt;&#x2F;html&gt;&#39;)</span><br><span class="line">        fout.close()</span><br></pre></td></tr></table></figure>
+这个爬取百度百科的模块是按照控制器、URL管理器、下载器、解析器、输出器分开编写的  </li>
+<li>最常用的是“.text”和”.content”，前者输出unicode，后者输出二进制   </li>
+<li>这是PIL模块中resize函数（重新设置图片尺寸）resize((size, size), Image.ANTIALIAS）图片质量的参数<br><img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7dtrugdj30mv06jmxb.jpg" alt="image"></li>
+<li>某些网站如知乎，存在反爬虫机制，如果要成功加载页面需要伪造头文件</li>
+<li>照着网上的教程，熟悉一下itchat模块，做微信头像拼图的代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*</span><br><span class="line">import itchat</span><br><span class="line">import os</span><br><span class="line">from math import sqrt</span><br><span class="line">from PIL import Image</span><br><span class="line"></span><br><span class="line">itchat.auto_login()#微信登录接口</span><br><span class="line">for friend in itchat.get_friends(update&#x3D;True)[0:]:#获取好友列表，并保持更新</span><br><span class="line">    print friend[&#39;NickName&#39;], friend[&#39;RemarkName&#39;], friend[&#39;Sex&#39;], friend[&#39;Province&#39;], friend[&#39;Signature&#39;]#输出好友的基本信息</span><br><span class="line">    img &#x3D; itchat.get_head_img(userName&#x3D;friend[&quot;UserName&quot;])#获取好友头像</span><br><span class="line">    path&#x3D;&quot;C:\\Users\\14564\\Pictures\\pachong\\&quot;+friend[&#39;NickName&#39;]+&#39;(&#39;+friend[&#39;RemarkName&#39;]+&#39;).jpg&#39;#保存获取的头像</span><br><span class="line">    try:</span><br><span class="line">        with open(path,&#39;wb&#39;) as f:</span><br><span class="line">            f.write(img)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        print repr(e)</span><br><span class="line"></span><br><span class="line">def pt():</span><br><span class="line">    path2&#x3D;&quot;C:\\Users\\14564\\Pictures\\pachong\\&quot;</span><br><span class="line">    pList&#x3D;[]</span><br><span class="line">    for item in os.listdir(path2):#遍历出单个头像</span><br><span class="line">        imgPath&#x3D;os.path.join(path2,item)</span><br><span class="line">        pList.append(imgPath)#将头像图片保存到字典中</span><br><span class="line">    total&#x3D;len(pList)#计算图片个数</span><br><span class="line">    line&#x3D;int(sqrt(total))#计算合成图片边长</span><br><span class="line">    NewImage&#x3D;Image.new(&#39;RGB&#39;,(128*line,128*line))#创建一个新的底片存放大小为128px的所有头像</span><br><span class="line">    x&#x3D;0</span><br><span class="line">    y&#x3D;0</span><br><span class="line">    for item in pList:</span><br><span class="line">        try:</span><br><span class="line">            Img&#x3D;Image.open(item)</span><br><span class="line">            Img&#x3D;Img.resize((128,128),Image.ANTIALIAS)#将头像图片改变大小</span><br><span class="line">            NewImage.paste(Img,(x*128,y*128))#不断添加头像</span><br><span class="line">            x+&#x3D;1</span><br><span class="line">        except IOError:</span><br><span class="line">            print &quot;第%d行，%d列文件读取失败！IOError：%s&quot;%(y,x,item)</span><br><span class="line">            x-&#x3D;1</span><br><span class="line">        if x&#x3D;&#x3D;line:#将一行填完后移动到下一行</span><br><span class="line">            x&#x3D;0</span><br><span class="line">            y+&#x3D;1</span><br><span class="line">        if (x+line*y)&#x3D;&#x3D;line*line:#判断</span><br><span class="line">            break</span><br><span class="line">    NewImage.save(path2+&#39;final.jpg&#39;)#保存为final.jpg</span><br><span class="line">pt()</span><br><span class="line">itchat.run()</span><br><span class="line">8.一个关于微信聊天机器人的程序</span><br><span class="line"># -*- coding: utf-8 -*</span><br><span class="line">import itchat, time, re</span><br><span class="line">from itchat.content import *</span><br><span class="line">import urllib2, urllib</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line">@itchat.msg_register([TEXT])#向注册方法传入msg包含text文本消息内容，这里的@是一个装饰器</span><br><span class="line">def text_reply(msg):</span><br><span class="line">    info&#x3D;msg[&#39;Text&#39;].encode(&#39;UTF-8&#39;)#将得到的消息存放在info变量中</span><br><span class="line">    url&#x3D;&#39;http:&#x2F;&#x2F;wwww.tuling123.com&#x2F;openapi&#x2F;api&#39;#链接到图灵机器人api</span><br><span class="line">    data&#x3D;&#123;u&quot;key&quot;:&quot;f0fa6a1ec8c542aeaa606a14b2ee8ecd&quot;,&quot;info&quot;:info&#125;#post传入参数</span><br><span class="line">    data&#x3D;urllib.urlencode(data)</span><br><span class="line">    url2&#x3D;urllib2.Request(url,data)</span><br><span class="line"></span><br><span class="line">    response&#x3D; urllib2.urlopen(url2)</span><br><span class="line">    apicontent&#x3D;response.read()</span><br><span class="line">    s&#x3D;json.loads(apicontent,encoding&#x3D;&quot;utf-8&quot;)</span><br><span class="line">    print &#39;s&#x3D;&#x3D;&#39;,s</span><br><span class="line">    if s[&#39;code&#39;]&#x3D;&#x3D;100000:</span><br><span class="line">        itchat.send(s[&#39;text&#39;],msg[&#39;FromUserName&#39;])#将从api得到的json文本发送给好友</span><br><span class="line">itchat.auto_login(hotReload&#x3D;True)#hotReload表示保持登录状态</span><br><span class="line">itchat.run(debug&#x3D;True)</span><br></pre></td></tr></table></figure></li>
+<li>关于requests模块的一些补充<br>常见报错说明<br><img src="http://ww1.sinaimg.cn/large/0060lm7Tly1fpp7aspnr9j315x0f6k3u.jpg" alt="image"><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">with open(&#39;小猪图片.jpg&#39;,&#39;wb&#39;) as f:</span><br><span class="line">    f.write(r.content)</span><br></pre></td></tr></table></figure>
+r.content将返回图像的二进制内容，当我们要保存到本地文件时，写入方式必须为“wb”，否则会报错</li>
+</ol>
+
+      
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2021年01月07日 - 16时10分</p>
+        <p><span>最后更新:</span>2018年03月25日 - 17时45分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" title="python爬虫学习1">http://yoursite.com/child/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/child/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          python：requests模块介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">python基础学习</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-number">1.</span> <span class="toc-text">前提</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#request%E6%B7%BB%E5%8A%A0%E6%A8%A1%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text">request添加模块</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">控制器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.0.0.2.</span> <span class="toc-text">管理器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%99%A8"><span class="toc-number">2.0.0.3.</span> <span class="toc-text">解析器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%99%A8"><span class="toc-number">2.0.0.4.</span> <span class="toc-text">下载器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%99%A8"><span class="toc-number">2.0.0.5.</span> <span class="toc-text">输出器</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="youyan" id="comments">
+  <div id="uyan_frame"></div>
+  <script src="http://v2.uyan.cc/code/uyan.js?uid=2152382"></script>
+</section>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/" title="上一篇: python：requests模块介绍">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" title="下一篇: python基础学习">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%EF%BC%9Arequests%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D/">python：requests模块介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python-%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/">python爬虫学习1</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/python%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">python基础学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/01/07/hello-world/">Hello World</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/15/%E8%84%B1%E5%A3%B3%E6%80%BB%E7%BB%93/">脱壳总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/25/seacms6.61xss/">Seacms6.61xss漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB(1)/">hash长度扩展攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/22/CBC%E5%AD%97%E8%8A%82%E7%BF%BB%E8%BD%AC%E6%94%BB%E5%87%BB/">CBC字节翻转攻击</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/12/Metasploit%20%E6%95%B4%E7%90%86%E7%AC%94%E8%AE%B0(%E6%9B%B4%E6%96%B0%E4%B8%AD)/">Metasploit 整理笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/01/%E5%AE%9E%E9%AA%8C%E5%90%A7%E5%B0%8F%E8%AE%A1/">实验吧ctf题小计</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/iscc%20ctf%E9%A2%98%E5%B0%8F%E8%AE%B0(1)/">iscc ctf题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/14/%E5%8F%98%E9%87%8F%E8%A6%86%E7%9B%96%E6%BC%8F%E6%B4%9E/">变量覆盖漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/05/09/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%B1%BBctf%E8%AE%B0%E5%BD%95/">代码审计类ctf记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/03/%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">文件解析漏洞学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/02/27/GOOGLE%20%20HAKING/">Google hacking利用简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/14/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">正则表达式学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/06/SQL%E6%B3%A8%E5%85%A5%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4/">SQL注入基本步骤</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/web%E4%BB%BB%E5%8A%A1%E6%9D%A5%E4%BA%86!!!!!!/">web任务来了！！！</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/12/24/%E5%85%B3%E4%BA%8E%E6%88%91/">关于我</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 jas0nwhy
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="http://bestwing.me" target="_blank">Sw'blog</a> by Swing
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >海贼到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 24;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+    <script type="text/javascript">
+      window.onload = function(){
+        document.getElementById("search").onclick = function(){
+            console.log("search")
+            search();
+        }
+      }
+      function search(){
+        (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+        })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+        _st('install','A1Pz-LKMXbrzcFg2FWi6','2.0.0');
+      }
+    </script>
+
+  </div>
+</body>
+</html>
